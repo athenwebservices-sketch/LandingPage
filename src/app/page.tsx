@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import noBgImage from './no_bg_image.png';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
+  import { FaInstagram, FaFacebookF } from 'react-icons/fa'; // Make sure this is imported
 export default function Home() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -247,7 +247,9 @@ export default function Home() {
       {/* Navigation Bar */}
       <div className="relative">
   {/* Navbar */}
-  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+  
+
+<nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
   <div className="container mx-auto px-4 py-4">
     <div className="flex items-center justify-between">
       
@@ -265,7 +267,7 @@ export default function Home() {
 
       {/* Center: Navigation Links */}
       <div className="hidden md:flex space-x-6">
-        {["Events", "Cosplay", "Exhibit with us","Awards"].map((item) => (
+        {["Events", "Cosplay", "Exhibit with us", "Awards"].map((item) => (
           <a 
             key={item}
             href="#" 
@@ -274,7 +276,7 @@ export default function Home() {
             {item}
           </a>
         ))}
-        
+
         {/* Year Switcher */}
         <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
           <button
@@ -296,15 +298,36 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Right: Join Us Button */}
-      <div className="hidden md:block">
-        <a 
-          href="#"
-          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-        >
-          Join Us
-        </a>
-      </div>
+      {/* Right: Social Icons + Join Us Button */}
+<div className="hidden md:flex items-center space-x-4">
+  {/* Social Icons */}
+  <a 
+    href="https://instagram.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+  >
+    <FaInstagram className="w-5 h-5" />
+  </a>
+  <a 
+    href="https://facebook.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+  >
+    <FaFacebookF className="w-5 h-5" />
+  </a>
+
+  {/* Join Us Button */}
+  <a 
+    href="#" 
+    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+  >
+    Join Us
+  </a>
+</div>
+
+
     </div>
   </div>
 </nav>
@@ -615,21 +638,21 @@ export default function Home() {
           image: "cosplay_award.jpg",
           link: "#join-cosplay",
           color: "from-[#3c0052] to-[#3c0052]",
-          emoji: "🎉"
+          
         },
         {
           name: "Creative Excellence Award",
           image: "creative_award.jpg",
           link: "#join-creative",
           color: "from-[#3c0052] to-[#3c0052]",
-          emoji: "✨"
+          
         },
         {
           name: "Community Hero Award",
           image: "community_award.jpg",
           link: "#join-community",
           color: "from-[#3c0052] to-[#3c0052]",
-          emoji: "🙌"
+          
         }
       ].map((award, index) => (
         <div
@@ -813,6 +836,7 @@ export default function Home() {
         <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
 
         {/* Year Selector */}
+
         <div className="flex justify-center space-x-4 mb-12">
           {['2024', '2025'].map((year) => (
             <button
