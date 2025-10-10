@@ -435,7 +435,7 @@ export default function Home() {
   <div 
     className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
     style={{
-      background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[currentColorIndex]} 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
+      background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #3c0052 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
       opacity: isHovering ? 0.75 : 0.5,
       transform: `scale(${isHovering ? 1.1 : 1})`,
       filter: 'brightness(1.2) saturate(1.5)',
@@ -445,7 +445,7 @@ export default function Home() {
   <div 
     className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
     style={{
-      background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]}, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
+      background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, #3c0052, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
       opacity: isHovering ? 0.35 : 0.25,
       transform: `scale(${isHovering ? 1.1 : 1})`,
     }}
@@ -529,6 +529,7 @@ export default function Home() {
     </div>
   </div>
 </section>
+
 
        <section className="relative bg-[#3c0052] py-20 overflow-hidden">
   {/* Background Orbs */}
