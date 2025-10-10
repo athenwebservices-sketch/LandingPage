@@ -17,6 +17,57 @@
   animation: scroll 30s linear infinite;
 }
 
+@keyframes blob-one {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes blob-two {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, 30px) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.animate-blob-one {
+  animation: blob-one 5s infinite;
+}
+
+.animate-blob-two {
+  animation: blob-two 5s infinite;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=B612&display=swap');
+
+@keyframes blob {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, -30px) scale(1.1);
+    }
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 5s infinite;
+  }
 
 @theme inline {
   --color-background: var(--background);

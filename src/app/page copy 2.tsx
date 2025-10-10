@@ -20,117 +20,7 @@ export default function Home() {
   ]);
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [galleryYear, setGalleryYear] = useState('2024');
-  const [gallerySlideIndex, setGallerySlideIndex] = useState(0);
-  const [galleryIsHovering, setGalleryIsHovering] = useState(false);
-  const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0); // for scrolling thumbs
-
-  const THUMBNAILS_VISIBLE = 4;
-
-  const galleryData = {
-    '2024': [
-      {
-        title: 'New Year 2024',
-        description: 'Fireworks and celebration shots',
-        image: 'https://source.unsplash.com/800x450/?fireworks,newyear',
-      },
-      {
-        title: 'Spring 2024',
-        description: 'Blossoms in the park',
-        image: 'https://source.unsplash.com/800x450/?spring,flowers',
-      },
-      {
-        title: 'Summer 2024',
-        description: 'Beachside memories',
-        image: 'https://source.unsplash.com/800x450/?beach,summer',
-      },
-      {
-        title: 'Autumn 2024',
-        description: 'Golden leaves and cityscapes',
-        image: 'https://source.unsplash.com/800x450/?autumn,leaves',
-      },
-      {
-        title: 'Winter 2024',
-        description: 'Snowy mountains and cozy vibes',
-        image: 'https://source.unsplash.com/800x450/?winter,snow',
-      },
-    ],
-    '2025': [
-      {
-        title: 'New Year 2025',
-        description: 'Futuristic celebrations',
-        image: 'https://source.unsplash.com/800x450/?city,fireworks',
-      },
-      {
-        title: 'Spring 2025',
-        description: 'Urban gardens in bloom',
-        image: 'https://source.unsplash.com/800x450/?urban,garden',
-      },
-      {
-        title: 'Summer 2025',
-        description: 'City festivals and markets',
-        image: 'https://source.unsplash.com/800x450/?festival,summer',
-      },
-      {
-        title: 'Autumn 2025',
-        description: 'Architecture in golden light',
-        image: 'https://source.unsplash.com/800x450/?architecture,autumn',
-      },
-      {
-        title: 'Winter 2025',
-        description: 'Tech and tradition mix',
-        image: 'https://source.unsplash.com/800x450/?technology,winter',
-      },
-    ],
-  };
-
-  const gallerySlides1 = galleryData[galleryYear];
-
-  // Sync thumbnail scroll with main slide
-  useEffect(() => {
-    const newStartIndex = Math.min(
-      Math.max(0, gallerySlideIndex - Math.floor(THUMBNAILS_VISIBLE / 2)),
-      gallerySlides1.length - THUMBNAILS_VISIBLE
-    );
-    setThumbnailStartIndex(newStartIndex);
-  }, [gallerySlideIndex, galleryYear]);
-
-  const handleGalleryPrev = () => {
-    setGallerySlideIndex((prev) =>
-      prev === 0 ? gallerySlides1.length - 1 : prev - 1
-    );
-  };
-
-  const handleGalleryNext = () => {
-    setGallerySlideIndex((prev) =>
-      prev === gallerySlides1.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const handleGallerySlideChange = (index) => {
-    setGallerySlideIndex(index);
-  };
-
-  const handleGalleryYearChange = (year) => {
-    setGalleryYear(year);
-    setGallerySlideIndex(0);
-  };
-
-  const handleThumbnailScrollLeft = () => {
-    setThumbnailStartIndex((prev) => Math.max(0, prev - 1));
-  };
-
-  const handleThumbnailScrollRight = () => {
-    setThumbnailStartIndex((prev) =>
-      Math.min(prev + 1, gallerySlides.length - THUMBNAILS_VISIBLE)
-    );
-  };
-
-
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    setCurrentSlide(0);
-  };
+  
   const scroll = (direction) => {
     const { current } = scrollRef;
     if (current) {
@@ -804,266 +694,167 @@ export default function Home() {
       
 
       {/* Gallery Section */}
-      
-              <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16">
-      <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
-
-      <div className="relative z-10 container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
-
-        {/* Year Selector */}
-        <div className="flex justify-center space-x-4 mb-12">
-          {['2024', '2025'].map((year) => (
-            <button
-              key={year}
-              onClick={() => handleGalleryYearChange(year)}
-              className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
-                galleryYear === year
-                  ? 'bg-yellow-400 text-black shadow-lg scale-105'
-                  : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-            >
-              {year}
-            </button>
-          ))}
-        </div>
-
-        {/* Featured Slide */}
-        <div className="max-w-4xl mx-auto">
-          <div className="relative mb-8">
-            <div className="aspect-video rounded-xl overflow-hidden relative">
-              <img
-                src={gallerySlides[gallerySlideIndex].image}
-                alt={gallerySlides[gallerySlideIndex].title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center p-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {gallerySlides[gallerySlideIndex].title}
-                  </h3>
-                  <p className="text-gray-300">
-                    {gallerySlides[gallerySlideIndex].description}
-                  </p>
+      <section className="relative bg-gradient-to-br from-purple-800 via-indigo-800 to-purple-900 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+            Gallery Highlights
+          </h2>
+          
+          <div className="max-w-4xl mx-auto">
+            {/* Featured Slide */}
+            <div className="relative mb-8">
+              <div className="aspect-video bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">📸</div>
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      {gallerySlides[currentSlide].title}
+                    </h3>
+                    <p className="text-gray-300">
+                      {gallerySlides[currentSlide].description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Main Slide Nav */}
-            <button
-              onClick={handleGalleryPrev}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
-              onMouseEnter={() => setGalleryIsHovering(true)}
-              onMouseLeave={() => setGalleryIsHovering(false)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={handleGalleryNext}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
-              onMouseEnter={() => setGalleryIsHovering(true)}
-              onMouseLeave={() => setGalleryIsHovering(false)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Thumbnail Carousel */}
-          <div className="flex items-center mb-8 space-x-2">
-            {/* Left scroll button */}
-            <button
-              onClick={handleThumbnailScrollLeft}
-              className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            {/* Visible thumbnails */}
-            <div className="grid grid-cols-4 gap-4 flex-1">
-              {gallerySlides
-                .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-                .map((slide, index) => {
-                  const realIndex = index + thumbnailStartIndex;
-                  return (
-                    <div
-                      key={realIndex}
-                      onClick={() => handleGallerySlideChange(realIndex)}
-                      className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
-                        gallerySlideIndex === realIndex
-                          ? 'ring-4 ring-yellow-400 scale-105'
-                          : 'opacity-60 hover:opacity-100'
-                      }`}
-                      onMouseEnter={() => setGalleryIsHovering(true)}
-                      onMouseLeave={() => setGalleryIsHovering(false)}
-                    >
-                      <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                    </div>
-                  );
-                })}
-            </div>
-
-            {/* Right scroll button */}
-            <button
-              onClick={handleThumbnailScrollRight}
-              className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Progress Dots */}
-          <div className="flex justify-center space-x-2">
-            {gallerySlides.map((_, index) => (
+              
+              {/* Navigation Buttons */}
               <button
-                key={index}
-                onClick={() => handleGallerySlideChange(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  gallerySlideIndex === index
-                    ? 'bg-yellow-400 scale-125'
-                    : 'bg-gray-600 hover:bg-gray-400'
-                }`}
-                onMouseEnter={() => setGalleryIsHovering(true)}
-                onMouseLeave={() => setGalleryIsHovering(false)}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
-
-      
-
-      {/* Join Now Section */}
-      
-
-
-                <section className="relative bg-[#3c0052] py-16">
-  {/* Glass Panel */}
-  <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/20 rounded-3xl pointer-events-none z-0" />
-
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      {/* Left Content */}
-      <div className="space-y-6">
-        <div className="inline-block">
-          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-            Limited Time Offer
-          </div>
-        </div>
-        
-        <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-          Join the Ultimate Pop-Culture Experience
-        </h2>
-        
-        <div className="space-y-4 text-gray-300 text-lg">
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">✨</span>
-            <span>Get exclusive access to all 4 experience zones</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🎭</span>
-            <span>Meet your favorite creators and celebrities</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🎮</span>
-            <span>Participate in gaming tournaments and workshops</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🏆</span>
-            <span>Win amazing prizes and exclusive merchandise</span>
-          </p>
-        </div>
-        
-        {/* Price Section (commented out) */}
-        {/* <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-400 line-through text-lg">Regular Price</span>
-            <span className="text-gray-400 line-through text-lg">₹2,999</span>
-          </div>
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-white text-xl font-bold">Early Bird Price</span>
-            <span className="text-yellow-400 text-2xl font-bold">₹1,999</span>
-          </div>
-          <div className="text-sm text-gray-400">
-            *Offer valid until December 31st, 2024
-          </div>
-        </div> */}
-        
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Join Now</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-          </button>
-          
-          <button
-            className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Learn More</span>
-              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </span>
-          </button>
-        </div>
-      </div>
-      
-      {/* Right Image */}
-      <div className="relative">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
-          <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
-            <div className="aspect-square w-full flex items-center justify-center p-8">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                  <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
-                    <div className="text-6xl">🎪</div>
+            {/* Thumbnail Navigation */}
+            <div className="grid grid-cols-4 gap-4 mb-8">
+              {gallerySlides.slice(0, 4).map((slide, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleSlideChange(index)}
+                  className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+                    currentSlide === index ? 'ring-4 ring-yellow-400 scale-105' : 'opacity-60 hover:opacity-100'
+                  }`}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <div className="w-full h-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">{slide.title}</span>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
-                  <p className="text-gray-300">Your adventure awaits!</p>
-                  <div className="flex justify-center space-x-2 text-2xl">
-                    <span>🎨</span>
-                    <span>🎮</span>
-                    <span>🎭</span>
-                    <span>🏆</span>
-                  </div>
-                </div>
-              </div>
+              ))}
+            </div>
+
+            {/* Progress Indicators */}
+            <div className="flex justify-center space-x-2">
+              {gallerySlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSlideChange(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index ? 'bg-yellow-400 scale-125' : 'bg-gray-600 hover:bg-gray-400'
+                  }`}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                />
+              ))}
             </div>
           </div>
-          
-          {/* Floating badges */}
-          <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
-            Early Bird
-          </div>
-          <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
-            Limited Seats
+        </div>
+      </section>
+              
+              <section className="relative bg-gradient-to-br from-[#3c0052] via-[#3c0052] to-[#3c0052] py-16">
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+      Gallery Highlights
+    </h2>
+    
+    <div className="max-w-4xl mx-auto">
+      {/* Featured Slide */}
+      <div className="relative mb-8">
+        <div className="aspect-video bg-gradient-to-br from-[#3c0052] to-[#3c0052] rounded-xl overflow-hidden">
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-6xl mb-4">📸</div>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                {gallerySlides[currentSlide].title}
+              </h3>
+              <p className="text-gray-300">
+                {gallerySlides[currentSlide].description}
+              </p>
+            </div>
           </div>
         </div>
+        
+        {/* Navigation Buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Thumbnail Navigation */}
+      <div className="grid grid-cols-4 gap-4 mb-8">
+        {gallerySlides.slice(0, 4).map((slide, index) => (
+          <div
+            key={index}
+            onClick={() => handleSlideChange(index)}
+            className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+              currentSlide === index ? 'ring-4 ring-yellow-400 scale-105' : 'opacity-60 hover:opacity-100'
+            }`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <div className="w-full h-full bg-gradient-to-br from-[#3c0052] to-[#3c0052] flex items-center justify-center">
+              <span className="text-white text-sm font-medium">{slide.title}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Progress Indicators */}
+      <div className="flex justify-center space-x-2">
+        {gallerySlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleSlideChange(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              currentSlide === index ? 'bg-yellow-400 scale-125' : 'bg-gray-600 hover:bg-gray-400'
+            }`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          />
+        ))}
       </div>
     </div>
   </div>
@@ -1071,11 +862,133 @@ export default function Home() {
 
 
 
-                  <section className="w-full bg-[#3c0052] py-16 px-6 text-center text-white relative">
-  {/* Glass Panel */}
-  <div className="absolute inset-6 bg-white/5 backdrop-blur-sm border border-white/20 rounded-3xl pointer-events-none z-0" />
+      
 
-  <div className="max-w-6xl mx-auto relative z-10">
+      {/* Join Now Section */}
+      <section className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-6">
+              <div className="inline-block">
+                <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+                  Limited Time Offer
+                </div>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                Join the Ultimate Pop-Culture Experience
+              </h2>
+              
+              <div className="space-y-4 text-gray-300 text-lg">
+                <p className="flex items-start space-x-3">
+                  <span className="text-yellow-400 text-xl mt-1">✨</span>
+                  <span>Get exclusive access to all 4 experience zones</span>
+                </p>
+                <p className="flex items-start space-x-3">
+                  <span className="text-yellow-400 text-xl mt-1">🎭</span>
+                  <span>Meet your favorite creators and celebrities</span>
+                </p>
+                <p className="flex items-start space-x-3">
+                  <span className="text-yellow-400 text-xl mt-1">🎮</span>
+                  <span>Participate in gaming tournaments and workshops</span>
+                </p>
+                <p className="flex items-start space-x-3">
+                  <span className="text-yellow-400 text-xl mt-1">🏆</span>
+                  <span>Win amazing prizes and exclusive merchandise</span>
+                </p>
+              </div>
+              {/*
+              <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-gray-400 line-through text-lg">Regular Price</span>
+                  <span className="text-gray-400 line-through text-lg">₹2,999</span>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white text-xl font-bold">Early Bird Price</span>
+                  <span className="text-yellow-400 text-2xl font-bold">₹1,999</span>
+                </div>
+                <div className="text-sm text-gray-400">
+                  *Offer valid until December 31st, 2024
+                </div>
+              </div>*/}
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span>Join Now</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                </button>
+                
+                <button
+                  className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span>Learn More</span>
+                    <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+            
+            {/* Right Image */}
+            <div className="relative">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
+                <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
+                  <div className="aspect-square w-full flex items-center justify-center p-8">
+                    <div className="text-center space-y-4">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                          <div className="text-6xl">🎪</div>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
+                        <p className="text-gray-300">Your adventure awaits!</p>
+                        <div className="flex justify-center space-x-2 text-2xl">
+                          <span>🎨</span>
+                          <span>🎮</span>
+                          <span>🎭</span>
+                          <span>🏆</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Floating badges */}
+                <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
+                  Early Bird
+                </div>
+                <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
+                  Limited Seats
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+                  <section className="w-full bg-gradient-to-br from-blue-800 via-blue-700 to-blue-900 py-16 px-6 text-center text-white">
+  <div className="max-w-6xl mx-auto">
     {/* Title */}
     <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">
       STAY TUNED ON SOCIAL
@@ -1147,8 +1060,6 @@ export default function Home() {
     </div>
   </div>
 </section>
-
-
 
 
 
