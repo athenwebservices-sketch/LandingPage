@@ -299,7 +299,7 @@ export default function Home() {
       </section>*/}
       <section
   ref={heroRef}
-  className="relative w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible"
+  className="relative w-screen min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible pb-[25rem]"
   onMouseEnter={() => setIsHovering(true)}
   onMouseLeave={() => setIsHovering(false)}
 >
@@ -323,41 +323,39 @@ export default function Home() {
     }}
   />
   
-  {/* Gradient orbs - reduced size & adjusted position for less overlap */}
+  {/* Gradient orbs */}
   <div className="absolute top-20 left-16 w-72 h-72 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500 pointer-events-none" />
   <div className="absolute top-32 right-20 w-72 h-72 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500 pointer-events-none" />
   <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500 pointer-events-none" />
   
-  {/* Content wrapper - add padding & relative positioning */}
-  <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center">
+  {/* Content wrapper with margin top to move content down */}
+  <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center mt-24">
+    
+    {/* Logo Section with margin-top to move logo down */}
+    <div className="w-96 flex flex-col items-center justify-center mb-12 mt-16 relative z-20" style={{ pointerEvents: 'auto' }}>
+      <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
+      <div className="relative w-full flex flex-col items-center justify-center py-4">
+        <img
+          src="/no_bg_image.png"
+          alt="Logo"
+          className="h-28 brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
+          style={{ filter: 'drop-shadow(0 0 25px white)' }}
+        />
+        <p className="text-2xl md:text-3xl text-white/90 mt-4 font-light transition-colors duration-300 group-hover:text-yellow-300 text-center">
+          India’s Biggest Celebration of Creativity
+        </p>
 
-    {/* Logo Section - changed to relative positioning inside flow */}
-    {/* Logo Section - moved down by adding mt-16 (4rem) */}
-<div className="w-96 flex flex-col items-center justify-center mb-12 mt-16 relative z-20" style={{ pointerEvents: 'auto' }}>
-  <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
-  <div className="relative w-full flex flex-col items-center justify-center py-4">
-    <img
-      src="/no_bg_image.png"
-      alt="Logo"
-      className="h-28 brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
-      style={{ filter: 'drop-shadow(0 0 25px white)' }}
-    />
-    <p className="text-2xl md:text-3xl text-white/90 mt-4 font-light transition-colors duration-300 group-hover:text-yellow-300 text-center">
-      India’s Biggest Celebration of Creativity
-    </p>
-
-    {/* Event Info */}
-    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mt-3 inline-block shadow-inner border border-white/10 transition-all duration-300 group-hover:scale-105 text-center">
-      <p className="text-lg font-semibold text-pink-400 group-hover:text-white transition-colors">
-        Oct 31st – 2nd Nov 2025
-      </p>
-      <p className="text-lg text-yellow-300 group-hover:text-pink-300 transition-colors">
-        Hyderabad | HICC Novotel
-      </p>
+        {/* Event Info */}
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mt-3 inline-block shadow-inner border border-white/10 transition-all duration-300 group-hover:scale-105 text-center">
+          <p className="text-lg font-semibold text-pink-400 group-hover:text-white transition-colors">
+            Oct 31st – 2nd Nov 2025
+          </p>
+          <p className="text-lg text-yellow-300 group-hover:text-pink-300 transition-colors">
+            Hyderabad | HICC Novotel
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
     {/* Tagline */}
     <p className="text-xl md:text-2xl text-yellow-200 mb-12 text-center">
@@ -420,98 +418,7 @@ export default function Home() {
 
 
 
-
-      {/* Promotional Banner Section */}
-      <section className="relative bg-gradient-to-br from-purple-800 via-indigo-800 to-purple-900 py-16 overflow-hidden">
-  {/* Event Banner */}
-  <div className="container mx-auto px-4 mb-12">
-    <div className="text-center mb-8">
-      <div className="inline-block relative group">
-        {/* Background Glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 rounded-2xl blur-2xl opacity-60 animate-pulse scale-105 group-hover:scale-110 transition-transform duration-500 ease-out"></div>
-
-        {/* Foreground Card */}
-        <div className="relative bg-gradient-to-br from-black/70 to-black/40 backdrop-blur-md rounded-2xl p-10 border border-white/10 shadow-xl transition-transform duration-500 group-hover:scale-[1.02]">
-          
-          {/* Logo */}
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <img 
-              src="/no_bg_image.png" 
-              alt="Creators Street Logo" 
-              className="h-16 w-auto drop-shadow-[0_0_12px_white] transition-transform duration-300 group-hover:scale-110"
-            />
-          </div>
-
-          {/* Subheading */}
-          <p className="text-2xl md:text-3xl text-white/90 mb-6 font-light transition-colors duration-300 group-hover:text-yellow-300">
-            India’s Biggest Celebration of Creativity
-          </p>
-
-          {/* Event Info */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 inline-block shadow-inner border border-white/10 transition-all duration-300 group-hover:scale-105">
-            <p className="text-lg font-semibold text-pink-400 group-hover:text-white transition-colors">Oct 31st – 2nd Nov 2025</p>
-            <p className="text-lg text-yellow-300 group-hover:text-pink-300 transition-colors">Hyderabad | HICC Novotel</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {/* 5-Image Gallery */}
-  <div className="container mx-auto px-4 mb-12">
-    <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {[
-          { name: "Awards", gradient: "from-purple-500 to-pink-500" },
-          { name: "Cosplay", gradient: "from-blue-500 to-indigo-500" },
-          { name: "Expo", gradient: "from-green-500 to-teal-500" },
-          { name: "Workshops", gradient: "from-red-500 to-orange-500" },
-          { name: "Keynotes", gradient: "from-yellow-500 to-amber-500" }
-        ].map((item, index) => (
-          <div 
-            key={index}
-            className="aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
-          >
-            <div className={`w-full h-full bg-gradient-to-br ${item.gradient} flex items-center justify-center transition-all duration-300`}>
-              <span className="text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
-                {item.name}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  {/* Promotional Text */}
-  <div className="container mx-auto px-4">
-    <div className="text-center group">
-      <p 
-        className="text-white text-2xl md:text-3xl font-bold leading-relaxed transition-transform duration-300 group-hover:scale-105" 
-        style={{ 
-          fontFamily: 'B612, sans-serif',
-          fontWeight: 700,
-          lineHeight: '150%',
-          letterSpacing: '3.5%'
-        }}
-      >
-        3 days of Awards, Cosplay, Expo, Workshops, Keynotes
-      </p>
-      <p 
-        className="text-white text-xl md:text-2xl font-bold mt-4 transition-transform duration-300 group-hover:scale-105" 
-        style={{ 
-          fontFamily: 'B612, sans-serif',
-          fontWeight: 700,
-          lineHeight: '150%',
-          letterSpacing: '3.5%'
-        }}
-      >
-        30,000+ attendees | 10M+ digital reach | 500+ cosplayers
-      </p>
-    </div>
-  </div>
-</section>
-
+    
 
       {/* Interactive Experience Zones Section */}
       <section className="relative bg-gradient-to-br from-purple-800 via-indigo-800 to-purple-900 py-16">
