@@ -881,6 +881,86 @@ export default function Home() {
         </div>
       </section>
 
+
+
+
+                  <section className="w-full bg-gradient-to-br from-blue-800 via-blue-700 to-blue-900 py-16 px-6 text-center text-white">
+  <div className="max-w-6xl mx-auto">
+    {/* Title */}
+    <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">
+      STAY TUNED ON SOCIAL
+    </h2>
+
+    {/* Subheading */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl md:text-2xl font-semibold">
+      <span className="text-yellow-200">FOLLOW US ON</span>
+      <span className="text-yellow-200">WRITE TO US AT</span>
+    </div>
+
+    {/* Social Icons and Email */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+      {/* Social Icons */}
+      <div className="flex gap-6">
+        {/* Facebook */}
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-black p-4 rounded-full hover:bg-[#1877F2] transition-all duration-300"
+        >
+          <svg
+            className="w-6 h-6 text-white"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07C2 17.1 5.66 21.3 10.44 22v-7.03H7.9v-2.9h2.54V9.82c0-2.5 1.5-3.89 3.8-3.89 1.1 0 2.24.2 2.24.2v2.46H15.7c-1.25 0-1.64.77-1.64 1.56v1.87h2.78l-.44 2.9h-2.34V22C18.34 21.3 22 17.1 22 12.07z" />
+          </svg>
+        </a>
+
+        {/* Instagram */}
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
+        >
+          <svg
+            className="w-6 h-6 text-white"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+          </svg>
+        </a>
+
+        {/* YouTube */}
+        <a
+          href="https://youtube.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-black p-4 rounded-full hover:bg-[#FF0000] transition-all duration-300"
+        >
+          <svg
+            className="w-6 h-6 text-white"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21.8 8.001a2.75 2.75 0 00-1.94-1.948C18.2 6 12 6 12 6s-6.2 0-7.86.053A2.75 2.75 0 002.2 8.001 28.82 28.82 0 002 12c0 1.34.087 2.659.2 3.999a2.75 2.75 0 001.94 1.948C5.8 18 12 18 12 18s6.2 0 7.86-.053a2.75 2.75 0 001.94-1.948A28.82 28.82 0 0022 12c0-1.34-.087-2.659-.2-3.999zM10 15V9l5 3-5 3z" />
+          </svg>
+        </a>
+      </div>
+
+      {/* Email Address */}
+      <div className="text-sm md:text-base text-white mt-4 md:mt-0">
+        info@comicconindia.com
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
       {/* Footer */}
       <footer className="relative bg-gray-900 py-12">
         <div className="container mx-auto px-4">
