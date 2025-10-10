@@ -128,62 +128,57 @@ export default function Home() {
       </div>
 
       {/* Navigation Bar */}
-      <div className="relative">
-  {/* Navbar */}
-  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-    <div className="container mx-auto px-4 py-4">
-      <div className="flex items-center justify-center space-x-8">
-        
-        {/* Logo Image Only – Enlarged */}
-        <a href="/" className="cursor-pointer group">
-          <img 
-            src="/no_bg_image.png" 
-            alt="Creators Street Logo" 
-            className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-            style={{
-              filter: 'drop-shadow(0 0 8px white)',
-            }}
-          />
-        </a>
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+  <div className="container mx-auto px-4 py-4">
+    <div className="flex items-center justify-center space-x-8">
+      
+      {/* Logo Image Only – Enlarged */}
+      <a href="/" className="cursor-pointer group">
+        <img 
+          src="/no_bg_image.png" 
+          alt="Creators Street Logo" 
+          className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+          style={{
+            filter: 'drop-shadow(0 0 8px white)',
+          }}
+        />
+      </a>
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex space-x-6">
-          {["Events", "Cosplay", "Exhibit with us", "Join us"].map((item) => (
-            <a 
-              key={item}
-              href="#" 
-              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
+      {/* Navigation Links */}
+      <div className="hidden md:flex space-x-6">
+        {["Events", "Cosplay", "Exhibit with us", "Join us"].map((item) => (
+          <a 
+            key={item}
+            href="#" 
+            className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
 
-        {/* Year Switcher */}
-        <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-          <button
-            onClick={() => setActiveYear('2024')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            2024
-          </button>
-          <button
-            onClick={() => setActiveYear('2025')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            2025
-          </button>
-        </div>
+      {/* Year Switcher */}
+      <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+        <button
+          onClick={() => setActiveYear('2024')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          2024
+        </button>
+        <button
+          onClick={() => setActiveYear('2025')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          2025
+        </button>
       </div>
     </div>
-  </nav>
-
-  {/* Your sections here, including the logo */}
-</div>
+  </div>
+</nav>
 
 
 
@@ -297,15 +292,15 @@ export default function Home() {
         <div className="absolute bottom-20 right-20 w-24 h-24 bg-indigo-500 rounded-full opacity-30 animate-float delay-1000"></div>
         <div className="absolute top-1/2 left-10 w-20 h-20 bg-pink-500 rounded-full opacity-30 animate-float delay-2000"></div>
       </section>*/}
-      <section
+      <section 
   ref={heroRef}
-  className="relative w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible"
+  className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900"
   onMouseEnter={() => setIsHovering(true)}
   onMouseLeave={() => setIsHovering(false)}
 >
-  {/* Background layers */}
+  {/* Enhanced Interactive fluid background effect */}
   <div 
-    className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
+    className="absolute inset-0 transition-all duration-1000 ease-in-out"
     style={{
       background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[currentColorIndex]} 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
       opacity: isHovering ? 0.75 : 0.5,
@@ -314,8 +309,9 @@ export default function Home() {
     }}
   />
   
+  {/* Additional interactive layers */}
   <div 
-    className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
+    className="absolute inset-0 transition-all duration-1000 ease-in-out"
     style={{
       background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]}, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
       opacity: isHovering ? 0.35 : 0.25,
@@ -323,82 +319,69 @@ export default function Home() {
     }}
   />
   
-  {/* Gradient orbs - reduced size & adjusted position for less overlap */}
-  <div className="absolute top-20 left-16 w-72 h-72 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500 pointer-events-none" />
-  <div className="absolute top-32 right-20 w-72 h-72 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500 pointer-events-none" />
-  <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500 pointer-events-none" />
+  {/* Reduced intensity gradient orbs */}
+  <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500" />
+  <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500" />
+  <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500" />
   
-  {/* Content wrapper - add padding & relative positioning */}
-  <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center">
-
-    {/* Logo Section - changed to relative positioning inside flow */}
-    {/* Logo Section - moved down by adding mt-16 (4rem) */}
-<div className="w-96 flex flex-col items-center justify-center mb-12 mt-16 relative z-20" style={{ pointerEvents: 'auto' }}>
-  <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
-  <div className="relative w-full flex flex-col items-center justify-center py-4">
-    <img
-      src="/no_bg_image.png"
-      alt="Logo"
-      className="h-28 brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
-      style={{ filter: 'drop-shadow(0 0 25px white)' }}
-    />
-    <p className="text-2xl md:text-3xl text-white/90 mt-4 font-light transition-colors duration-300 group-hover:text-yellow-300 text-center">
-      India’s Biggest Celebration of Creativity
-    </p>
-
-    {/* Event Info */}
-    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mt-3 inline-block shadow-inner border border-white/10 transition-all duration-300 group-hover:scale-105 text-center">
-      <p className="text-lg font-semibold text-pink-400 group-hover:text-white transition-colors">
-        Oct 31st – 2nd Nov 2025
-      </p>
-      <p className="text-lg text-yellow-300 group-hover:text-pink-300 transition-colors">
-        Hyderabad | HICC Novotel
-      </p>
-    </div>
-  </div>
-</div>
-
-
-    {/* Tagline */}
-    <p className="text-xl md:text-2xl text-yellow-200 mb-12 text-center">
-      India's Greatest Pop-Culture Experience
-    </p>
-    
-    {/* Gradient grid */}
-    <div className="w-full mb-12 px-4">
-      <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {[
-            { name: "Awards", gradient: "from-purple-500 to-pink-500", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
-            { name: "Cosplay", gradient: "from-blue-500 to-indigo-500", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
-            { name: "Expo", gradient: "from-green-500 to-teal-500", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
-            { name: "Workshops", gradient: "from-red-500 to-orange-500", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
-            { name: "Keynotes", gradient: "from-yellow-500 to-amber-500", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.png" }
-          ].map((item, index) => (
-            <div 
-              key={index}
-              className="aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
-            >
-              <img 
-                src={item.image} 
-                alt={item.name} 
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
+  {/* Logo and content - moved up with margin */}
+  <div className="relative z-10 mb-12 text-center fluid-cursor">
+    {/* Logo Section */}
+    <div className="w-96 h-40 mx-auto mb-8 relative flex items-center justify-center -translate-y-12">
+      {/* Glowing background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
+      
+      {/* Logo image with enhancements */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        <img 
+          src="/no_bg_image.png" 
+          alt="Logo" 
+          className="h-full brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
+          style={{
+            filter: 'drop-shadow(0 0 25px white)'
+          }}
+        />
       </div>
     </div>
-    
-    {/* Promotional text */}
-    <div className="w-full max-w-4xl text-center group px-4">
+    <p className="text-xl md:text-2xl text-yellow-200"> India's Greatest Pop-Culture Experience </p>
+  </div>
+  
+  {/* New content: Gradient grid */}
+  <div className="container mx-auto px-4 mb-12 relative z-10">
+    <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {[
+          { name: "Awards", gradient: "from-purple-500 to-pink-500" },
+          { name: "Cosplay", gradient: "from-blue-500 to-indigo-500" },
+          { name: "Expo", gradient: "from-green-500 to-teal-500" },
+          { name: "Workshops", gradient: "from-red-500 to-orange-500" },
+          { name: "Keynotes", gradient: "from-yellow-500 to-amber-500" }
+        ].map((item, index) => (
+          <div 
+            key={index}
+            className="aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
+          >
+            <div className={`w-full h-full bg-gradient-to-br ${item.gradient} flex items-center justify-center transition-all duration-300`}>
+              <span className="text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                {item.name}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  
+  {/* New content: Promotional text */}
+  <div className="container mx-auto px-4 relative z-10">
+    <div className="text-center group">
       <p 
         className="text-white text-2xl md:text-3xl font-bold leading-relaxed transition-transform duration-300 group-hover:scale-105" 
         style={{ 
           fontFamily: 'B612, sans-serif',
           fontWeight: 700,
           lineHeight: '150%',
-          letterSpacing: '3.5%',
+          letterSpacing: '3.5%'
         }}
       >
         3 days of Awards, Cosplay, Expo, Workshops, Keynotes
@@ -409,7 +392,7 @@ export default function Home() {
           fontFamily: 'B612, sans-serif',
           fontWeight: 700,
           lineHeight: '150%',
-          letterSpacing: '3.5%',
+          letterSpacing: '3.5%'
         }}
       >
         30,000+ attendees | 10M+ digital reach | 500+ cosplayers
@@ -417,9 +400,6 @@ export default function Home() {
     </div>
   </div>
 </section>
-
-
-
 
       {/* Promotional Banner Section */}
       <section className="relative bg-gradient-to-br from-purple-800 via-indigo-800 to-purple-900 py-16 overflow-hidden">
