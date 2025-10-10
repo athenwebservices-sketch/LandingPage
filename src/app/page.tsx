@@ -10,7 +10,26 @@ export default function Home() {
   const [activeYear, setActiveYear] = useState('2025');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [selectedYear, setSelectedYear] = useState('2024');
+  const [fluidColors, setFluidColors] = useState([
+    'rgba(250, 204, 21, 0.4)',
+    'rgba(236, 72, 153, 0.4)',
+    'rgba(59, 130, 246, 0.4)',
+    'rgba(34, 197, 94, 0.4)'
+  ]);
+  const [currentColorIndex, setCurrentColorIndex] = useState(0);
   
+
+  // Track mouse position for interactive effects
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   const heroRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -110,51 +129,126 @@ export default function Home() {
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-center space-x-8">
-            <div className="text-yellow-400 font-bold text-xl hover:text-purple-400 transition-colors cursor-pointer">
-              Creators Street Logo
-            </div>
-            <div className="hidden md:flex space-x-6">
-              {["Events", "Cosplay", "Exhibit with us", "Join us"].map((item) => (
-                <a 
-                  key={item}
-                  href="#" 
-                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-            <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-              <button
-                onClick={() => setActiveYear('2024')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                }`}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-              >
-                2024
-              </button>
-              <button
-                onClick={() => setActiveYear('2025')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                }`}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-              >
-                2025
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+  <div className="container mx-auto px-4 py-4">
+    <div className="flex items-center justify-center space-x-8">
+      
+      {/* Logo Image Only – Enlarged */}
+      <a href="/" className="cursor-pointer group">
+        <img 
+          src="/no_bg_image.png" 
+          alt="Creators Street Logo" 
+          className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+          style={{
+            filter: 'drop-shadow(0 0 8px white)',
+          }}
+        />
+      </a>
+
+      {/* Navigation Links */}
+      <div className="hidden md:flex space-x-6">
+        {["Events", "Cosplay", "Exhibit with us", "Join us"].map((item) => (
+          <a 
+            key={item}
+            href="#" 
+            className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
+
+      {/* Year Switcher */}
+      <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+        <button
+          onClick={() => setActiveYear('2024')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          2024
+        </button>
+        <button
+          onClick={() => setActiveYear('2025')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          2025
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
 
       {/* Hero Section */}
+      <section 
+        ref={heroRef}
+        className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        {/* Enhanced Interactive fluid background effect */}
+        <div 
+          className="absolute inset-0 transition-all duration-700 ease-out"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[currentColorIndex]} 0%, transparent ${isHovering ? '80%' : '60%'})`,
+            opacity: isHovering ? 0.6 : 0.4,
+            transform: `scale(${isHovering ? 1.1 : 1})`,
+          }}
+        />
+        
+        {/* Additional interactive layers */}
+        <div 
+          className="absolute inset-0 transition-all duration-700 ease-out"
+          style={{
+            background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]}, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
+            opacity: isHovering ? 0.3 : 0.2,
+            transform: `scale(${isHovering ? 1.05 : 1})`,
+          }}
+        />
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+        
+        {/* Logo and content */}
+        <div className="relative z-10 text-center fluid-cursor">
+            {/* Logo Section */}
+            <div className="w-96 h-40 mx-auto mb-8 relative flex items-center justify-center">
+              {/* Glowing background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-pink-500 rounded-xl blur-2xl opacity-60 animate-pulse" />
+              
+              {/* Logo image with enhancements */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <img 
+                  src="/no_bg_image.png" 
+                  alt="Logo" 
+                  className="h-full brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
+                  style={{
+                    filter: 'drop-shadow(0 0 15px white)'
+                  }}
+                />
+              </div>
+            </div>
+            <p className="text-xl md:text-2xl text-yellow-200"> India's Greatest Pop-Culture Experience </p>
+            {/* Tagline with shine effect 
+            <p className="text-xl md:text-2xl text-yellow-200 relative group inline-block">
+              <span className="relative z-10">India's Greatest Pop-Culture Experience</span>
+              
+              {/* Shine effect using pseudo-element 
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-glow-shine pointer-events-none" />
+            </p>*/}
+          </div>
+
+
+
+
+      </section>
+
+      {/* Hero Section 
       <section 
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
@@ -169,7 +263,7 @@ export default function Home() {
           }
         }}
       >
-        {/* Fluid Background Animation */}
+        {/* Fluid Background Animation 
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800">
           <div className="absolute inset-0 opacity-50">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
@@ -177,7 +271,7 @@ export default function Home() {
             <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
           </div>
           
-          {/* Mouse-following gradient effect */}
+          {/* Mouse-following gradient effect 
           <div 
             className="absolute inset-0 opacity-30 transition-all duration-300 ease-out"
             style={{
@@ -186,7 +280,7 @@ export default function Home() {
           ></div>
         </div>
 
-        {/* Hero Content */}
+        {/* Hero Content
         <div className="relative z-10 text-center px-4">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
             Creators Street
@@ -194,44 +288,64 @@ export default function Home() {
           <p className="text-2xl md:text-4xl text-gray-300 mb-8 font-light">
             India's Greatest Pop-Culture Experience
           </p>
-          <div className="relative w-48 h-48 mx-auto mb-8">
-    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 blur-xl animate-pulse"></div>
-    <div className="relative w-full h-full bg-gray-800 flex items-center justify-center border-4 border-purple-400">
-        <img src="/no_bg_image.png" alt="Logo" />
-    </div>
-</div>
-
+          <div className="relative w-48 h-48 mx-auto mb-8 flex items-center justify-center">
+            <img src="/no_bg_image.png" alt="Logo" />
         </div>
 
-        {/* Floating orbs */}
+
+        </div>
+              */}
+        {/* Floating orbs 
         <div className="absolute top-20 left-20 w-32 h-32 bg-purple-500 rounded-full opacity-30 animate-float"></div>
         <div className="absolute bottom-20 right-20 w-24 h-24 bg-indigo-500 rounded-full opacity-30 animate-float delay-1000"></div>
         <div className="absolute top-1/2 left-10 w-20 h-20 bg-pink-500 rounded-full opacity-30 animate-float delay-2000"></div>
-      </section>
+      </section>*/}
 
       {/* Promotional Banner Section */}
       <section className="relative bg-gradient-to-br from-purple-800 via-indigo-800 to-purple-900 py-16">
         {/* Event Banner */}
         <div className="container mx-auto px-4 mb-12">
-          <div className="text-center mb-8">
-            <div className="inline-block relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-red-500 rounded-lg blur-xl animate-pulse"></div>
-              <div className="relative bg-black/50 backdrop-blur-sm rounded-lg p-8 border border-white/20">
-                <h2 className="text-5xl md:text-7xl font-black mb-4">
-                  <span className="text-yellow-400 transform -rotate-2 inline-block">CREATORS</span>
-                  <span className="text-red-500 transform rotate-1 inline-block ml-2">STREET</span>
-                </h2>
-                <p className="text-xl text-white mb-6 font-light">
-                  India's Biggest Celebration of Creativity
-                </p>
-                <div className="bg-black/30 rounded-lg p-4 inline-block">
-                  <p className="text-orange-400 text-lg font-bold">Oct 31st - 2nd Nov 2025</p>
-                  <p className="text-yellow-400 text-lg">Hyderabad | HICC NOVOTEL</p>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div className="text-center mb-8">
+    <div className="inline-block relative">
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 rounded-2xl blur-2xl opacity-60 animate-pulse"></div>
+
+      {/* Foreground Card */}
+      <div className="relative bg-gradient-to-br from-black/70 to-black/40 backdrop-blur-md rounded-2xl p-10 border border-white/10 shadow-xl">
+        
+        {/* Logo and Title */}
+        <div className="flex items-center justify-center space-x-4 mb-4">
+          <img 
+            src="/no_bg_image.png" 
+            alt="Creators Street Logo" 
+            className="h-14 w-auto drop-shadow-[0_0_8px_white] transition-transform duration-300 hover:scale-105"
+          />
+
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight flex flex-wrap items-center gap-2">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 transform -rotate-2 inline-block">
+              CREATORS
+            </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 transform rotate-1 inline-block">
+              STREET
+            </span>
+          </h2>
         </div>
+
+        {/* Subheading */}
+        <p className="text-2xl md:text-3xl text-white/90 mb-6 font-light">
+          India’s Biggest Celebration of Creativity
+        </p>
+
+        {/* Event Info */}
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 inline-block shadow-inner border border-white/10">
+          <p className="text-lg font-semibold text-pink-400">Oct 31st – 2nd Nov 2025</p>
+          <p className="text-lg text-yellow-300">Hyderabad | HICC Novotel</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
         {/* 5-Image Gallery */}
         <div className="container mx-auto px-4 mb-12">
