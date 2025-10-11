@@ -74,30 +74,60 @@ export default function Home() {
     ],
     '2025': [
       {
-        title: 'New Year 2025',
-        description: 'Futuristic celebrations',
-        image: 'https://source.unsplash.com/800x450/?city,fireworks',
-      },
-      {
-        title: 'Spring 2025',
-        description: 'Urban gardens in bloom',
-        image: 'https://source.unsplash.com/800x450/?urban,garden',
-      },
-      {
-        title: 'Summer 2025',
-        description: 'City festivals and markets',
-        image: 'https://source.unsplash.com/800x450/?festival,summer',
-      },
-      {
-        title: 'Autumn 2025',
-        description: 'Architecture in golden light',
-        image: 'https://source.unsplash.com/800x450/?architecture,autumn',
-      },
-      {
-        title: 'Winter 2025',
-        description: 'Tech and tradition mix',
-        image: 'https://source.unsplash.com/800x450/?technology,winter',
-      },
+  title: 'Award Presentation',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/IMG_20251011_105421.jpg',
+},
+{
+  title: 'Presenting Check',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/IMG_20251011_105439.jpg',
+},
+{
+  title: 'Character',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5304 (2).JPG',
+},
+{
+  title: 'Character 2',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5325.JPG',
+},
+{
+  title: 'Championship',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5351.JPG',
+},
+{
+  title: 'Batman',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5359.JPG',
+},
+{
+  title: 'Ironman',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5366.JPG',
+},
+{
+  title: 'Small Boy',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5378.JPG',
+},
+{
+  title: 'Sword Man',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5380.JPG',
+},
+{
+  title: 'Grookh',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5394.JPG',
+},
+{
+  title: 'Masked Man',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2025/NISL5407.JPG',
+},
     ],
   };
 
@@ -800,12 +830,15 @@ export default function Home() {
           <div className="mx-auto max-w-3xl">
             <div className="relative mb-8">
               {/* Image Container */}
-              <div className="aspect-video rounded-xl overflow-hidden relative">
+              <div className="w-full relative overflow-hidden rounded-xl">
                 <img
-                  src={gallerySlides1[gallerySlideIndex].image}
-                  alt={gallerySlides1[gallerySlideIndex].title}
-                  className="w-full h-full object-cover"
-                />
+    src={gallerySlides1[gallerySlideIndex].image}
+    alt={gallerySlides1[gallerySlideIndex].title}
+    className="w-full h-full object-cover object-center" // Keep object-cover for no stretching
+  />
+
+
+
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center p-4">
                   <div>
                     <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
@@ -952,19 +985,20 @@ export default function Home() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
-                  className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>Join Now</span>
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                </button>
+    className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+    onMouseEnter={() => setIsHovering(true)}
+    onMouseLeave={() => setIsHovering(false)}
+    onClick={() => window.location.href = 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v'} // Direct redirection on click
+  >
+    <span className="relative z-10 flex items-center justify-center space-x-2">
+      <span>Join Now</span>
+      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </span>
+    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+  </button>
 
                 <button
                   className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
@@ -1055,15 +1089,17 @@ export default function Home() {
                 </svg>
               </a>
 
-              {/* YouTube */}
-              <a
-                href="https://www.linkedin.com/company/creators-street/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-              >
-                <FaLinkedinIn className="w-5 h-5" />
-              </a>
+    
+              {/* LinkedIn */}
+<a
+  href="https://www.linkedin.com/company/creators-street/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-black p-4 rounded-full hover:bg-[#0077b5] transition-all duration-300"
+>
+  <FaLinkedinIn className="w-6 h-6 text-white" />
+</a>
+
             </div>
 
             {/* Email Address */}
