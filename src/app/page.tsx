@@ -630,74 +630,75 @@ export default function Home() {
 
 
       <section className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
-        {/* Background Layers */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.4), transparent 70%)`,
-            filter: 'brightness(1.2) saturate(1.3)',
-            transform: 'scale(1.1)',
-          }}
-        />
+  {/* Background Layers */}
+  <div
+    className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
+    style={{
+      background: `radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.4), transparent 70%)`,
+      filter: 'brightness(1.2) saturate(1.3)',
+      transform: 'scale(1.1)',
+    }}
+  />
+  
+  <div
+    className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
+    style={{
+      background: `conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0.05), transparent, rgba(255, 255, 255, 0.05))`,
+      opacity: 0.25,
+    }}
+  />
+  
+  {/* Animated Gradient Orbs */}
+  <div className="absolute top-32 left-20 w-96 h-96 bg-gradient-to-tr from-pink-400 via-yellow-300 to-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 pointer-events-none" />
+  <div className="absolute top-10 right-32 w-80 h-80 bg-gradient-to-tr from-purple-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000 pointer-events-none" />
+  <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-3000 pointer-events-none" />
 
-        <div
-          className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
-          style={{
-            background: `conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0.05), transparent, rgba(255, 255, 255, 0.05))`,
-            opacity: 0.25,
-          }}
-        />
+  {/* Content Block */}
+  <div className="relative z-10 flex flex-col md:flex-row justify-between items-center w-full px-6 max-w-6xl space-y-12 md:space-y-0">
+    
+    {/* Left Content */}
+    <div className="text-left max-w-sm">
+      <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
+        Join Our Cosplay Community
+      </h2>
+      <p className="text-lg md:text-2xl text-yellow-200 mb-6">
+        Heroes, Villains & Fantasies Come to Life
+      </p>
+      <a
+        href="#join-cosplay"
+        className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+      >
+        Join Us
+      </a>
+    </div>
 
-        {/* Animated Gradient Orbs */}
-        <div className="absolute top-32 left-20 w-96 h-96 bg-gradient-to-tr from-pink-400 via-yellow-300 to-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 pointer-events-none" />
-        <div className="absolute top-10 right-32 w-80 h-80 bg-gradient-to-tr from-purple-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000 pointer-events-none" />
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-3000 pointer-events-none" />
+    {/* Centered Cosplay Image */}
+    <div className="relative z-10 w-full md:w-[28rem]">
+      <img
+        src="/no_bg_image_cosplay.png"
+        alt="Cosplay Showcase"
+        className="w-full rounded-2xl transition-transform duration-500 hover:scale-105"
+      />
+    </div>
 
-        {/* Content Block */}
-        <div className="relative z-10 flex justify-between items-center w-full px-6 max-w-6xl">
-          {/* Left Content */}
-          <div className="text-left max-w-sm">
-            <h2 className="text-4xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
-              Join Our Cosplay Community
-            </h2>
-            <p className="text-xl md:text-2xl text-yellow-200 mb-6">
-              Heroes, Villains & Fantasies Come to Life
-            </p>
-            <a
-              href="#join-cosplay"
-              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
-            >
-              Join Us
-            </a>
-          </div>
+    {/* Right Content */}
+    <div className="text-right max-w-sm">
+      <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
+        Join the workshop
+      </h2>
+      <p className="text-lg md:text-2xl text-yellow-200 mb-6">
+        Heroes, Villains & Fantasies Come to Life
+      </p>
+      <a
+        href="#join-cosplay"
+        className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+      >
+        Join Us
+      </a>
+    </div>
+  </div>
+</section>
 
-          {/* Centered Cosplay Image */}
-          <div className="relative z-10">
-            <img
-              src="/no_bg_image_cosplay.png"
-              alt="Cosplay Showcase"
-              className="w-80 md:w-[28rem] rounded-2xl transition-transform duration-500 hover:scale-105"
-            />
-
-          </div>
-
-          {/* Right Content */}
-          <div className="text-right max-w-sm">
-            <h2 className="text-4xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
-              Join the workshop
-            </h2>
-            <p className="text-xl md:text-2xl text-yellow-200 mb-6">
-              Heroes, Villains & Fantasies Come to Life
-            </p>
-            <a
-              href="#join-cosplay"
-              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
-            >
-              Join Us
-            </a>
-          </div>
-        </div>
-      </section>
 
 
 
@@ -771,7 +772,7 @@ export default function Home() {
       <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16">
   <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
 
-  <div className="relative z-10 container mx-auto px-6">
+  <div className="relative z-10 container mx-auto px-6 max-w-3xl">
     <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
 
     {/* Year Selector */}
@@ -791,7 +792,7 @@ export default function Home() {
     </div>
 
     {/* Featured Slide */}
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-3xl">
       <div className="relative mb-8">
         {/* Image Container */}
         <div className="aspect-video rounded-xl overflow-hidden relative">
@@ -815,21 +816,21 @@ export default function Home() {
         {/* Main Slide Nav */}
         <button
           onClick={handleGalleryPrev}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
           onMouseEnter={() => setGalleryIsHovering(true)}
           onMouseLeave={() => setGalleryIsHovering(false)}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <button
           onClick={handleGalleryNext}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
           onMouseEnter={() => setGalleryIsHovering(true)}
           onMouseLeave={() => setGalleryIsHovering(false)}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -904,132 +905,119 @@ export default function Home() {
 
 
 
+
       {/* Join Now Section */}
 
 
 
-      <section className="relative bg-[#3c0052] py-16">
-        {/* Glass Panel */}
-        <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/20 rounded-3xl pointer-events-none z-0" />
+      <section className="relative bg-[#3c0052] py-16 md:py-24">
+  {/* Glass Panel */}
+  <div className="absolute inset-0 md:inset-10 bg-white/5 backdrop-blur-md md:backdrop-blur-sm border-2 border-white/20 rounded-3xl pointer-events-none z-0" />
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-6">
-              <div className="inline-block">
-                <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-                  Limited Time Offer
-                </div>
-              </div>
-
-              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-                Join the Ultimate Pop-Culture Experience
-              </h2>
-
-              <div className="space-y-4 text-gray-300 text-lg">
-                <p className="flex items-start space-x-3">
-                  <span className="text-yellow-400 text-xl mt-1">✨</span>
-                  <span>Get exclusive access to all 4 experience zones</span>
-                </p>
-                <p className="flex items-start space-x-3">
-                  <span className="text-yellow-400 text-xl mt-1">🎭</span>
-                  <span>Meet your favorite creators and celebrities</span>
-                </p>
-                <p className="flex items-start space-x-3">
-                  <span className="text-yellow-400 text-xl mt-1">🎮</span>
-                  <span>Participate in gaming tournaments and workshops</span>
-                </p>
-                <p className="flex items-start space-x-3">
-                  <span className="text-yellow-400 text-xl mt-1">🏆</span>
-                  <span>Win amazing prizes and exclusive merchandise</span>
-                </p>
-              </div>
-
-              {/* Price Section (commented out) */}
-              {/* <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-400 line-through text-lg">Regular Price</span>
-            <span className="text-gray-400 line-through text-lg">₹2,999</span>
-          </div>
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-white text-xl font-bold">Early Bird Price</span>
-            <span className="text-yellow-400 text-2xl font-bold">₹1,999</span>
-          </div>
-          <div className="text-sm text-gray-400">
-            *Offer valid until December 31st, 2024
-          </div>
-        </div> */}
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>Join Now</span>
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                </button>
-
-                <button
-                  className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>Learn More</span>
-                    <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="relative">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
-                <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
-                  <div className="aspect-square w-full flex items-center justify-center p-8">
-                    <div className="text-center space-y-4">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
-                          <div className="text-6xl">🎪</div>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
-                        <p className="text-gray-300">Your adventure awaits!</p>
-                        <div className="flex justify-center space-x-2 text-2xl">
-                          <span>🎨</span>
-                          <span>🎮</span>
-                          <span>🎭</span>
-                          <span>🏆</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating badges */}
-                <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
-                  Early Bird
-                </div>
-                <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
-                  Limited Seats
-                </div>
-              </div>
-            </div>
+  <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Left Content */}
+      <div className="space-y-6">
+        <div className="inline-block">
+          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+            Limited Time Offer
           </div>
         </div>
-      </section>
+
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          Join the Ultimate Pop-Culture Experience
+        </h2>
+
+        <div className="space-y-4 text-gray-300 text-base md:text-lg">
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1">✨</span>
+            <span>Get exclusive access to all 4 experience zones</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1">🎭</span>
+            <span>Meet your favorite creators and celebrities</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1">🎮</span>
+            <span>Participate in gaming tournaments and workshops</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1">🏆</span>
+            <span>Win amazing prizes and exclusive merchandise</span>
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              <span>Join Now</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+          </button>
+
+          <button
+            className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              <span>Learn More</span>
+              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Right Image */}
+      <div className="relative hidden lg:block">
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
+          <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
+            <div className="aspect-square w-full flex items-center justify-center p-8">
+              <div className="text-center space-y-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                  <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                    <div className="text-6xl">🎪</div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
+                  <p className="text-gray-300">Your adventure awaits!</p>
+                  <div className="flex justify-center space-x-2 text-2xl">
+                    <span>🎨</span>
+                    <span>🎮</span>
+                    <span>🎭</span>
+                    <span>🏆</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating badges */}
+          <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
+            Early Bird
+          </div>
+          <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
+            Limited Seats
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 
