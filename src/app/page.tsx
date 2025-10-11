@@ -5,6 +5,8 @@ import noBgImage from './no_bg_image.png';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 import { FaLinkedinIn } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa'; // Make sure this matches your icon library
+
 
 export default function Home() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -231,6 +233,7 @@ export default function Home() {
       description: "Blockchain, AI, Creator Economy, Startups & Emerging Tech"
     }
   ];
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Handle mouse movement for custom cursor and fluid background
   useEffect(() => {
@@ -294,92 +297,137 @@ export default function Home() {
 
       {/* Navigation Bar */}
       <div className="relative">
-        {/* Navbar */}
+  {/* Navbar */}
+  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+    <div className="container mx-auto px-4 py-4">
+      <div className="flex items-center justify-between">
 
+        {/* Left: Logo */}
+        <a href="/" className="cursor-pointer group">
+          <img
+            src="/Logo1.png"
+            alt="Creators Street Logo"
+            className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+            style={{
+              filter: 'drop-shadow(0 0 8px white)',
+            }}
+          />
+        </a>
 
-        <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
+        {/* Mobile Hamburger Menu */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-white"
+          >
+            <FaBars className="w-6 h-6" />
+          </button>
+        </div>
 
-              {/* Left: Logo */}
-              <a href="/" className="cursor-pointer group">
-                <img
-                  src="/Logo1.png"
-                  alt="Creators Street Logo"
-                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    filter: 'drop-shadow(0 0 8px white)',
-                  }}
-                />
-              </a>
+        {/* Center: Navigation Links */}
+        <div className={`hidden md:flex items-center space-x-6`}>
+          {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+            >
+              {item}
+            </a>
+          ))}
 
-              {/* Center: Navigation Links */}
-              <div className="hidden md:flex items-center space-x-6">
-                {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
-                  <a
-                    key={item}
-                    href="#"
-                    className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-                  >
-                    {item}
-                  </a>
-                ))}
-
-                {/* Year Switcher */}
-                <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-                  <button
-                    onClick={() => handleGalleryYearChange('2024')}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                      }`}
-                  >
-                    2024
-                  </button>
-                  <button
-                    onClick={() => handleGalleryYearChange('2025')}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                      }`}
-                  >
-                    2025
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: Social Icons + Join Us Button */}
-              <div className="hidden md:flex items-center space-x-4">
-                {/* Social Icons */}
-                <a
-                  href="https://www.instagram.com/creatorsstreet.official"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-                >
-                  <FaInstagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/creators-street/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-                >
-                  <FaLinkedinIn className="w-5 h-5" />
-                </a>
-
-                {/* Join Us Button */}
-                <a
-                  href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-                >
-                  Join Us
-                </a>
-              </div>
-            </div>
+          {/* Year Switcher */}
+          <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+            <button
+              onClick={() => handleGalleryYearChange('2024')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              2024
+            </button>
+            <button
+              onClick={() => handleGalleryYearChange('2025')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              2025
+            </button>
           </div>
-        </nav>
+        </div>
 
+        {/* Right: Social Icons + Join Us Button */}
+        <div className="hidden md:flex items-center space-x-4">
+          {/* Social Icons */}
+          <a
+            href="https://www.instagram.com/creatorsstreet.official"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+          >
+            <FaInstagram className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/creators-street/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+          >
+            <FaLinkedinIn className="w-5 h-5" />
+          </a>
 
-
-        {/* Your sections here, including the logo */}
+          {/* Join Us Button */}
+          <a
+            href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+          >
+            Join Us
+          </a>
+        </div>
       </div>
+    </div>
+  </nav>
+
+  {/* Mobile Menu (Dropdown) */}
+  <div className={`md:hidden ${mobileMenuOpen ? "block" : "hidden"} bg-black/90 absolute top-0 left-0 right-0 p-4`}>
+    <div className="flex flex-col space-y-4">
+      {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
+        <a
+          key={item}
+          href="#"
+          className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+        >
+          {item}
+        </a>
+      ))}
+      <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+        <button
+          onClick={() => handleGalleryYearChange('2024')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+            }`}
+        >
+          2024
+        </button>
+        <button
+          onClick={() => handleGalleryYearChange('2025')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+            }`}
+        >
+          2025
+        </button>
+      </div>
+
+      {/* Join Us Button */}
+      <a
+        href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+        className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+      >
+        Join Us
+      </a>
+    </div>
+  </div>
+
+</div>
+
 
 
 
@@ -594,79 +642,81 @@ export default function Home() {
 
 
       <section className="relative bg-[#3c0052] py-20 overflow-hidden">
-        {/* Background Orbs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+  {/* Background Orbs */}
+  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
 
-        {/* Floating Glass Panel */}
-        <div className="absolute inset-4 sm:inset-6 md:inset-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-10" />
+  {/* Floating Glass Panel */}
+  <div className="absolute inset-4 sm:inset-6 md:inset-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-10" />
 
-        {/* Section Content */}
-        <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-            Iconic Awards
-          </h2>
+  {/* Section Content */}
+  <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
+    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+      Iconic Awards
+    </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[
-              {
-                name: "Comics Awards 2025",
-                image: "/Logo1.png",
-                link: "#join-cosplay",
-                color: "from-[#3c0052] to-[#3c0052]",
-              },
-              {
-                name: "Animation Awards 2025",
-                image: "/Logo1.png",
-                link: "#join-creative",
-                color: "from-[#3c0052] to-[#3c0052]",
-              },
-              {
-                name: "GAMING Awards 2025",
-                image: "/Logo1.png",
-                link: "#join-community",
-                color: "from-[#3c0052] to-[#3c0052]",
-              }
-            ].map((award, index) => (
-              <div
-                key={index}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/10 backdrop-blur-md shadow-xl transition-transform duration-500 hover:scale-[1.03] hover:shadow-2xl hover:translate-y-1 hover:translate-x-1"
-              >
-                {/* Hover Gradient Glow */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${award.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
-                />
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {[
+        {
+          name: "Comics Awards 2025",
+          image: "/Logo1.png",
+          link: "#join-cosplay",
+          color: "from-[#3c0052] to-[#3c0052]",
+        },
+        {
+          name: "Animation Awards 2025",
+          image: "/Logo1.png",
+          link: "#join-creative",
+          color: "from-[#3c0052] to-[#3c0052]",
+        },
+        {
+          name: "GAMING Awards 2025",
+          image: "/Logo1.png",
+          link: "#join-community",
+          color: "from-[#3c0052] to-[#3c0052]",
+        }
+      ].map((award, index) => (
+        <div
+          key={index}
+          className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/10 backdrop-blur-md shadow-xl transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl"
+        >
+          {/* Hover Gradient Glow */}
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${award.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+          />
 
-                {/* Award Image */}
-                <img
-                  src={award.image}
-                  alt={award.name}
-                  className="w-full h-60 object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                />
+          {/* Award Image */}
+          <img
+            src={award.image}
+            alt={award.name}
+            className="w-full h-60 object-cover object-center transition-transform duration-300 group-hover:scale-105"
+          />
 
-                {/* Content */}
-                <div className="p-6 text-center">
-                  <h3 className="text-2xl font-semibold text-white mb-3 drop-shadow-md">
-                    {award.name}
-                  </h3>
+          {/* Content */}
+          <div className="p-6 text-center">
+            <h3 className="text-2xl font-semibold text-white mb-3 drop-shadow-md">
+              {award.name}
+            </h3>
 
-                  <a
-                    href={award.link}
-                    className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300"
-                  >
-                    Join Now →
-                  </a>
-                </div>
-
-                {/* Bottom Accent */}
-                <div
-                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${award.color}`}
-                />
-              </div>
-            ))}
+            <a
+              href={award.link}
+              className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300"
+            >
+              Join Now →
+            </a>
           </div>
+
+          {/* Bottom Accent */}
+          <div
+            className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${award.color}`}
+          />
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+
 
 
 
@@ -820,122 +870,108 @@ export default function Home() {
 
       {/* Gallery Section */}
 
-      <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16">
-        <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
+      <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16 sm:py-12">
+  <div className="relative z-10 container mx-auto px-6 max-w-full sm:max-w-3xl">
+    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
 
-        <div className="relative z-10 container mx-auto px-6 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
+    <div className="mx-auto max-w-full sm:max-w-3xl">
+      <div className="relative mb-8">
+        {/* Image Container */}
+        <div className="w-full relative overflow-hidden rounded-xl h-[300px] sm:h-[400px] md:h-[500px]">
+          <img
+            src={gallerySlides1[gallerySlideIndex].image}
+            alt={gallerySlides1[gallerySlideIndex].title}
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
 
-          {/* Featured Slide */}
-          <div className="mx-auto max-w-3xl">
-            <div className="relative mb-8">
-              {/* Image Container */}
-              <div className="w-full relative overflow-hidden rounded-xl">
-                <img
-    src={gallerySlides1[gallerySlideIndex].image}
-    alt={gallerySlides1[gallerySlideIndex].title}
-    className="w-full h-full object-cover object-center" // Keep object-cover for no stretching
-  />
+        {/* Navigation buttons */}
+        <button
+          onClick={handleGalleryPrev}
+          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          onMouseEnter={() => setGalleryIsHovering(true)}
+          onMouseLeave={() => setGalleryIsHovering(false)}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
+        <button
+          onClick={handleGalleryNext}
+          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          onMouseEnter={() => setGalleryIsHovering(true)}
+          onMouseLeave={() => setGalleryIsHovering(false)}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
 
+      {/* Thumbnail Carousel */}
+      <div className="flex items-center mb-8 space-x-2">
+        <button
+          onClick={handleThumbnailScrollLeft}
+          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center p-4">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
-                      {gallerySlides1[gallerySlideIndex].title}
-                    </h3>
-                    
-                  </div>
-                </div>
-              </div>
-
-              {/* Main Slide Nav */}
-              <button
-                onClick={handleGalleryPrev}
-                className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-                onMouseEnter={() => setGalleryIsHovering(true)}
-                onMouseLeave={() => setGalleryIsHovering(false)}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={handleGalleryNext}
-                className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-                onMouseEnter={() => setGalleryIsHovering(true)}
-                onMouseLeave={() => setGalleryIsHovering(false)}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Thumbnail Carousel */}
-            <div className="flex items-center mb-8 space-x-2">
-              {/* Left scroll button */}
-              <button
-                onClick={handleThumbnailScrollLeft}
-                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              {/* Visible thumbnails */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
-                {gallerySlides1
-                  .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-                  .map((slide, index) => {
-                    const realIndex = index + thumbnailStartIndex;
-                    return (
-                      <div
-                        key={realIndex}
-                        onClick={() => handleGallerySlideChange(realIndex)}
-                        className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
-                          ? 'ring-4 ring-yellow-400 scale-105'
-                          : 'opacity-60 hover:opacity-100'
-                          }`}
-                        onMouseEnter={() => setGalleryIsHovering(true)}
-                        onMouseLeave={() => setGalleryIsHovering(false)}
-                      >
-                        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                      </div>
-                    );
-                  })}
-              </div>
-
-              {/* Right scroll button */}
-              <button
-                onClick={handleThumbnailScrollRight}
-                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Progress Dots */}
-            <div className="flex justify-center space-x-2">
-              {gallerySlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleGallerySlideChange(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
-                    ? 'bg-yellow-400 scale-125'
-                    : 'bg-gray-600 hover:bg-gray-400'
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
+          {gallerySlides1
+            .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
+            .map((slide, index) => {
+              const realIndex = index + thumbnailStartIndex;
+              return (
+                <div
+                  key={realIndex}
+                  onClick={() => handleGallerySlideChange(realIndex)}
+                  className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
+                    ? 'ring-4 ring-yellow-400 scale-105'
+                    : 'opacity-60 hover:opacity-100'
                     }`}
                   onMouseEnter={() => setGalleryIsHovering(true)}
                   onMouseLeave={() => setGalleryIsHovering(false)}
-                />
-              ))}
-            </div>
-          </div>
+                >
+                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                </div>
+              );
+            })}
         </div>
-      </section>
+
+        <button
+          onClick={handleThumbnailScrollRight}
+          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Progress Dots */}
+      <div className="flex justify-center space-x-2">
+        {gallerySlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleGallerySlideChange(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
+              ? 'bg-yellow-400 scale-125'
+              : 'bg-gray-600 hover:bg-gray-400'
+              }`}
+            onMouseEnter={() => setGalleryIsHovering(true)}
+            onMouseLeave={() => setGalleryIsHovering(false)}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
 
 
