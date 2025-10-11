@@ -688,6 +688,12 @@ export default function Home() {
           image: "/Logo1.png",
           link: "#join-community",
           color: "from-[#3c0052] to-[#3c0052]",
+        },
+        {
+          name: "GAMING Awards 2025",
+          image: "/Logo1.png",
+          link: "#join-community",
+          color: "from-[#3c0052] to-[#3c0052]",
         }
       ].map((award, index) => (
         <div
@@ -978,122 +984,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
-
-
-
-
-
-
-      {/* Join Now Section */}
-
-
-
-      <section className="relative bg-[#3c0052] py-16 md:py-24">
-  <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      {/* Left Content */}
-      <div className="space-y-6">
-        <div className="inline-block">
-          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-            Limited Time Offer
-          </div>
-        </div>
-
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-          Join the Ultimate Pop-Culture Experience
-        </h2>
-
-        <div className="space-y-4 text-gray-300 text-base md:text-lg">
-          <p className="flex items-start space-x-3">
-            <span>Get exclusive access to all 4 experience zones</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span>Meet your favorite creators and celebrities</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span>Participate in gaming tournaments and workshops</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span>Win amazing prizes and exclusive merchandise</span>
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onClick={() => window.location.href = 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v'} // Direct redirection on click
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Join Now</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-          </button>
-
-          <button
-            className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Learn More</span>
-              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Right Image */}
-      <div className="relative">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
-                <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
-                  <div className="aspect-square w-full flex items-center justify-center p-8">
-                    <div className="text-center space-y-4">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
-                          <div className="text-6xl">🎪</div>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
-                        <p className="text-gray-300">Your adventure awaits!</p>
-                        <div className="flex justify-center space-x-2 text-2xl">
-                          <span>🎨</span>
-                          <span>🎮</span>
-                          <span>🎭</span>
-                          <span>🏆</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Floating badges */}
-                <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
-                  Early Bird
-                </div>
-                <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
-                  Limited Seats
-                </div>
-              </div>
-            </div>
-
-    </div>
-  </div>
-</section>
-
-
 
 
 
