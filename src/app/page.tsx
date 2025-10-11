@@ -22,6 +22,8 @@ export default function Home() {
     'rgba(59, 130, 246, 0.4)',
     'rgba(34, 197, 94, 0.4)'
   ]);
+
+  
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [galleryYear, setGalleryYear] = useState('2025');
@@ -34,102 +36,102 @@ export default function Home() {
   const galleryData = {
     '2024': [
       {
-  title: 'Panel Discussion',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/AMP09527.JPG',
-},
-{
-  title: 'Discussion Long',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/AMP09540.JPG',
-},
-{
-  title: 'Guests of Honor',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/Artboard 1.jpg',
-},
-{
-  title: 'Prashanth Varma',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/IMG_20241117_213816.jpg',
-},
-{
-  title: 'Stall Sale',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/IMG-20241119-WA0103.jpg',
-},
-{
-  title: 'Old Man',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/KGS_2455.JPG',
-},
-{
-  title: 'Old Man Award',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/KGS_2460.JPG',
-},
-{
-  title: 'All Awards',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2024/KGS_2485.JPG',
-},
+        title: 'Panel Discussion',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/AMP09527.JPG',
+      },
+      {
+        title: 'Discussion Long',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/AMP09540.JPG',
+      },
+      {
+        title: 'Guests of Honor',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/Artboard 1.jpg',
+      },
+      {
+        title: 'Prashanth Varma',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/IMG_20241117_213816.jpg',
+      },
+      {
+        title: 'Stall Sale',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/IMG-20241119-WA0103.jpg',
+      },
+      {
+        title: 'Old Man',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/KGS_2455.JPG',
+      },
+      {
+        title: 'Old Man Award',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/KGS_2460.JPG',
+      },
+      {
+        title: 'All Awards',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2024/KGS_2485.JPG',
+      },
     ],
     '2025': [
       {
-  title: 'Award Presentation',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/IMG_20251011_105421.jpg',
-},
-{
-  title: 'Presenting Check',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/IMG_20251011_105439.jpg',
-},
-{
-  title: 'Character',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5304 (2).JPG',
-},
-{
-  title: 'Character 2',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5325.JPG',
-},
-{
-  title: 'Championship',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5351.JPG',
-},
-{
-  title: 'Batman',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5359.JPG',
-},
-{
-  title: 'Ironman',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5366.JPG',
-},
-{
-  title: 'Small Boy',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5378.JPG',
-},
-{
-  title: 'Sword Man',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5380.JPG',
-},
-{
-  title: 'Grookh',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5394.JPG',
-},
-{
-  title: 'Masked Man',
-  description: 'Snowy mountains and cozy vibes',
-  image: '/2025/NISL5407.JPG',
-},
+        title: 'Award Presentation',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/IMG_20251011_105421.jpg',
+      },
+      {
+        title: 'Presenting Check',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/IMG_20251011_105439.jpg',
+      },
+      {
+        title: 'Character',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5304 (2).JPG',
+      },
+      {
+        title: 'Character 2',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5325.JPG',
+      },
+      {
+        title: 'Championship',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5351.JPG',
+      },
+      {
+        title: 'Batman',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5359.JPG',
+      },
+      {
+        title: 'Ironman',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5366.JPG',
+      },
+      {
+        title: 'Small Boy',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5378.JPG',
+      },
+      {
+        title: 'Sword Man',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5380.JPG',
+      },
+      {
+        title: 'Grookh',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5394.JPG',
+      },
+      {
+        title: 'Masked Man',
+        description: 'Snowy mountains and cozy vibes',
+        image: '/2025/NISL5407.JPG',
+      },
     ],
   };
 
@@ -209,7 +211,7 @@ export default function Home() {
     { title: "Merchandise Paradise", description: "Shop exclusive collectibles and limited editions" },
     { title: "Workshop Sessions", description: "Learn from industry experts and creators" }
   ];
-
+  
   // Experience zones data
   const experienceZones = [
     {
@@ -244,7 +246,16 @@ export default function Home() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-
+  const sections = ["Awards", "Cosplay", "ExhibitWithUs", "Events"];
+  const handleCloseMenu = (e) => {
+     setMobileMenuOpen(false);
+  };
+  const handleScrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   // Auto-play carousel
   useEffect(() => {
     if (isAutoPlaying) {
@@ -296,137 +307,143 @@ export default function Home() {
       </div>
 
       {/* Navigation Bar */}
-      <div className="relative">
-  {/* Navbar */}
-  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-    <div className="container mx-auto px-4 py-4">
-      <div className="flex items-center justify-between">
+      <div className="relative" onClick={handleCloseMenu}>
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
 
-        {/* Left: Logo */}
-        <a href="/" className="cursor-pointer group">
-          <img
-            src="/Logo1.png"
-            alt="Creators Street Logo"
-            className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-            style={{
-              filter: 'drop-shadow(0 0 8px white)',
-            }}
-          />
-        </a>
-
-        {/* Mobile Hamburger Menu */}
-        <div className="md:hidden flex items-center">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-white"
-          >
-            <FaBars className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Center: Navigation Links */}
-        <div className={`hidden md:flex items-center space-x-6`}>
-          {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-            >
-              {item}
+            {/* Logo */}
+            <a href="/" className="cursor-pointer group">
+              <img
+                src="/Logo1.png"
+                alt="Creators Street Logo"
+                className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+                style={{
+                  filter: 'drop-shadow(0 0 8px white)',
+                }}
+              />
             </a>
-          ))}
 
-          {/* Year Switcher */}
-          <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-            <button
-              onClick={() => handleGalleryYearChange('2024')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                }`}
-            >
-              2024
-            </button>
-            <button
-              onClick={() => handleGalleryYearChange('2025')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-                }`}
-            >
-              2025
-            </button>
-          </div>
-        </div>
+            {/* Mobile Hamburger Menu */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // ⛔ prevent menu from closing immediately
+                  setMobileMenuOpen(!mobileMenuOpen);
+                }}
+                className="text-white"
+              >
+                <FaBars className="w-6 h-6" />
+              </button>
+            </div>
 
-        {/* Right: Social Icons + Join Us Button */}
-        <div className="hidden md:flex items-center space-x-4">
-          {/* Social Icons */}
-          <a
-            href="https://www.instagram.com/creatorsstreet.official"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-          >
-            <FaInstagram className="w-5 h-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/creators-street/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-          >
-            <FaLinkedinIn className="w-5 h-5" />
-          </a>
-
-          {/* Join Us Button */}
-          <a
-            href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-          >
-            Join Us
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  {/* Mobile Menu (Dropdown) */}
-  <div className={`md:hidden ${mobileMenuOpen ? "block" : "hidden"} bg-black/90 absolute top-0 left-0 right-0 p-4`}>
-    <div className="flex flex-col space-y-4">
-      {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
+            {/* Center: Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-6">
+      {sections.map((item) => (
         <a
           key={item}
-          href="#"
-          className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+          href={`#${item}`}
+          onClick={(e) => {
+            e.preventDefault();
+            handleScrollToSection(item);
+          }}
+          className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
         >
-          {item}
+          {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
         </a>
       ))}
+
+      {/* Year Switcher */}
       <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-        <button
-          onClick={() => handleGalleryYearChange('2024')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+        {["2024", "2025"].map((year) => (
+          <button
+            key={year}
+            onClick={() => handleGalleryYearChange(year)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              activeYear === year
+                ? "bg-purple-600 text-white"
+                : "text-gray-400 hover:text-white"
             }`}
-        >
-          2024
-        </button>
-        <button
-          onClick={() => handleGalleryYearChange('2025')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-            }`}
-        >
-          2025
-        </button>
+          >
+            {year}
+          </button>
+        ))}
       </div>
-
-      {/* Join Us Button */}
-      <a
-        href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-        className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-      >
-        Join Us
-      </a>
     </div>
-  </div>
 
-</div>
+            {/* Right: Social + Join Us */}
+            <div className="hidden md:flex items-center space-x-4">
+              <a
+                href="https://www.instagram.com/creatorsstreet.official"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+              >
+                <FaInstagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/creators-street/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+              >
+                <FaLinkedinIn className="w-5 h-5" />
+              </a>
+              <a
+                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+              >
+                Join Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div
+          onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
+          className="md:hidden bg-black/90 absolute top-0 left-0 right-0 p-4 z-50"
+        >
+          <div className="flex flex-col space-y-4">
+            {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+              >
+                {item}
+              </a>
+            ))}
+
+            <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+              {["2024", "2025"].map((year) => (
+                <button
+                  key={year}
+                  onClick={() => handleGalleryYearChange(year)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    activeYear === year
+                      ? 'bg-purple-600 text-white'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {year}
+                </button>
+              ))}
+            </div>
+
+            <a
+              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+            >
+              Join Us
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
 
 
 
@@ -601,33 +618,33 @@ export default function Home() {
 
           {/* Gradient grid */}
           <div className="w-full mb-6 px-4">
-            <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {[
-                  { name: "Awards", gradient: "from-purple-500 to-pink-500", textColor: "text-pink-400", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
-                  { name: "Celebrity anocunements", gradient: "from-blue-500 to-indigo-500", textColor: "text-indigo-400", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
-                  { name: "Expo", gradient: "from-green-500 to-teal-500", textColor: "text-teal-400", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
-                  { name: "KeyNotes", gradient: "from-red-500 to-orange-500", textColor: "text-orange-400", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
-                  { name: "Cosplay", gradient: "from-yellow-500 to-amber-500", textColor: "text-amber-400", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.jpeg" }
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <p className={`mt-2 text-lg font-b612 font-semibold black drop-shadow-md`}>
-                      {item.name}
-                    </p>
-                  </div>
-                ))}
+  <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {[
+        { name: "Awards", gradient: "from-purple-500 to-pink-500", textColor: "text-pink-400", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
+        { name: "Celebrity Announcements", gradient: "from-blue-500 to-indigo-500", textColor: "text-indigo-400", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
+        { name: "Expo", gradient: "from-green-500 to-teal-500", textColor: "text-teal-400", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
+        { name: "KeyNotes", gradient: "from-red-500 to-orange-500", textColor: "text-orange-400", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
+        { name: "Cosplay", gradient: "from-yellow-500 to-amber-500", textColor: "text-amber-400", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.jpeg" }
+      ].map((item, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
+        >
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <p className={`mt-2 text-lg font-b612 font-semibold text-black drop-shadow-md`}>
+            {item.name}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
-              </div>
-            </div>
-          </div>
 
           {/* Promotional text */}
 
@@ -641,13 +658,10 @@ export default function Home() {
 
 
 
-      <section className="relative bg-[#3c0052] py-20 overflow-hidden">
+      <section id="Awards" className="relative bg-[#3c0052] py-20 overflow-hidden">
   {/* Background Orbs */}
   <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
   <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
-
-  {/* Floating Glass Panel */}
-  <div className="absolute inset-4 sm:inset-6 md:inset-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-10" />
 
   {/* Section Content */}
   <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
@@ -725,7 +739,8 @@ export default function Home() {
 
 
 
-      <section className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
+
+      <section id="Cosplay"  className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
         {/* Background Layers */}
         <div
           className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
@@ -802,62 +817,55 @@ export default function Home() {
 
 
       {/* Interactive Experience Zones Section */}
-      <section className="relative bg-[#3c0052] py-20 overflow-hidden">
-        {/* Background Orbs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
-
-        {/* Floating Glass Panel */}
-        <div className="absolute inset-6 sm:inset-8 md:inset-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
-
-        {/* Section Content */}
-        <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-            Experience Zones
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {experienceZones.map((zone, index) => (
-              <div
-                key={index}
-                className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 backdrop-blur-md transition-all duration-300"
-                style={{
-                  backgroundColor: `${zone.color}20`,
-                  minHeight: '350px',
-                  height: 'auto',
-                  // Add padding to keep the cards inside the container
-                  padding: '1rem',
-                }}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-              >
-                {/* Hover Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                {/* Inner Content (glass effect container) */}
-                <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm">
-                  {/* Icon Container */}
-                  <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-6xl opacity-50">🎭</div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
-                  <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
-                    {zone.description}
-                  </p>
-                </div>
-
-                {/* Bottom Accent */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
-                  style={{ backgroundColor: zone.color }}
-                ></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="relative bg-[#3c0052] py-20 overflow-hidden">         
+  {/* Background Orbs */}         
+  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />         
+  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />          
+  {/* Section Content */}         
+  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">           
+    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">             
+      Experience Zones           
+    </h2>            
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">             
+      {experienceZones.map((zone, index) => (               
+        <div                 
+          key={index}                 
+          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"                 
+          style={{                   
+            backgroundColor: `${zone.color}20`,                   
+            minHeight: '350px',                   
+            height: 'auto',                   
+            // Add padding to keep the cards inside the container                   
+            padding: '1rem',                 
+          }}                 
+          onMouseEnter={() => setIsHovering(true)}                 
+          onMouseLeave={() => setIsHovering(false)}               
+        >                 
+          {/* Hover Gradient Overlay */}                 
+          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>                  
+          {/* Inner Content */}                 
+          <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">                   
+            {/* Icon Container */}                   
+            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">                     
+              <div className="w-full h-full flex items-center justify-center">                       
+                <div className="text-6xl opacity-50">🎭</div>                     
+              </div>                   
+            </div>                   
+            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>                   
+            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>                     
+              {zone.description}                   
+            </p>                 
+          </div>                  
+          {/* Bottom Accent */}                 
+          <div                   
+            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"                   
+            style={{ backgroundColor: zone.color }}                 
+          ></div>               
+        </div>             
+      ))}           
+    </div>         
+  </div>       
+</section>
 
 
 
@@ -870,106 +878,106 @@ export default function Home() {
 
       {/* Gallery Section */}
 
-      <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16 sm:py-12">
-  <div className="relative z-10 container mx-auto px-6 max-w-full sm:max-w-3xl">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
+      <section id="Events" className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16 sm:py-12">
+        <div className="relative z-10 container mx-auto px-6 max-w-full sm:max-w-3xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
 
-    <div className="mx-auto max-w-full sm:max-w-3xl">
-      <div className="relative mb-8">
-        {/* Image Container */}
-        <div className="w-full relative overflow-hidden rounded-xl h-[300px] sm:h-[400px] md:h-[500px]">
-          <img
-            src={gallerySlides1[gallerySlideIndex].image}
-            alt={gallerySlides1[gallerySlideIndex].title}
-            className="w-full h-full object-cover object-center"
-          />
-        </div>
+          <div className="mx-auto max-w-full sm:max-w-3xl">
+            <div className="relative mb-8">
+              {/* Image Container */}
+              <div className="w-full relative overflow-hidden rounded-xl h-[300px] sm:h-[400px] md:h-[500px]">
+                <img
+                  src={gallerySlides1[gallerySlideIndex].image}
+                  alt={gallerySlides1[gallerySlideIndex].title}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
 
-        {/* Navigation buttons */}
-        <button
-          onClick={handleGalleryPrev}
-          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+              {/* Navigation buttons */}
+              <button
+                onClick={handleGalleryPrev}
+                className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-        <button
-          onClick={handleGalleryNext}
-          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+              <button
+                onClick={handleGalleryNext}
+                className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
-      {/* Thumbnail Carousel */}
-      <div className="flex items-center mb-8 space-x-2">
-        <button
-          onClick={handleThumbnailScrollLeft}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+            {/* Thumbnail Carousel */}
+            <div className="flex items-center mb-8 space-x-2">
+              <button
+                onClick={handleThumbnailScrollLeft}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
-          {gallerySlides1
-            .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-            .map((slide, index) => {
-              const realIndex = index + thumbnailStartIndex;
-              return (
-                <div
-                  key={realIndex}
-                  onClick={() => handleGallerySlideChange(realIndex)}
-                  className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
-                    ? 'ring-4 ring-yellow-400 scale-105'
-                    : 'opacity-60 hover:opacity-100'
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
+                {gallerySlides1
+                  .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
+                  .map((slide, index) => {
+                    const realIndex = index + thumbnailStartIndex;
+                    return (
+                      <div
+                        key={realIndex}
+                        onClick={() => handleGallerySlideChange(realIndex)}
+                        className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
+                          ? 'ring-4 ring-yellow-400 scale-105'
+                          : 'opacity-60 hover:opacity-100'
+                          }`}
+                        onMouseEnter={() => setGalleryIsHovering(true)}
+                        onMouseLeave={() => setGalleryIsHovering(false)}
+                      >
+                        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                      </div>
+                    );
+                  })}
+              </div>
+
+              <button
+                onClick={handleThumbnailScrollRight}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Progress Dots */}
+            <div className="flex justify-center space-x-2">
+              {gallerySlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleGallerySlideChange(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
+                    ? 'bg-yellow-400 scale-125'
+                    : 'bg-gray-600 hover:bg-gray-400'
                     }`}
                   onMouseEnter={() => setGalleryIsHovering(true)}
                   onMouseLeave={() => setGalleryIsHovering(false)}
-                >
-                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                </div>
-              );
-            })}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-
-        <button
-          onClick={handleThumbnailScrollRight}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Progress Dots */}
-      <div className="flex justify-center space-x-2">
-        {gallerySlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleGallerySlideChange(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
-              ? 'bg-yellow-400 scale-125'
-              : 'bg-gray-600 hover:bg-gray-400'
-              }`}
-            onMouseEnter={() => setGalleryIsHovering(true)}
-            onMouseLeave={() => setGalleryIsHovering(false)}
-          />
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
 
 
@@ -983,76 +991,69 @@ export default function Home() {
 
 
       <section className="relative bg-[#3c0052] py-16 md:py-24">
-        {/* Glass Panel */}
-        <div className="absolute inset-0 md:inset-10 bg-white/5 backdrop-blur-md md:backdrop-blur-sm border-2 border-white/20 rounded-3xl pointer-events-none z-0" />
+  <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Left Content */}
+      <div className="space-y-6">
+        <div className="inline-block">
+          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+            Limited Time Offer
+          </div>
+        </div>
 
-        <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-6">
-              <div className="inline-block">
-                <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-                  Limited Time Offer
-                </div>
-              </div>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          Join the Ultimate Pop-Culture Experience
+        </h2>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Join the Ultimate Pop-Culture Experience
-              </h2>
+        <div className="space-y-4 text-gray-300 text-base md:text-lg">
+          <p className="flex items-start space-x-3">
+            <span>Get exclusive access to all 4 experience zones</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span>Meet your favorite creators and celebrities</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span>Participate in gaming tournaments and workshops</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span>Win amazing prizes and exclusive merchandise</span>
+          </p>
+        </div>
 
-              <div className="space-y-4 text-gray-300 text-base md:text-lg">
-                <p className="flex items-start space-x-3">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onClick={() => window.location.href = 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v'} // Direct redirection on click
+          >
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              <span>Join Now</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+          </button>
 
-                  <span>Get exclusive access to all 4 experience zones</span>
-                </p>
-                <p className="flex items-start space-x-3">
+          <button
+            className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              <span>Learn More</span>
+              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
 
-                  <span>Meet your favorite creators and celebrities</span>
-                </p>
-                <p className="flex items-start space-x-3">
-
-                  <span>Participate in gaming tournaments and workshops</span>
-                </p>
-                <p className="flex items-start space-x-3">
-
-                  <span>Win amazing prizes and exclusive merchandise</span>
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-    className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-    onMouseEnter={() => setIsHovering(true)}
-    onMouseLeave={() => setIsHovering(false)}
-    onClick={() => window.location.href = 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v'} // Direct redirection on click
-  >
-    <span className="relative z-10 flex items-center justify-center space-x-2">
-      <span>Join Now</span>
-      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-      </svg>
-    </span>
-    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-  </button>
-
-                <button
-                  className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>Learn More</span>
-                    <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="relative hidden lg:block">
+      {/* Right Image */}
+      <div className="relative">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
                 <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
@@ -1060,16 +1061,24 @@ export default function Home() {
                     <div className="text-center space-y-4">
                       <div className="relative">
                         <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center overflow-hidden">
-                          {/* Replace the emoji with an image */}
-                          <img src="/Logo1.png" alt="Creators Street" className="w-full h-full object-cover rounded-full" />
+                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                          <div className="text-6xl">🎪</div>
                         </div>
                       </div>
-
+                      <div className="space-y-2">
+                        <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
+                        <p className="text-gray-300">Your adventure awaits!</p>
+                        <div className="flex justify-center space-x-2 text-2xl">
+                          <span>🎨</span>
+                          <span>🎮</span>
+                          <span>🎭</span>
+                          <span>🏆</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
+                
                 {/* Floating badges */}
                 <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
                   Early Bird
@@ -1080,71 +1089,68 @@ export default function Home() {
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
+    </div>
+  </div>
+</section>
+
 
 
 
 
       <section className="w-full bg-[#3c0052] py-16 px-6 text-center text-white relative">
-        {/* Glass Panel */}
-        <div className="absolute inset-6 bg-white/5 backdrop-blur-sm border border-white/20 rounded-3xl pointer-events-none z-0" />
+  <div className="max-w-6xl mx-auto relative z-10">
+    {/* Title */}
+    <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">
+      STAY TUNED ON SOCIAL
+    </h2>
 
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-wider">
-            STAY TUNED ON SOCIAL
-          </h2>
+    {/* Subheading */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl md:text-2xl font-semibold">
+      <span className="text-yellow-200">FOLLOW US ON</span>
+      <span className="text-yellow-200">WRITE TO US AT</span>
+    </div>
 
-          {/* Subheading */}
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl md:text-2xl font-semibold">
-            <span className="text-yellow-200">FOLLOW US ON</span>
-            <span className="text-yellow-200">WRITE TO US AT</span>
-          </div>
+    {/* Social Icons and Email */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+      {/* Social Icons */}
+      <div className="flex gap-6">
 
-          {/* Social Icons and Email */}
-          <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-            {/* Social Icons */}
-            <div className="flex gap-6">
+        {/* Instagram */}
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
+        >
+          <svg
+            className="w-6 h-6 text-white"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+          </svg>
+        </a>
 
+        {/* LinkedIn */}
+        <a
+          href="https://www.linkedin.com/company/creators-street/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-black p-4 rounded-full hover:bg-[#0077b5] transition-all duration-300"
+        >
+          <FaLinkedinIn className="w-6 h-6 text-white" />
+        </a>
 
-              {/* Instagram */}
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
-              >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
-                </svg>
-              </a>
+      </div>
 
-    
-              {/* LinkedIn */}
-<a
-  href="https://www.linkedin.com/company/creators-street/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="bg-black p-4 rounded-full hover:bg-[#0077b5] transition-all duration-300"
->
-  <FaLinkedinIn className="w-6 h-6 text-white" />
-</a>
+      {/* Email Address */}
+      <div className="text-sm md:text-base text-white mt-4 md:mt-0">
+        info@creatorsstreet.com
+      </div>
+    </div>
+  </div>
+</section>
 
-            </div>
-
-            {/* Email Address */}
-            <div className="text-sm md:text-base text-white mt-4 md:mt-0">
-              info@comicconindia.com
-            </div>
-          </div>
-        </div>
-      </section>
 
 
 
