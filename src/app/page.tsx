@@ -32,30 +32,45 @@ export default function Home() {
   const galleryData = {
     '2024': [
       {
-        title: 'New Year 2024',
-        description: 'Fireworks and celebration shots',
-        image: '/2024/AMP09527.JPG',
-      },
-      {
-        title: 'Spring 2024',
-        description: 'Blossoms in the park',
-        image: '/2024/AMP09527.JPG',
-      },
-      {
-        title: 'Summer 2024',
-        description: 'Beachside memories',
-        image: 'https://source.unsplash.com/800x450/?beach,summer',
-      },
-      {
-        title: 'Autumn 2024',
-        description: 'Golden leaves and cityscapes',
-        image: 'https://source.unsplash.com/800x450/?autumn,leaves',
-      },
-      {
-        title: 'Winter 2024',
-        description: 'Snowy mountains and cozy vibes',
-        image: 'https://source.unsplash.com/800x450/?winter,snow',
-      },
+  title: 'Panel Discussion',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/AMP09527.JPG',
+},
+{
+  title: 'Discussion Long',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/AMP09540.JPG',
+},
+{
+  title: 'Guests of Honor',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/Artboard 1.jpg',
+},
+{
+  title: 'Prashanth Varma',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/IMG_20241117_213816.jpg',
+},
+{
+  title: 'Stall Sale',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/IMG-20241119-WA0103.jpg',
+},
+{
+  title: 'Old Man',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/KGS_2455.JPG',
+},
+{
+  title: 'Old Man Award',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/KGS_2460.JPG',
+},
+{
+  title: 'All Awards',
+  description: 'Snowy mountains and cozy vibes',
+  image: '/2024/KGS_2485.JPG',
+},
     ],
     '2025': [
       {
@@ -796,9 +811,7 @@ export default function Home() {
                     <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
                       {gallerySlides1[gallerySlideIndex].title}
                     </h3>
-                    <p className="text-gray-300">
-                      {gallerySlides1[gallerySlideIndex].description}
-                    </p>
+                    
                   </div>
                 </div>
               </div>
