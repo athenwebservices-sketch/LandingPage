@@ -13,7 +13,7 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedYear, setSelectedYear] = useState('2025');
   const [fluidColors, setFluidColors] = useState([
     'rgba(250, 204, 21, 0.4)',
     'rgba(236, 72, 153, 0.4)',
@@ -22,7 +22,7 @@ export default function Home() {
   ]);
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [galleryYear, setGalleryYear] = useState('2024');
+  const [galleryYear, setGalleryYear] = useState('2025');
   const [gallerySlideIndex, setGallerySlideIndex] = useState(0);
   const [galleryIsHovering, setGalleryIsHovering] = useState(false);
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0); // for scrolling thumbs
@@ -34,12 +34,12 @@ export default function Home() {
       {
         title: 'New Year 2024',
         description: 'Fireworks and celebration shots',
-        image: 'https://source.unsplash.com/800x450/?fireworks,newyear',
+        image: '/2024/AMP09527.JPG',
       },
       {
         title: 'Spring 2024',
         description: 'Blossoms in the park',
-        image: 'https://source.unsplash.com/800x450/?spring,flowers',
+        image: '/2024/AMP09527.JPG',
       },
       {
         title: 'Summer 2024',
@@ -114,6 +114,7 @@ export default function Home() {
   };
 
   const handleGalleryYearChange = (year) => {
+    setActiveYear(year);
     setGalleryYear(year);
     setGallerySlideIndex(0);
   };
@@ -252,83 +253,83 @@ export default function Home() {
 
 
         <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-  <div className="container mx-auto px-4 py-4">
-    <div className="flex items-center justify-between">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
 
-      {/* Left: Logo */}
-      <a href="/" className="cursor-pointer group">
-        <img
-          src="/Logo1.png"
-          alt="Creators Street Logo"
-          className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-          style={{
-            filter: 'drop-shadow(0 0 8px white)',
-          }}
-        />
-      </a>
+              {/* Left: Logo */}
+              <a href="/" className="cursor-pointer group">
+                <img
+                  src="/Logo1.png"
+                  alt="Creators Street Logo"
+                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+                  style={{
+                    filter: 'drop-shadow(0 0 8px white)',
+                  }}
+                />
+              </a>
 
-      {/* Center: Navigation Links */}
-      <div className="hidden md:flex items-center space-x-6">
-        {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-          >
-            {item}
-          </a>
-        ))}
+              {/* Center: Navigation Links */}
+              <div className="hidden md:flex items-center space-x-6">
+                {["Awards", "Cosplay", "Exhibit with us", "Events"].map((item) => (
+                  <a
+                    key={item}
+                    href="#"
+                    className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                  >
+                    {item}
+                  </a>
+                ))}
 
-        {/* Year Switcher */}
-        <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
-          <button
-            onClick={() => setActiveYear('2024')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-              }`}
-          >
-            2024
-          </button>
-          <button
-            onClick={() => setActiveYear('2025')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
-              }`}
-          >
-            2025
-          </button>
-        </div>
-      </div>
+                {/* Year Switcher */}
+                <div className="flex items-center space-x-2 bg-gray-800 rounded-full p-1">
+                  <button
+                    onClick={() => handleGalleryYearChange('2024')}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2024' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                      }`}
+                  >
+                    2024
+                  </button>
+                  <button
+                    onClick={() => handleGalleryYearChange('2025')}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeYear === '2025' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                      }`}
+                  >
+                    2025
+                  </button>
+                </div>
+              </div>
 
-      {/* Right: Social Icons + Join Us Button */}
-      <div className="hidden md:flex items-center space-x-4">
-        {/* Social Icons */}
-        <a
-          href="https://www.instagram.com/creatorsstreet.official"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-        >
-          <FaInstagram className="w-5 h-5" />
-        </a>
-        <a
-          href="https://www.linkedin.com/company/creators-street/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-        >
-          <FaLinkedinIn className="w-5 h-5" />
-        </a>
+              {/* Right: Social Icons + Join Us Button */}
+              <div className="hidden md:flex items-center space-x-4">
+                {/* Social Icons */}
+                <a
+                  href="https://www.instagram.com/creatorsstreet.official"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+                >
+                  <FaInstagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/creators-street/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+                >
+                  <FaLinkedinIn className="w-5 h-5" />
+                </a>
 
-        {/* Join Us Button */}
-        <a
-          href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-        >
-          Join Us
-        </a>
-      </div>
-    </div>
-  </div>
-</nav>
+                {/* Join Us Button */}
+                <a
+                  href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+                >
+                  Join Us
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
 
 
 
@@ -492,8 +493,8 @@ export default function Home() {
                 style={{ filter: 'drop-shadow(0 0 25px white)' }}
               />
               <p className="font-b612 text-xl md:text-2xl text-white-200 mb-6 mt-6 text-center whitespace-nowrap tracking-[3.5%] leading-[120%]">
-  India's Biggest Celebration of Creativity
-</p>
+                India's Biggest Celebration of Creativity
+              </p>
 
 
               <p className="font-b612 text-xl text-lg font-semibold text-yellow-300 group-hover:text-yellow-400 transition-colors whitespace-nowrap">
@@ -547,80 +548,80 @@ export default function Home() {
 
 
 
-     <section className="relative bg-[#3c0052] py-20 overflow-hidden">
-  {/* Background Orbs */}
-  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+      <section className="relative bg-[#3c0052] py-20 overflow-hidden">
+        {/* Background Orbs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
 
-  {/* Floating Glass Panel */}
-  <div className="absolute inset-4 sm:inset-6 md:inset-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-10" />
+        {/* Floating Glass Panel */}
+        <div className="absolute inset-4 sm:inset-6 md:inset-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-10" />
 
-  {/* Section Content */}
-  <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-      Iconic Awards
-    </h2>
+        {/* Section Content */}
+        <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+            Iconic Awards
+          </h2>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      {[
-        {
-          name: "Comics Awards 2025",
-          image: "/Logo1.png",
-          link: "#join-cosplay",
-          color: "from-[#3c0052] to-[#3c0052]",
-        },
-        {
-          name: "Animation Awards 2025",
-          image: "/Logo1.png",
-          link: "#join-creative",
-          color: "from-[#3c0052] to-[#3c0052]",
-        },
-        {
-          name: "GAMING Awards 2025",
-          image: "/Logo1.png",
-          link: "#join-community",
-          color: "from-[#3c0052] to-[#3c0052]",
-        }
-      ].map((award, index) => (
-        <div
-          key={index}
-          className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/10 backdrop-blur-md shadow-xl transition-transform duration-500 hover:scale-[1.03] hover:shadow-2xl hover:translate-y-1 hover:translate-x-1"
-        >
-          {/* Hover Gradient Glow */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${award.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {[
+              {
+                name: "Comics Awards 2025",
+                image: "/Logo1.png",
+                link: "#join-cosplay",
+                color: "from-[#3c0052] to-[#3c0052]",
+              },
+              {
+                name: "Animation Awards 2025",
+                image: "/Logo1.png",
+                link: "#join-creative",
+                color: "from-[#3c0052] to-[#3c0052]",
+              },
+              {
+                name: "GAMING Awards 2025",
+                image: "/Logo1.png",
+                link: "#join-community",
+                color: "from-[#3c0052] to-[#3c0052]",
+              }
+            ].map((award, index) => (
+              <div
+                key={index}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/10 backdrop-blur-md shadow-xl transition-transform duration-500 hover:scale-[1.03] hover:shadow-2xl hover:translate-y-1 hover:translate-x-1"
+              >
+                {/* Hover Gradient Glow */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${award.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+                />
 
-          {/* Award Image */}
-          <img
-            src={award.image}
-            alt={award.name}
-            className="w-full h-60 object-cover object-center transition-transform duration-300 group-hover:scale-105"
-          />
+                {/* Award Image */}
+                <img
+                  src={award.image}
+                  alt={award.name}
+                  className="w-full h-60 object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                />
 
-          {/* Content */}
-          <div className="p-6 text-center">
-            <h3 className="text-2xl font-semibold text-white mb-3 drop-shadow-md">
-              {award.name}
-            </h3>
+                {/* Content */}
+                <div className="p-6 text-center">
+                  <h3 className="text-2xl font-semibold text-white mb-3 drop-shadow-md">
+                    {award.name}
+                  </h3>
 
-            <a
-              href={award.link}
-              className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300"
-            >
-              Join Now →
-            </a>
+                  <a
+                    href={award.link}
+                    className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300"
+                  >
+                    Join Now →
+                  </a>
+                </div>
+
+                {/* Bottom Accent */}
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${award.color}`}
+                />
+              </div>
+            ))}
           </div>
-
-          {/* Bottom Accent */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${award.color}`}
-          />
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
 
 
@@ -630,74 +631,74 @@ export default function Home() {
 
 
       <section className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
-  {/* Background Layers */}
-  <div
-    className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
-    style={{
-      background: `radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.4), transparent 70%)`,
-      filter: 'brightness(1.2) saturate(1.3)',
-      transform: 'scale(1.1)',
-    }}
-  />
-  
-  <div
-    className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
-    style={{
-      background: `conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0.05), transparent, rgba(255, 255, 255, 0.05))`,
-      opacity: 0.25,
-    }}
-  />
-  
-  {/* Animated Gradient Orbs */}
-  <div className="absolute top-32 left-20 w-96 h-96 bg-gradient-to-tr from-pink-400 via-yellow-300 to-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 pointer-events-none" />
-  <div className="absolute top-10 right-32 w-80 h-80 bg-gradient-to-tr from-purple-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000 pointer-events-none" />
-  <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-3000 pointer-events-none" />
+        {/* Background Layers */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, rgba(255, 192, 203, 0.4), transparent 70%)`,
+            filter: 'brightness(1.2) saturate(1.3)',
+            transform: 'scale(1.1)',
+          }}
+        />
 
-  {/* Content Block */}
-  <div className="relative z-10 flex flex-col md:flex-row justify-between items-center w-full px-6 max-w-6xl space-y-12 md:space-y-0">
-    
-    {/* Left Content */}
-    <div className="text-left max-w-sm">
-      <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
-        Join Our Cosplay Community
-      </h2>
-      <p className="text-lg md:text-2xl text-yellow-200 mb-6">
-        Heroes, Villains & Fantasies Come to Life
-      </p>
-      <a
-        href="#join-cosplay"
-        className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
-      >
-        Join Us
-      </a>
-    </div>
+        <div
+          className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
+          style={{
+            background: `conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0.05), transparent, rgba(255, 255, 255, 0.05))`,
+            opacity: 0.25,
+          }}
+        />
 
-    {/* Centered Cosplay Image */}
-    <div className="relative z-10 w-full md:w-[28rem]">
-      <img
-        src="/no_bg_image_cosplay.png"
-        alt="Cosplay Showcase"
-        className="w-full rounded-2xl transition-transform duration-500 hover:scale-105"
-      />
-    </div>
+        {/* Animated Gradient Orbs */}
+        <div className="absolute top-32 left-20 w-96 h-96 bg-gradient-to-tr from-pink-400 via-yellow-300 to-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 pointer-events-none" />
+        <div className="absolute top-10 right-32 w-80 h-80 bg-gradient-to-tr from-purple-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000 pointer-events-none" />
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-3000 pointer-events-none" />
 
-    {/* Right Content */}
-    <div className="text-right max-w-sm">
-      <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
-        Join the workshop
-      </h2>
-      <p className="text-lg md:text-2xl text-yellow-200 mb-6">
-        Heroes, Villains & Fantasies Come to Life
-      </p>
-      <a
-        href="#join-cosplay"
-        className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
-      >
-        Join Us
-      </a>
-    </div>
-  </div>
-</section>
+        {/* Content Block */}
+        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center w-full px-6 max-w-6xl space-y-12 md:space-y-0">
+
+          {/* Left Content */}
+          <div className="text-left max-w-sm">
+            <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
+              Join Our Cosplay Community
+            </h2>
+            <p className="text-lg md:text-2xl text-yellow-200 mb-6">
+              Heroes, Villains & Fantasies Come to Life
+            </p>
+            <a
+              href="#join-cosplay"
+              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+            >
+              Join Us
+            </a>
+          </div>
+
+          {/* Centered Cosplay Image */}
+          <div className="relative z-10 w-full md:w-[28rem]">
+            <img
+              src="/no_bg_image_cosplay.png"
+              alt="Cosplay Showcase"
+              className="w-full rounded-2xl transition-transform duration-500 hover:scale-105"
+            />
+          </div>
+
+          {/* Right Content */}
+          <div className="text-right max-w-sm">
+            <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
+              Join the workshop
+            </h2>
+            <p className="text-lg md:text-2xl text-yellow-200 mb-6">
+              Heroes, Villains & Fantasies Come to Life
+            </p>
+            <a
+              href="#join-cosplay"
+              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+            >
+              Join Us
+            </a>
+          </div>
+        </div>
+      </section>
 
 
 
@@ -707,59 +708,64 @@ export default function Home() {
 
       {/* Interactive Experience Zones Section */}
       <section className="relative bg-[#3c0052] py-20 overflow-hidden">
-  {/* Background Orbs */}
-  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+        {/* Background Orbs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
 
-  {/* Floating Glass Panel */}
-  <div className="absolute inset-6 sm:inset-8 md:inset-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
+        {/* Floating Glass Panel */}
+        <div className="absolute inset-6 sm:inset-8 md:inset-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
 
-  {/* Section Content */}
-  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-      Experience Zones
-    </h2>
+        {/* Section Content */}
+        <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+            Experience Zones
+          </h2>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {experienceZones.map((zone, index) => (
-        <div
-          key={index}
-          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-          style={{
-            backgroundColor: `${zone.color}20`,
-            minHeight: '350px',
-            height: 'auto',
-          }}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          {/* Hover Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {experienceZones.map((zone, index) => (
+              <div
+                key={index}
+                className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 backdrop-blur-md transition-all duration-300"
+                style={{
+                  backgroundColor: `${zone.color}20`,
+                  minHeight: '350px',
+                  height: 'auto',
+                  // Add padding to keep the cards inside the container
+                  padding: '1rem',
+                }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                {/* Hover Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          {/* Inner Content (glass effect container) */}
-          <div className="relative p-6 flex flex-col justify-between rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm">
-            {/* Icon Container */}
-            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-6xl opacity-50">🎭</div>
+                {/* Inner Content (glass effect container) */}
+                <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm">
+                  {/* Icon Container */}
+                  <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="text-6xl opacity-50">🎭</div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
+                    {zone.description}
+                  </p>
+                </div>
+
+                {/* Bottom Accent */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
+                  style={{ backgroundColor: zone.color }}
+                ></div>
               </div>
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
-              {zone.description}
-            </p>
+            ))}
           </div>
-          
-          {/* Bottom Accent */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
-            style={{ backgroundColor: zone.color }}
-          ></div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
+
+
+
 
 
 
@@ -770,136 +776,120 @@ export default function Home() {
       {/* Gallery Section */}
 
       <section className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16">
-  <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
+        <div className="absolute inset-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl pointer-events-none z-0" />
 
-  <div className="relative z-10 container mx-auto px-6 max-w-3xl">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
+        <div className="relative z-10 container mx-auto px-6 max-w-3xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Gallery</h2>
 
-    {/* Year Selector */}
-    <div className="flex justify-center space-x-4 mb-12">
-      {['2024', '2025'].map((year) => (
-        <button
-          key={year}
-          onClick={() => handleGalleryYearChange(year)}
-          className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${galleryYear === year
-            ? 'bg-yellow-400 text-black shadow-lg scale-105'
-            : 'bg-white/10 text-white hover:bg-white/20'
-            }`}
-        >
-          {year}
-        </button>
-      ))}
-    </div>
+          {/* Featured Slide */}
+          <div className="mx-auto max-w-3xl">
+            <div className="relative mb-8">
+              {/* Image Container */}
+              <div className="aspect-video rounded-xl overflow-hidden relative">
+                <img
+                  src={gallerySlides1[gallerySlideIndex].image}
+                  alt={gallerySlides1[gallerySlideIndex].title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center p-4">
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
+                      {gallerySlides1[gallerySlideIndex].title}
+                    </h3>
+                    <p className="text-gray-300">
+                      {gallerySlides1[gallerySlideIndex].description}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-    {/* Featured Slide */}
-    <div className="mx-auto max-w-3xl">
-      <div className="relative mb-8">
-        {/* Image Container */}
-        <div className="aspect-video rounded-xl overflow-hidden relative">
-          <img
-            src={gallerySlides1[gallerySlideIndex].image}
-            alt={gallerySlides1[gallerySlideIndex].title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-center p-4">
-            <div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
-                {gallerySlides1[gallerySlideIndex].title}
-              </h3>
-              <p className="text-gray-300">
-                {gallerySlides1[gallerySlideIndex].description}
-              </p>
+              {/* Main Slide Nav */}
+              <button
+                onClick={handleGalleryPrev}
+                className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={handleGalleryNext}
+                className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-          </div>
-        </div>
 
-        {/* Main Slide Nav */}
-        <button
-          onClick={handleGalleryPrev}
-          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          onClick={handleGalleryNext}
-          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+            {/* Thumbnail Carousel */}
+            <div className="flex items-center mb-8 space-x-2">
+              {/* Left scroll button */}
+              <button
+                onClick={handleThumbnailScrollLeft}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-      {/* Thumbnail Carousel */}
-      <div className="flex items-center mb-8 space-x-2">
-        {/* Left scroll button */}
-        <button
-          onClick={handleThumbnailScrollLeft}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+              {/* Visible thumbnails */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
+                {gallerySlides1
+                  .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
+                  .map((slide, index) => {
+                    const realIndex = index + thumbnailStartIndex;
+                    return (
+                      <div
+                        key={realIndex}
+                        onClick={() => handleGallerySlideChange(realIndex)}
+                        className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
+                          ? 'ring-4 ring-yellow-400 scale-105'
+                          : 'opacity-60 hover:opacity-100'
+                          }`}
+                        onMouseEnter={() => setGalleryIsHovering(true)}
+                        onMouseLeave={() => setGalleryIsHovering(false)}
+                      >
+                        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                      </div>
+                    );
+                  })}
+              </div>
 
-        {/* Visible thumbnails */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
-          {gallerySlides1
-            .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-            .map((slide, index) => {
-              const realIndex = index + thumbnailStartIndex;
-              return (
-                <div
-                  key={realIndex}
-                  onClick={() => handleGallerySlideChange(realIndex)}
-                  className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
-                    ? 'ring-4 ring-yellow-400 scale-105'
-                    : 'opacity-60 hover:opacity-100'
+              {/* Right scroll button */}
+              <button
+                onClick={handleThumbnailScrollRight}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Progress Dots */}
+            <div className="flex justify-center space-x-2">
+              {gallerySlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleGallerySlideChange(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
+                    ? 'bg-yellow-400 scale-125'
+                    : 'bg-gray-600 hover:bg-gray-400'
                     }`}
                   onMouseEnter={() => setGalleryIsHovering(true)}
                   onMouseLeave={() => setGalleryIsHovering(false)}
-                >
-                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                </div>
-              );
-            })}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-
-        {/* Right scroll button */}
-        <button
-          onClick={handleThumbnailScrollRight}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Progress Dots */}
-      <div className="flex justify-center space-x-2">
-        {gallerySlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleGallerySlideChange(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
-              ? 'bg-yellow-400 scale-125'
-              : 'bg-gray-600 hover:bg-gray-400'
-              }`}
-            onMouseEnter={() => setGalleryIsHovering(true)}
-            onMouseLeave={() => setGalleryIsHovering(false)}
-          />
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
 
 
@@ -911,112 +901,105 @@ export default function Home() {
 
 
       <section className="relative bg-[#3c0052] py-16 md:py-24">
-  {/* Glass Panel */}
-  <div className="absolute inset-0 md:inset-10 bg-white/5 backdrop-blur-md md:backdrop-blur-sm border-2 border-white/20 rounded-3xl pointer-events-none z-0" />
+        {/* Glass Panel */}
+        <div className="absolute inset-0 md:inset-10 bg-white/5 backdrop-blur-md md:backdrop-blur-sm border-2 border-white/20 rounded-3xl pointer-events-none z-0" />
 
-  <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      {/* Left Content */}
-      <div className="space-y-6">
-        <div className="inline-block">
-          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-            Limited Time Offer
-          </div>
-        </div>
+        <div className="container mx-auto px-4 relative z-10 max-w-screen-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-6">
+              <div className="inline-block">
+                <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+                  Limited Time Offer
+                </div>
+              </div>
 
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-          Join the Ultimate Pop-Culture Experience
-        </h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                Join the Ultimate Pop-Culture Experience
+              </h2>
 
-        <div className="space-y-4 text-gray-300 text-base md:text-lg">
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">✨</span>
-            <span>Get exclusive access to all 4 experience zones</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🎭</span>
-            <span>Meet your favorite creators and celebrities</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🎮</span>
-            <span>Participate in gaming tournaments and workshops</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1">🏆</span>
-            <span>Win amazing prizes and exclusive merchandise</span>
-          </p>
-        </div>
+              <div className="space-y-4 text-gray-300 text-base md:text-lg">
+                <p className="flex items-start space-x-3">
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Join Now</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-          </button>
+                  <span>Get exclusive access to all 4 experience zones</span>
+                </p>
+                <p className="flex items-start space-x-3">
 
-          <button
-            className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              <span>Learn More</span>
-              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </span>
-          </button>
-        </div>
-      </div>
+                  <span>Meet your favorite creators and celebrities</span>
+                </p>
+                <p className="flex items-start space-x-3">
 
-      {/* Right Image */}
-      <div className="relative hidden lg:block">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
-          <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
-            <div className="aspect-square w-full flex items-center justify-center p-8">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                  <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
-                    <div className="text-6xl">🎪</div>
+                  <span>Participate in gaming tournaments and workshops</span>
+                </p>
+                <p className="flex items-start space-x-3">
+
+                  <span>Win amazing prizes and exclusive merchandise</span>
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span>Join Now</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                </button>
+
+                <button
+                  className="group relative bg-transparent border-2 border-yellow-400 text-yellow-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:scale-105 hover:shadow-2xl"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span>Learn More</span>
+                    <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right Image */}
+            <div className="relative hidden lg:block">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
+                <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
+                  <div className="aspect-square w-full flex items-center justify-center p-8">
+                    <div className="text-center space-y-4">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                        <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center overflow-hidden">
+                          {/* Replace the emoji with an image */}
+                          <img src="/Logo1.png" alt="Creators Street" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
-                  <p className="text-gray-300">Your adventure awaits!</p>
-                  <div className="flex justify-center space-x-2 text-2xl">
-                    <span>🎨</span>
-                    <span>🎮</span>
-                    <span>🎭</span>
-                    <span>🏆</span>
-                  </div>
+
+                {/* Floating badges */}
+                <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
+                  Early Bird
+                </div>
+                <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
+                  Limited Seats
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Floating badges */}
-          <div className="absolute -top-4 -left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold animate-float">
-            Early Bird
-          </div>
-          <div className="absolute -bottom-4 -right-4 bg-purple-400 text-white px-3 py-1 rounded-full text-sm font-bold animate-float animation-delay-2000">
-            Limited Seats
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
 
 
@@ -1041,21 +1024,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-center items-center gap-8">
             {/* Social Icons */}
             <div className="flex gap-6">
-              {/* Facebook */}
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#1877F2] transition-all duration-300"
-              >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07C2 17.1 5.66 21.3 10.44 22v-7.03H7.9v-2.9h2.54V9.82c0-2.5 1.5-3.89 3.8-3.89 1.1 0 2.24.2 2.24.2v2.46H15.7c-1.25 0-1.64.77-1.64 1.56v1.87h2.78l-.44 2.9h-2.34V22C18.34 21.3 22 17.1 22 12.07z" />
-                </svg>
-              </a>
+
 
               {/* Instagram */}
               <a
@@ -1075,18 +1044,12 @@ export default function Home() {
 
               {/* YouTube */}
               <a
-                href="https://youtube.com"
+                href="https://www.linkedin.com/company/creators-street/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#FF0000] transition-all duration-300"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
               >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M21.8 8.001a2.75 2.75 0 00-1.94-1.948C18.2 6 12 6 12 6s-6.2 0-7.86.053A2.75 2.75 0 002.2 8.001 28.82 28.82 0 002 12c0 1.34.087 2.659.2 3.999a2.75 2.75 0 001.94 1.948C5.8 18 12 18 12 18s6.2 0 7.86-.053a2.75 2.75 0 001.94-1.948A28.82 28.82 0 0022 12c0-1.34-.087-2.659-.2-3.999zM10 15V9l5 3-5 3z" />
-                </svg>
+                <FaLinkedinIn className="w-5 h-5" />
               </a>
             </div>
 
