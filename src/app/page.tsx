@@ -5,13 +5,13 @@ import noBgImage from './no_bg_image.png';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 import { FaLinkedinIn } from 'react-icons/fa';
-import { FaBars,FaTimes  } from 'react-icons/fa'; // Make sure this matches your icon library
+import { FaBars, FaTimes } from 'react-icons/fa'; // Make sure this matches your icon library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 
 export default function Home() {
-  
+
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [activeYear, setActiveYear] = useState('2025');
@@ -41,100 +41,80 @@ export default function Home() {
       {
         title: 'Panel Discussion',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/AMP09527.JPG',
+        image: '/2024/1.png',
       },
       {
         title: 'Discussion Long',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/AMP09540.JPG',
+        image: '/2024/2.png',
       },
       {
         title: 'Guests of Honor',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/Artboard 1.jpg',
+        image: '/2024/3.png',
       },
       {
         title: 'Prashanth Varma',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/IMG_20241117_213816.jpg',
+        image: '/2024/4.png',
       },
       {
         title: 'Stall Sale',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/IMG-20241119-WA0103.jpg',
+        image: '/2024/5.png',
       },
       {
         title: 'Old Man',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/KGS_2455.JPG',
+        image: '/2024/6.png',
       },
       {
         title: 'Old Man Award',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/KGS_2460.JPG',
+        image: '/2024/7.png',
       },
       {
         title: 'All Awards',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2024/KGS_2485.JPG',
+        image: '/2024/8.png',
       },
     ],
     '2025': [
       {
         title: 'Award Presentation',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/IMG_20251011_105421.jpg',
+        image: '/2025/9.png',
       },
       {
         title: 'Presenting Check',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/IMG_20251011_105439.jpg',
+        image: '/2025/10.png',
       },
       {
         title: 'Character',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5304 (2).JPG',
+        image: '/2025/11.png',
       },
       {
         title: 'Character 2',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5325.JPG',
+        image: '/2025/12.png',
       },
       {
         title: 'Championship',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5351.JPG',
+        image: '/2025/13.png',
       },
       {
         title: 'Batman',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5359.JPG',
+        image: '/2025/14.png',
       },
       {
         title: 'Ironman',
         description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5366.JPG',
-      },
-      {
-        title: 'Small Boy',
-        description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5378.JPG',
-      },
-      {
-        title: 'Sword Man',
-        description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5380.JPG',
-      },
-      {
-        title: 'Grookh',
-        description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5394.JPG',
-      },
-      {
-        title: 'Masked Man',
-        description: 'Snowy mountains and cozy vibes',
-        image: '/2025/NISL5407.JPG',
-      },
+        image: '/2025/15.png',
+      }
     ],
   };
 
@@ -312,138 +292,138 @@ export default function Home() {
       </div>
 
       <div className="relative" onClick={handleCloseMenu}>
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+        {/* Navbar */}
+        <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
 
-            {/* Logo First */}
-            <a href="/" className="cursor-pointer group">
-              <img
-                src="/Logo1.png"
-                alt="Creators Street Logo"
-                className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-                style={{
-                  filter: 'drop-shadow(0 0 8px white)',
-                }}
-              />
-            </a>
-
-            {/* Mobile Hamburger Menu */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // ⛔ prevent menu from closing immediately
-                  setMobileMenuOpen(!mobileMenuOpen);
-                }}
-                className="text-white"
-              >
-                <FaBars className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Center: Desktop Nav (after logo) */}
-            <div className="hidden md:flex items-center space-x-6">
-              {sections.map((item) => (
-                <a
-                  key={item}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScrollToSection(item);
-                  }}
-                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
-                >
-                  {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
-                </a>
-              ))}
-            </div>
-
-            {/* Right: Social + Join Us */}
-            <div className="hidden md:flex items-center space-x-4">
-              <a
-                href="https://www.instagram.com/creatorsstreet.official"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-              >
-                <FaInstagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/creators-street/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-              >
-                <FaLinkedinIn className="w-5 h-5" />
-              </a>
-              <a
-                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-              >
-                Join Us
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div
-          onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
-          className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50"
-        >
-          <div className="flex flex-col space-y-4">
-            {/* Logo inside the mobile menu */}
-            <div className="mb-6">
+              {/* Logo First */}
               <a href="/" className="cursor-pointer group">
                 <img
                   src="/Logo1.png"
                   alt="Creators Street Logo"
-                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
+                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
                   style={{
                     filter: 'drop-shadow(0 0 8px white)',
                   }}
                 />
               </a>
+
+              {/* Mobile Hamburger Menu */}
+              <div className="md:hidden flex items-center">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // ⛔ prevent menu from closing immediately
+                    setMobileMenuOpen(!mobileMenuOpen);
+                  }}
+                  className="text-white"
+                >
+                  <FaBars className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Center: Desktop Nav (after logo) */}
+              <div className="hidden md:flex items-center space-x-6">
+                {sections.map((item) => (
+                  <a
+                    key={item}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleScrollToSection(item);
+                    }}
+                    className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
+                  >
+                    {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
+                  </a>
+                ))}
+              </div>
+
+              {/* Right: Social + Join Us */}
+              <div className="hidden md:flex items-center space-x-4">
+                <a
+                  href="https://www.instagram.com/creatorsstreet.official"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+                >
+                  <FaInstagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/creators-street/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+                >
+                  <FaLinkedinIn className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+                >
+                  Join Us
+                </a>
+              </div>
             </div>
-
-            {/* Close Button (X) */}
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white absolute top-4 right-4"
-            >
-              <FaTimes className="w-6 h-6" />
-            </button>
-
-            {/* Menu Items */}
-            {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
-              <a
-                key={item}
-                href=""
-                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleScrollToSection(item);
-                  setMobileMenuOpen(false); // Close the menu after clicking
-                }}
-              >
-                {item}
-              </a>
-            ))}
-
-            {/* Join Us Button */}
-            <a
-              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-              onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
-            >
-              Join Us
-            </a>
           </div>
-        </div>
-      )}
-    </div>
+        </nav>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div
+            onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
+            className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50"
+          >
+            <div className="flex flex-col space-y-4">
+              {/* Logo inside the mobile menu */}
+              <div className="mb-6">
+                <a href="/" className="cursor-pointer group">
+                  <img
+                    src="/Logo1.png"
+                    alt="Creators Street Logo"
+                    className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
+                    style={{
+                      filter: 'drop-shadow(0 0 8px white)',
+                    }}
+                  />
+                </a>
+              </div>
+
+              {/* Close Button (X) */}
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white absolute top-4 right-4"
+              >
+                <FaTimes className="w-6 h-6" />
+              </button>
+
+              {/* Menu Items */}
+              {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
+                <a
+                  key={item}
+                  href=""
+                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScrollToSection(item);
+                    setMobileMenuOpen(false); // Close the menu after clicking
+                  }}
+                >
+                  {item}
+                </a>
+              ))}
+
+              {/* Join Us Button */}
+              <a
+                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+                onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
+              >
+                Join Us
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
 
 
 
@@ -559,89 +539,89 @@ export default function Home() {
         <div className="absolute top-1/2 left-10 w-20 h-20 bg-pink-500 rounded-full opacity-30 animate-float delay-2000"></div>
       </section>*/}
       <section
-  ref={heroRef}
-  className="relative w-screen min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible pb-24"
-  onMouseEnter={() => setIsHovering(true)}
-  onMouseLeave={() => setIsHovering(false)}
->
-  {/* Background layers */}
-  <div
-    className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
-    style={{
-      background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #3c0052 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
-      opacity: isHovering ? 0.75 : 0.5,
-      transform: `scale(${isHovering ? 1.1 : 1})`,
-      filter: 'brightness(1.2) saturate(1.5)',
-    }}
-  />
-  <div
-    className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
-    style={{
-      background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, #3c0052, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
-      opacity: isHovering ? 0.35 : 0.25,
-      transform: `scale(${isHovering ? 1.1 : 1})`,
-    }}
-  />
-
-  {/* Gradient orbs */}
-  <div className="absolute top-20 left-16 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500 pointer-events-none" />
-  <div className="absolute top-32 right-20 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500 pointer-events-none" />
-  <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500 pointer-events-none" />
-
-  {/* Content wrapper with margin top to move content down */}
-  <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center mt-12">
-
-    {/* Logo Section */}
-    <div className="w-72 sm:w-96 flex flex-col items-center justify-center mb-6 mt-8 relative z-20" style={{ pointerEvents: 'auto' }}>
-      <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
-      <div className="relative w-full flex flex-col items-center justify-center py-4">
-        <img
-          src="/Logo1.png"
-          alt="Logo"
-          className="h-20 sm:h-28 brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
-          style={{ filter: 'drop-shadow(0 0 25px white)' }}
+        ref={heroRef}
+        className="relative w-screen min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible pb-24"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        {/* Background layers */}
+        <div
+          className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #3c0052 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
+            opacity: isHovering ? 0.75 : 0.5,
+            transform: `scale(${isHovering ? 1.1 : 1})`,
+            filter: 'brightness(1.2) saturate(1.5)',
+          }}
         />
-        <p className="font-b612 text-lg sm:text-xl md:text-2xl text-white-200 mb-6 mt-6 text-center whitespace-nowrap tracking-[3.5%] leading-[120%]">
-          India's Biggest Celebration of Creativity
-        </p>
+        <div
+          className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
+          style={{
+            background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, #3c0052, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
+            opacity: isHovering ? 0.35 : 0.25,
+            transform: `scale(${isHovering ? 1.1 : 1})`,
+          }}
+        />
 
-        <p className="font-b612 text-sm sm:text-xl text-lg font-semibold text-yellow-300 group-hover:text-yellow-400 transition-colors whitespace-nowrap">
-          Oct 31st – 2nd Nov 2025 | Hyderabad | HICC Novotel
-        </p>
-      </div>
-    </div>
+        {/* Gradient orbs */}
+        <div className="absolute top-20 left-16 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500 pointer-events-none" />
+        <div className="absolute top-32 right-20 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500 pointer-events-none" />
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500 pointer-events-none" />
 
-    {/* Gradient grid */}
-    <div className="w-full mb-6 px-4">
-      <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {[
-            { name: "Awards", gradient: "from-purple-500 to-pink-500", textColor: "text-pink-400", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
-            { name: "Celebrity Announcements", gradient: "from-blue-500 to-indigo-500", textColor: "text-indigo-400", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
-            { name: "Expo", gradient: "from-green-500 to-teal-500", textColor: "text-teal-400", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
-            { name: "KeyNotes", gradient: "from-red-500 to-orange-500", textColor: "text-orange-400", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
-            { name: "Cosplay", gradient: "from-yellow-500 to-amber-500", textColor: "text-amber-400", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.jpeg" }
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
-            >
+        {/* Content wrapper with margin top to move content down */}
+        <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center mt-12">
+
+          {/* Logo Section */}
+          <div className="w-72 sm:w-96 flex flex-col items-center justify-center mb-6 mt-8 relative z-20" style={{ pointerEvents: 'auto' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
+            <div className="relative w-full flex flex-col items-center justify-center py-4">
               <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                src="/Logo1.png"
+                alt="Logo"
+                className="h-20 sm:h-28 brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
+                style={{ filter: 'drop-shadow(0 0 25px white)' }}
               />
-              <p className={`text-white mt-2 text-sm sm:text-lg font-b612 font-semibold text-black drop-shadow-md`}>
-                {item.name}
+              <p className="font-b612 text-lg sm:text-xl md:text-2xl text-white-200 mb-6 mt-6 text-center whitespace-nowrap tracking-[3.5%] leading-[120%]">
+                India's Biggest Celebration of Creativity
+              </p>
+
+              <p className="font-b612 text-sm sm:text-xl text-lg font-semibold text-yellow-300 group-hover:text-yellow-400 transition-colors whitespace-nowrap">
+                Oct 31st – 2nd Nov 2025 | Hyderabad | HICC Novotel
               </p>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+          </div>
 
-  </div>
-</section>
+          {/* Gradient grid */}
+          <div className="w-full mb-6 px-4">
+            <div className="bg-yellow-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {[
+                  { name: "Awards", gradient: "from-purple-500 to-pink-500", textColor: "text-pink-400", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
+                  { name: "Celebrity Announcements", gradient: "from-blue-500 to-indigo-500", textColor: "text-indigo-400", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
+                  { name: "Expo", gradient: "from-green-500 to-teal-500", textColor: "text-teal-400", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
+                  { name: "KeyNotes", gradient: "from-red-500 to-orange-500", textColor: "text-orange-400", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
+                  { name: "Cosplay", gradient: "from-yellow-500 to-amber-500", textColor: "text-amber-400", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.jpeg" }
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center aspect-square rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-110 group shadow-lg hover:shadow-2xl"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <p className={`text-white mt-2 text-sm sm:text-lg font-b612 font-semibold text-black drop-shadow-md`}>
+                      {item.name}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
 
 
 
@@ -893,7 +873,8 @@ export default function Home() {
           <div className="mx-auto max-w-full sm:max-w-3xl">
             <div className="relative mb-8">
               {/* Image Container */}
-              <div className="w-full relative overflow-hidden rounded-xl h-[300px] sm:h-[400px] md:h-[500px]">
+              <div className="w-full relative overflow-hidden rounded-xl h-[500px] sm:h-[600px] md:h-[700px]">
+
                 <img
                   src={gallerySlides1[gallerySlideIndex].image}
                   alt={gallerySlides1[gallerySlideIndex].title}
@@ -952,8 +933,9 @@ export default function Home() {
                         onMouseEnter={() => setGalleryIsHovering(true)}
                         onMouseLeave={() => setGalleryIsHovering(false)}
                       >
-                        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                        <img src={slide.image} alt={slide.title} className="w-full h-full object-contain" />
                       </div>
+
                     );
                   })}
               </div>
@@ -1053,71 +1035,71 @@ export default function Home() {
       <footer className="relative bg-gray-900 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-  {/* Company Info */}
-  <div>
-    <div className="col-span-4 flex justify-center mt-8">
-  <img src="/Logo1.png" alt="Creators Street Logo" className="h-12" />
-</div>
-    <p className="text-gray-400 text-sm">
-      India's Biggest Celebration of Creativity
-    </p>
-  </div>
+            {/* Company Info */}
+            <div>
+              <div className="col-span-4 flex justify-center mt-8">
+                <img src="/Logo1.png" alt="Creators Street Logo" className="h-12" />
+              </div>
+              <p className="text-gray-400 text-sm">
+                India's Biggest Celebration of Creativity
+              </p>
+            </div>
 
-  {/* Quick Links */}
-  <div>
-    <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
-    <ul className="space-y-2">
-      {['About Us', 'Events', 'Tickets', 'Contact'].map((link) => (
-        <li key={link}>
-          <a
-            href="#"
-            className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            {link}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                {['About Us', 'Events', 'Tickets', 'Contact'].map((link) => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                      onMouseEnter={() => setIsHovering(true)}
+                      onMouseLeave={() => setIsHovering(false)}
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-  {/* Social Media */}
-  <div>
-    <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
-    <div className="flex space-x-4">
-      {[
-        { name: 'Instagram', icon: faInstagram, link: 'https://www.instagram.com/creatorsstreet.official' },
-        { name: 'LinkedIn', icon: faLinkedin, link: 'https://www.linkedin.com/company/creators-street/' },
-      ].map(({ name, icon, link }) => (
-        <a
-          key={name}
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
-            <FontAwesomeIcon icon={icon} className="text-white text-xl" />
+            {/* Social Media */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
+              <div className="flex space-x-4">
+                {[
+                  { name: 'Instagram', icon: faInstagram, link: 'https://www.instagram.com/creatorsstreet.official' },
+                  { name: 'LinkedIn', icon: faLinkedin, link: 'https://www.linkedin.com/company/creators-street/' },
+                ].map(({ name, icon, link }) => (
+                  <a
+                    key={name}
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                  >
+                    <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
+                      <FontAwesomeIcon icon={icon} className="text-white text-xl" />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
+              <div className="space-y-2 text-gray-400 text-sm">
+                <p>Email: info@creatorsstreet.com</p>
+                <p>Phone: +91 123 456 7890</p>
+              </div>
+            </div>
           </div>
-        </a>
-      ))}
-    </div>
-  </div>
 
-  {/* Contact Info */}
-  <div>
-    <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
-    <div className="space-y-2 text-gray-400 text-sm">
-      <p>Email: info@creatorsstreet.com</p>
-      <p>Phone: +91 123 456 7890</p>
-    </div>
-  </div>
-</div>
-
-{/* Logo */}
+          {/* Logo */}
 
 
           {/* Copyright */}
