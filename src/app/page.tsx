@@ -1053,9 +1053,6 @@ export default function Home() {
       <footer className="relative bg-gray-900 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-4 flex justify-center mt-8">
-  <img src="/Logo1.png" alt="Creators Street Logo" className="h-12" />
-</div>
   {/* Company Info */}
   <div>
     <div className="col-span-4 flex justify-center mt-8">
