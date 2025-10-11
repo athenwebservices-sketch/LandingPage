@@ -631,7 +631,7 @@ export default function Home() {
                 alt={item.name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <p className={`mt-2 text-sm sm:text-lg font-b612 font-semibold text-black drop-shadow-md`}>
+              <p className={`text-white mt-2 text-sm sm:text-lg font-b612 font-semibold text-black drop-shadow-md`}>
                 {item.name}
               </p>
             </div>
@@ -681,7 +681,7 @@ export default function Home() {
                 color: "from-[#3c0052] to-[#3c0052]",
               },
               {
-                name: "GAMING Awards 2025",
+                name: "Special Carogery Awards 2025",
                 link: "#join-community",
                 color: "from-[#3c0052] to-[#3c0052]",
               }
