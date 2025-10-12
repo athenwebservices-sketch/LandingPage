@@ -7,8 +7,8 @@ import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 import { FaLinkedinIn } from 'react-icons/fa';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Make sure this matches your icon library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-
+import { faInstagram, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Home() {
 
@@ -25,8 +25,51 @@ export default function Home() {
     'rgba(59, 130, 246, 0.4)',
     'rgba(34, 197, 94, 0.4)'
   ]);
+  const [showButton, setShowButton] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const isClient = typeof window !== 'undefined';
+  // Show or hide the button based on scroll position
+   const handleResize = () => {
+    if (isClient) {
+      setIsMobile(window.innerWidth <= 640); // Adjust based on your breakpoint
+    }
+  };
 
+  // Handle scroll position
+  const handleScroll = () => {
+    if (isClient && window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
 
+  useEffect(() => {
+    if (isClient) {
+      // Set initial mobile state
+      setIsMobile(window.innerWidth <= 640);
+
+      // Listen to window resize and scroll events
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleScroll);
+
+      // Cleanup event listeners on unmount
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [isClient]); // Empty dependency array ensures this runs once after mount
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    if (isClient) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [galleryYear, setGalleryYear] = useState('2025');
@@ -427,6 +470,17 @@ export default function Home() {
 
 
 
+        {showButton && (
+        <button
+          onClick={scrollToTop}
+          className="fixed right-4 bottom-16 bg-yellow-400 text-black p-3 rounded-full shadow-lg transition-all duration-300 hover:bg-yellow-500 z-50"
+          aria-label="Scroll to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7-7-7 7" />
+          </svg>
+        </button>
+      )}
 
       {/* Hero Section 
      <section 
@@ -656,13 +710,13 @@ export default function Home() {
                 color: "from-[#3c0052] to-[#3c0052]",
               },
               {
-                name: "GAMING Awards 2025",
-                link: "https://docs.google.com/forms/d/e/1FAIpQLSdWxEblCh_nEGUJ5HSefC70Q0aigC_yGUo7WHDcQDPHbUeLFg/viewform?usp=header",
+                name: "Gaming Awards 2025",
+                link: "https://docs.google.com/forms/d/e/1FAIpQLSdhQ_ecD4jqbEpl25O4fa5PKUY7H6mNjcjoNicrKR2wOAcQBA/viewform?usp=header",
                 color: "from-[#3c0052] to-[#3c0052]",
               },
               {
                 name: "Special Carogery Awards 2025",
-                link: "#join-community",
+                link: "https://docs.google.com/forms/d/e/1FAIpQLSdWxEblCh_nEGUJ5HSefC70Q0aigC_yGUo7WHDcQDPHbUeLFg/viewform?usp=header",
                 color: "from-[#3c0052] to-[#3c0052]",
               }
             ].map((award, index) => (
@@ -676,7 +730,7 @@ export default function Home() {
                 />
 
                 {/* Content */}
-                <div className="p-6 text-center flex flex-col justify-between h-full">
+                <div className="relative z-20 p-6 text-center flex flex-col justify-between h-full">
                   {/* Title */}
                   <h3 className="text-2xl font-semibold text-white mb-3 drop-shadow-md">
                     {award.name}
@@ -685,9 +739,9 @@ export default function Home() {
                   {/* Button */}
                   <a
                     href={award.link}
-                    className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300"
+                    className="inline-block px-5 py-2 mt-2 text-sm font-semibold text-yellow-300 border border-yellow-400 rounded-full shadow-md hover:bg-yellow-400 hover:text-indigo-900 transition-all duration-300 relative z-30"
                   >
-                    Join Now →
+                    Register Now→
                   </a>
                 </div>
 
@@ -713,6 +767,7 @@ export default function Home() {
 
 
 
+
       <section id="Cosplay" className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
         {/* Background Layers */}
         <div
@@ -723,7 +778,6 @@ export default function Home() {
             transform: 'scale(1.1)',
           }}
         />
-
         <div
           className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-in-out"
           style={{
@@ -743,15 +797,14 @@ export default function Home() {
           {/* Left Content */}
           <div className="text-left max-w-sm">
             <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
-              Join The Workshop
-              Join Our Cosplay Community
+              Cosplay Workshop
             </h2>
             <p className="text-lg md:text-2xl text-yellow-200 mb-6">
               Step Into Character
             </p>
             <a
-              href="#join-cosplay"
-              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+              href=""
+              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300 relative z-30"
             >
               Register Now
             </a>
@@ -773,14 +826,15 @@ export default function Home() {
             </h2>
 
             <a
-              href="#join-cosplay"
-              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300"
+              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+              className="inline-block px-6 py-3 mt-4 text-lg font-semibold text-white bg-white/10 hover:bg-white/20 border-none rounded-full transition-all duration-300 relative z-30"
             >
               Join Now
             </a>
           </div>
         </div>
       </section>
+
 
 
 
@@ -851,123 +905,134 @@ export default function Home() {
       {/* Gallery Section */}
 
       <section id="Events" className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16 sm:py-12">
-        <div className="relative z-10 container mx-auto px-6 max-w-full sm:max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Past Events</h2>
-          {/* Year Selector */}
+  <div className="relative z-10 container mx-auto px-6 sm:px-4 lg:px-12 max-w-full sm:max-w-3xl">
+    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Past Events</h2>
+    
+    {/* Year Selector */}
+    <div className="flex justify-center space-x-4 mb-12">
+      {['2024', '2025'].map((year) => (
+        <button
+          key={year}
+          onClick={() => handleGalleryYearChange(year)}
+          className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${galleryYear === year
+            ? 'bg-yellow-400 text-black shadow-lg scale-105'
+            : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
+        >
+          {year}
+        </button>
+      ))}
+    </div>
 
-          <div className="flex justify-center space-x-4 mb-12">
-            {['2024', '2025'].map((year) => (
-              <button
-                key={year}
-                onClick={() => handleGalleryYearChange(year)}
-                className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${galleryYear === year
-                  ? 'bg-yellow-400 text-black shadow-lg scale-105'
-                  : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-              >
-                {year}
-              </button>
-            ))}
-          </div>
+    <div className="mx-auto max-w-full sm:max-w-3xl">
+      <div className="relative mb-8">
+        
+        {/* Image Container */}
+        <div className={`w-full relative overflow-hidden rounded-xl transition-all duration-300 ${galleryIsHovering ? 'scale-105' : ''} 
+          ${isMobile ? 'h-auto' : 'h-[400px] sm:h-[500px] md:h-[600px]'}`}
+        >
+          <img
+            src={gallerySlides1[gallerySlideIndex].image}
+            alt={gallerySlides1[gallerySlideIndex].title}
+            className="w-full h-full object-cover sm:object-contain transition-all duration-300"
+            onMouseEnter={() => setGalleryIsHovering(true)}
+            onMouseLeave={() => setGalleryIsHovering(false)}
+          />
+        </div>
 
-          <div className="mx-auto max-w-full sm:max-w-3xl">
-            <div className="relative mb-8">
-              {/* Image Container */}
-              <div className="w-full relative overflow-hidden rounded-xl h-[500px] sm:h-[600px] md:h-[700px]">
+        {/* Navigation buttons */}
+        <button
+          onClick={handleGalleryPrev}
+          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          onMouseEnter={() => setGalleryIsHovering(true)}
+          onMouseLeave={() => setGalleryIsHovering(false)}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-                <img
-                  src={gallerySlides1[gallerySlideIndex].image}
-                  alt={gallerySlides1[gallerySlideIndex].title}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
+        <button
+          onClick={handleGalleryNext}
+          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+          onMouseEnter={() => setGalleryIsHovering(true)}
+          onMouseLeave={() => setGalleryIsHovering(false)}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
 
-              {/* Navigation buttons */}
-              <button
-                onClick={handleGalleryPrev}
-                className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-                onMouseEnter={() => setGalleryIsHovering(true)}
-                onMouseLeave={() => setGalleryIsHovering(false)}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+      {/* Thumbnail Carousel */}
+      <div className="flex items-center mb-8 space-x-2">
+        <button
+          onClick={handleThumbnailScrollLeft}
+          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-              <button
-                onClick={handleGalleryNext}
-                className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-                onMouseEnter={() => setGalleryIsHovering(true)}
-                onMouseLeave={() => setGalleryIsHovering(false)}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Thumbnail Carousel */}
-            <div className="flex items-center mb-8 space-x-2">
-              <button
-                onClick={handleThumbnailScrollLeft}
-                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1 overflow-hidden">
-                {gallerySlides1
-                  .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-                  .map((slide, index) => {
-                    const realIndex = index + thumbnailStartIndex;
-                    return (
-                      <div
-                        key={realIndex}
-                        onClick={() => handleGallerySlideChange(realIndex)}
-                        className={`aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
-                          ? 'ring-4 ring-yellow-400 scale-105'
-                          : 'opacity-60 hover:opacity-100'
-                          }`}
-                        onMouseEnter={() => setGalleryIsHovering(true)}
-                        onMouseLeave={() => setGalleryIsHovering(false)}
-                      >
-                        <img src={slide.image} alt={slide.title} className="w-full h-full object-contain" />
-                      </div>
-
-                    );
-                  })}
-              </div>
-
-              <button
-                onClick={handleThumbnailScrollRight}
-                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Progress Dots */}
-            <div className="flex justify-center space-x-2">
-              {gallerySlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleGallerySlideChange(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
-                    ? 'bg-yellow-400 scale-125'
-                    : 'bg-gray-600 hover:bg-gray-400'
-                    }`}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-0 flex-1 overflow-hidden">
+          {gallerySlides1
+            .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
+            .map((slide, index) => {
+              const realIndex = index + thumbnailStartIndex;
+              return (
+                <div
+                  key={realIndex}
+                  onClick={() => handleGallerySlideChange(realIndex)}
+                  className={`aspect-video overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
+                    ? 'scale-105'
+                    : 'opacity-60 hover:opacity-100'
+                    } rounded-lg`}
                   onMouseEnter={() => setGalleryIsHovering(true)}
                   onMouseLeave={() => setGalleryIsHovering(false)}
-                />
-              ))}
-            </div>
-          </div>
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-contain rounded-lg"
+                  />
+                </div>
+              );
+            })}
         </div>
-      </section>
+
+        <button
+          onClick={handleThumbnailScrollRight}
+          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Progress Dots */}
+      <div className="flex justify-center space-x-2">
+        {gallerySlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleGallerySlideChange(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
+              ? 'bg-yellow-400 scale-125'
+              : 'bg-gray-600 hover:bg-gray-400'
+              }`}
+            onMouseEnter={() => setGalleryIsHovering(true)}
+            onMouseLeave={() => setGalleryIsHovering(false)}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
 
 
 
@@ -981,7 +1046,7 @@ export default function Home() {
           {/* Subheading */}
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl md:text-2xl font-semibold">
             <span className="text-yellow-200">FOLLOW US ON</span>
-            <span className="text-yellow-200">WRITE TO US AT</span>
+
           </div>
 
           {/* Social Icons and Email */}
@@ -1015,12 +1080,21 @@ export default function Home() {
                 <FaLinkedinIn className="w-6 h-6 text-white" />
               </a>
 
+              {/* WhatsApp */}
+              <a
+                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black p-4 rounded-full hover:bg-[#25D366] transition-all duration-300"
+              >
+                <FaWhatsapp className="w-6 h-6 text-white" />
+              </a>
+
             </div>
 
+
             {/* Email Address */}
-            <div className="text-sm md:text-base text-white mt-4 md:mt-0">
-              info@creatorsstreet.com
-            </div>
+
           </div>
         </div>
       </section>
@@ -1071,6 +1145,7 @@ export default function Home() {
                 {[
                   { name: 'Instagram', icon: faInstagram, link: 'https://www.instagram.com/creatorsstreet.official' },
                   { name: 'LinkedIn', icon: faLinkedin, link: 'https://www.linkedin.com/company/creators-street/' },
+                  { name: 'WhatsApp', icon: faWhatsapp, link: 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v' }, // Add WhatsApp link
                 ].map(({ name, icon, link }) => (
                   <a
                     key={name}
@@ -1094,7 +1169,6 @@ export default function Home() {
               <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
               <div className="space-y-2 text-gray-400 text-sm">
                 <p>Email: info@creatorsstreet.com</p>
-                <p>Phone: +91 123 456 7890</p>
               </div>
             </div>
           </div>
