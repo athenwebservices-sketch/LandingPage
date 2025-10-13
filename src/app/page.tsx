@@ -8,7 +8,8 @@ import { FaLinkedinIn } from 'react-icons/fa';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Make sure this matches your icon library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp ,FaTicketAlt} from 'react-icons/fa';
+import { AlignCenter } from 'lucide-react';
 
 export default function Home() {
 
@@ -78,6 +79,22 @@ export default function Home() {
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0); // for scrolling thumbs
 
   const THUMBNAILS_VISIBLE = 4;
+  const leaders = [
+  {
+    name: "Mr. Vikas Tiwari",
+    description: "President, MP- AVGC-XR Association",
+    color: "#FFC107",
+    image: "/Vikas.png"  // Replace with your image URL
+  },
+  {
+    name: "Mr. Sanjay Khimsera",
+    description: "President, Asifa",
+    color: "#F44336",
+    image: "/Sanjay.png"  // Replace with your image URL
+  },
+];
+
+
 
   const galleryData = {
     '2024': [
@@ -240,27 +257,32 @@ export default function Home() {
 
   // Experience zones data
   const experienceZones = [
-    {
-      name: "Comic Street",
-      color: "#FFC107",
-      description: "Publishers, Comics, Manga, Webtoons, Graphic Novels"
-    },
-    {
-      name: "Anime Street",
-      color: "#F44336",
-      description: "Anime Studios, Screenings, Merchandise"
-    },
-    {
-      name: "Play Street",
-      color: "#00BCD4",
-      description: "Gaming, Board Games, Esports, AR/VR Fan Zones"
-    },
-    {
-      name: "Innovation Street",
-      color: "#4CAF50",
-      description: "Blockchain, AI, Creator Economy, Startups & Emerging Tech"
-    }
-  ];
+  {
+    name: "Comic Street",
+    color: "#FFC107",
+    description: "Publishers, Comics, Manga, Webtoons, Graphic Novels",
+    image: "/2024/4.png"  // Replace with your image URL
+  },
+  {
+    name: "Anime Street",
+    color: "#F44336",
+    description: "Anime Studios, Screenings, Merchandise",
+    image: "/coming_soon.jpg"  // Replace with your image URL
+  },
+  {
+    name: "Play Street",
+    color: "#00BCD4",
+    description: "Gaming, Board Games, Esports, AR/VR Fan Zones",
+    image: "/coming_soon.jpg"  // Replace with your image URL
+  },
+  {
+    name: "Innovation Street",
+    color: "#4CAF50",
+    description: "Blockchain, AI, Creator Economy, Startups & Emerging Tech",
+    image: "/coming_soon.jpg"  // Replace with your image URL
+  }
+];
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Handle mouse movement for custom cursor and fluid background
@@ -335,138 +357,177 @@ export default function Home() {
       </div>
 
       <div className="relative" onClick={handleCloseMenu}>
-        {/* Navbar */}
-        <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
+  {/* Navbar */}
+  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+    <div className="container mx-auto px-4 py-4">
+      <div className="flex items-center justify-between">
+        {/* Logo First */}
+        <a href="/" className="cursor-pointer group">
+          <img
+            src="/Logo1.png"
+            alt="Creators Street Logo"
+            className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+            style={{
+              filter: 'drop-shadow(0 0 8px white)',
+            }}
+          />
+        </a>
 
-              {/* Logo First */}
-              <a href="/" className="cursor-pointer group">
-                <img
-                  src="/Logo1.png"
-                  alt="Creators Street Logo"
-                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    filter: 'drop-shadow(0 0 8px white)',
-                  }}
-                />
-              </a>
-
-              {/* Mobile Hamburger Menu */}
-              <div className="md:hidden flex items-center">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // ⛔ prevent menu from closing immediately
-                    setMobileMenuOpen(!mobileMenuOpen);
-                  }}
-                  className="text-white"
-                >
-                  <FaBars className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Center: Desktop Nav (after logo) */}
-              <div className="hidden md:flex items-center space-x-6">
-                {sections.map((item) => (
-                  <a
-                    key={item}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleScrollToSection(item);
-                    }}
-                    className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
-                  >
-                    {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
-                  </a>
-                ))}
-              </div>
-
-              {/* Right: Social + Join Us */}
-              <div className="hidden md:flex items-center space-x-4">
-                <a
-                  href="https://www.instagram.com/creatorsstreet.official"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-                >
-                  <FaInstagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/creators-street/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-                >
-                  <FaLinkedinIn className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-                >
-                  Join Us
-                </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div
-            onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
-            className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50"
+        {/* Mobile Hamburger Menu */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // ⛔ prevent menu from closing immediately
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
+            className="text-white"
           >
-            <div className="flex flex-col space-y-4">
-              {/* Logo inside the mobile menu */}
-              <div className="mb-6">
-                <a href="/" className="cursor-pointer group">
-                  <img
-                    src="/Logo1.png"
-                    alt="Creators Street Logo"
-                    className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
-                    style={{
-                      filter: 'drop-shadow(0 0 8px white)',
-                    }}
-                  />
-                </a>
-              </div>
+            <FaBars className="w-6 h-6" />
+          </button>
+        </div>
 
-              {/* Close Button (X) */}
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-white absolute top-4 right-4"
-              >
-                <FaTimes className="w-6 h-6" />
-              </button>
+        {/* Center: Desktop Nav (after logo) */}
+        <div className="hidden md:flex items-center space-x-6">
+          {sections.map((item) => (
+            <a
+              key={item}
+              onClick={(e) => {
+                e.preventDefault();
+                handleScrollToSection(item);
+              }}
+              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
+            >
+              {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
+            </a>
+          ))}
+        </div>
 
-              {/* Menu Items */}
-              {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
-                <a
-                  key={item}
-                  href=""
-                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScrollToSection(item);
-                    setMobileMenuOpen(false); // Close the menu after clicking
-                  }}
-                >
-                  {item}
-                </a>
-              ))}
-
-              {/* Join Us Button */}
-              <a
-                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-                onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
-              >
-                Join Us
-              </a>
-            </div>
-          </div>
-        )}
+        {/* Right: Social + Join Us */}
+        <div className="hidden md:flex items-center space-x-4">
+          <a
+            href="https://www.instagram.com/creatorsstreet.official"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+          >
+            <FaInstagram className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/creators-street/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+          >
+            <FaLinkedinIn className="w-5 h-5" />
+          </a>
+          <a
+            href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+          >
+            Join Us
+          </a>
+          {/* Ticket Icon */}
+          <a
+            href="/tickets"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-yellow-600 hover:text-white transition-all duration-300"
+          >
+            <FaTicketAlt className="w-5 h-5" />
+          </a>
+        </div>
       </div>
+    </div>
+  </nav>
+
+  {/* Mobile Menu */}
+  {mobileMenuOpen && (
+    <div
+      onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
+      className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50"
+    >
+      <div className="flex flex-col space-y-4">
+        {/* Logo inside the mobile menu */}
+        <div className="mb-6">
+          <a href="/" className="cursor-pointer group">
+            <img
+              src="/Logo1.png"
+              alt="Creators Street Logo"
+              className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
+              style={{
+                filter: 'drop-shadow(0 0 8px white)',
+              }}
+            />
+          </a>
+        </div>
+
+        {/* Close Button (X) */}
+        <button
+          onClick={() => setMobileMenuOpen(false)}
+          className="text-white absolute top-4 right-4"
+        >
+          <FaTimes className="w-6 h-6" />
+        </button>
+
+        {/* Menu Items */}
+        {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
+          <a
+            key={item}
+            href=""
+            className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+            onClick={(e) => {
+              e.preventDefault();
+              handleScrollToSection(item);
+              setMobileMenuOpen(false); // Close the menu after clicking
+            }}
+          >
+            {item}
+          </a>
+        ))}
+
+        {/* Join Us Button */}
+        <a
+          href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+          onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
+        >
+          Join Us
+        </a>
+
+        {/* Ticket, Facebook, and LinkedIn in Same Row */}
+        <div className="flex items-center space-x-4">
+          {/* Facebook Icon */}
+          <a
+            href="https://www.facebook.com/creatorsstreet"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-600 hover:text-white transition-all duration-300"
+          >
+            <FaFacebookF className="w-5 h-5" />
+          </a>
+
+          {/* LinkedIn Icon */}
+          <a
+            href="https://www.linkedin.com/company/creators-street/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+          >
+            <FaLinkedinIn className="w-5 h-5" />
+          </a>
+
+          {/* Ticket Icon */}
+          <a
+            href="/tickets"
+            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-yellow-600 hover:text-white transition-all duration-300"
+          >
+            <FaTicketAlt className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+
 
 
 
@@ -597,6 +658,7 @@ export default function Home() {
         className="relative w-screen min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible pb-24"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
+        id="hero"
       >
         {/* Background layers */}
         <div
@@ -757,6 +819,68 @@ export default function Home() {
 
 
 
+<section id="Leaders" className="relative bg-[#3c0052] py-10 overflow-hidden flex items-center justify-center min-h-screen">
+  {/* Background Orbs */}
+  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+  
+  {/* Section Content */}
+  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden flex flex-col items-center justify-center text-center">
+    <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">
+      Jury
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6 justify-center items-center">
+      {leaders.map((zone, index) => (
+        <div
+          key={index}
+          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
+          style={{
+            backgroundColor: `${zone.color}20`,
+            minHeight: '350px',
+            height: 'auto',
+            padding: '1rem',
+          }}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          {/* Hover Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          {/* Inner Content */}
+          <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
+            {/* Icon Container - Flex to center the image */}
+            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20 flex justify-center items-center">
+              <div className="w-full h-full flex items-center justify-center">
+                <img
+                  src={zone.image}
+                  alt={zone.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            
+            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
+            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
+              {zone.description}
+            </p>
+          </div>
+          
+          {/* Bottom Accent */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
+            style={{ backgroundColor: zone.color }}
+          ></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
 
 
 
@@ -843,55 +967,64 @@ export default function Home() {
 
 
       {/* Interactive Experience Zones Section */}
-      <section id='Exhibit With Us' className="relative bg-[#3c0052] py-20 overflow-hidden">
-        {/* Background Orbs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
-        {/* Section Content */}
-        <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-            Experience Zones
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {experienceZones.map((zone, index) => (
-              <div
-                key={index}
-                className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
-                style={{
-                  backgroundColor: `${zone.color}20`,
-                  minHeight: '350px',
-                  height: 'auto',
-                  // Add padding to keep the cards inside the container                   
-                  padding: '1rem',
-                }}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-              >
-                {/* Hover Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                {/* Inner Content */}
-                <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
-                  {/* Icon Container */}
-                  <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-6xl opacity-50">🎭</div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
-                  <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
-                    {zone.description}
-                  </p>
-                </div>
-                {/* Bottom Accent */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
-                  style={{ backgroundColor: zone.color }}
-                ></div>
+      <section id="Exhibit With Us" className="relative bg-[#3c0052] py-20 overflow-hidden">
+  {/* Background Orbs */}
+  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+  
+  {/* Section Content */}
+  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
+    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+      Experience Zones
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {experienceZones.map((zone, index) => (
+        <div
+          key={index}
+          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
+          style={{
+            backgroundColor: `${zone.color}20`,
+            minHeight: '350px',
+            height: 'auto',
+            padding: '1rem',
+          }}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          {/* Hover Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          {/* Inner Content */}
+          <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
+            {/* Icon Container */}
+            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
+              <div className="w-full h-full flex items-center justify-center">
+                <img
+                  src={zone.image}
+                  alt={zone.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            ))}
+            </div>
+            
+            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
+            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
+              {zone.description}
+            </p>
           </div>
+          
+          {/* Bottom Accent */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
+            style={{ backgroundColor: zone.color }}
+          ></div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+
 
 
 
@@ -1034,6 +1167,113 @@ export default function Home() {
 
 
 
+        <section id ="tickets" className="relative bg-[#3c0052] pt-12">
+  <div className="container mx-auto px-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      {/* Left Content */}
+      <div className="space-y-6">
+        <div className="inline-block">
+          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+            Limited Time Offer
+          </div>
+        </div>
+
+        <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+          Join the Ultimate Pop-Culture Experience at Creators Street 2025
+        </h2>
+
+        <div className="space-y-4 text-gray-300 text-lg">
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1"></span>
+            <span>Get exclusive access to all <strong>4 experience zones Animation, VFX, Film, and OTT</strong></span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1"></span>
+            <span>Meet top <strong>creators, artists, and industry leaders</strong> from across India</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1"></span>
+            <span>Participate in <strong>gaming tournaments, cosplay shows,</strong> and workshops</span>
+          </p>
+          <p className="flex items-start space-x-3">
+            <span className="text-yellow-400 text-xl mt-1"></span>
+            <span>Experience <strong>masterclasses, live performances,</strong> and panel sessions</span>
+          </p>
+        </div>
+
+        <p className="text-yellow-400 font-semibold text-lg">
+          Early Bird Offer — Limited Seats Only!
+        </p>
+
+        <div className="flex">
+          <button
+            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              {/* Replace "For Tickets" with a ticket logo */}
+              <span className="text-2xl">🎟️</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+        </div>
+      </div>
+
+      {/* Right Image */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
+        <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
+          <div className="aspect-square w-full flex items-center justify-center p-8">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                  <div className="text-6xl">🎪</div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
+                <p className="text-gray-300">Your adventure awaits!</p>
+                <div className="flex justify-center space-x-2 text-2xl">
+                  <span>🎨</span>
+                  <span>🎮</span>
+                  <span>🎭</span>
+                  <span>🏆</span>
+                  {/* Ticket with Glow Animation */}
+                  <span className="relative inline-block ticket-glow group-hover:scale-125 group-hover:rotate-6 transition-transform duration-500">
+                    <span className="absolute inset-0 blur-md bg-yellow-400 opacity-0 group-hover:opacity-60 rounded-full transition-opacity duration-500"></span>
+                    <span className="relative z-10">🎟</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Image Section */}
+        <div className="absolute inset-0 w-full h-full">
+          <img src="/2024/4.png" alt="Creators Street 2025" className="object-cover w-full h-full rounded-2xl" />
+        </div>
+
+        {/* Floating badges */}
+        <div className="absolute top-4 left-4 bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold animate-float z-20">
+          Early Bird
+        </div>
+        <div className="absolute bottom-4 right-4 bg-purple-400 text-white px-4 py-2 rounded-full text-sm font-bold animate-float z-20">
+          Limited Seats
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
 
 
       <section className="w-full bg-[#3c0052] py-16 px-6 text-center text-white relative">
@@ -1056,7 +1296,7 @@ export default function Home() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/creatorsstreet.official"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
@@ -1123,18 +1363,23 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                {['About Us', 'Events', 'Tickets', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
-                      onMouseEnter={() => setIsHovering(true)}
-                      onMouseLeave={() => setIsHovering(false)}
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
+                {[
+  { text: 'About Us', id: 'hero' },
+  { text: 'Events', id: 'Events' },
+  { text: 'Tickets', id: 'tickets' }
+].map(({ text, id }) => (
+  <li key={id}>
+    <a
+      href={`#${id}`}
+      className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {text}
+    </a>
+  </li>
+))}
+
               </ul>
             </div>
 
@@ -1168,7 +1413,7 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
               <div className="space-y-2 text-gray-400 text-sm">
-                <p>Email: info@creatorsstreet.com</p>
+                <p>Email: contact@forbiddenverse.world</p>
               </div>
             </div>
           </div>
