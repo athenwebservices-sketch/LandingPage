@@ -1,102 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import styled from 'styled-components';
-
-const RegisterContainer = styled.div`
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-`;
-
-const RegisterTitle = styled.h1`
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 2rem;
-`;
-
-const RegisterForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Label = styled.label`
-  margin-bottom: 0.5rem;
-  color: #34495e;
-  font-weight: 500;
-`;
-
-const Input = styled.input`
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  
-  &:focus {
-    outline: none;
-    border-color: #667eea;
-  }
-`;
-
-const PasswordRequirements = styled.div`
-  font-size: 0.8rem;
-  color: #7f8c8d;
-  margin-top: 0.25rem;
-`;
-
-const SubmitButton = styled.button`
-  padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-2px);
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-`;
-
-const ErrorMessage = styled.div`
-  color: #e74c3c;
-  text-align: center;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background: #fdf2f2;
-  border-radius: 5px;
-`;
-
-const LoginLink = styled.p`
-  text-align: center;
-  margin-top: 1rem;
-  
-  a {
-    color: #667eea;
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+import './Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -111,7 +16,7 @@ const Register = () => {
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       navigate('/');
     }
@@ -174,13 +79,14 @@ const Register = () => {
   };
 
   return (
-    <RegisterContainer>
-      <RegisterTitle>Create Account</RegisterTitle>
+    <div className="register-container">
+      <h1 className="register-title">Create Account</h1>
       
-      <RegisterForm onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label htmlFor="name">Full Name</Label>
-          <Input
+      <form className="register-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="label" htmlFor="name">Full Name</label>
+          <input
+            className="input"
             type="text"
             id="name"
             name="name"
@@ -188,11 +94,12 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-        </FormGroup>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="email">Email Address</Label>
-          <Input
+        <div className="form-group">
+          <label className="label" htmlFor="email">Email Address</label>
+          <input
+            className="input"
             type="email"
             id="email"
             name="email"
@@ -200,11 +107,12 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-        </FormGroup>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="password">Password</Label>
-          <Input
+        <div className="form-group">
+          <label className="label" htmlFor="password">Password</label>
+          <input
+            className="input"
             type="password"
             id="password"
             name="password"
@@ -212,14 +120,15 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          <PasswordRequirements>
+          <div className="password-requirements">
             Password must be at least 6 characters long
-          </PasswordRequirements>
-        </FormGroup>
+          </div>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
+        <div className="form-group">
+          <label className="label" htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            className="input"
             type="password"
             id="confirmPassword"
             name="confirmPassword"
@@ -227,19 +136,19 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-        </FormGroup>
+        </div>
 
-        <SubmitButton type="submit" disabled={isLoading}>
+        <button className="submit-button" type="submit" disabled={isLoading}>
           {isLoading ? 'Creating Account...' : 'Create Account'}
-        </SubmitButton>
-      </RegisterForm>
+        </button>
+      </form>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <div className="error-message">{error}</div>}
 
-      <LoginLink>
+      <div className="login-link">
         Already have an account? <Link to="/admin">Login here</Link>
-      </LoginLink>
-    </RegisterContainer>
+      </div>
+    </div>
   );
 };
 

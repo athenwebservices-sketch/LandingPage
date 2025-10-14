@@ -1,0 +1,108 @@
+/* Register Page Styles */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #3c0052;
+  color: white;
+  font-family: 'Mukta Vaani', sans-serif;
+  padding: 20px;
+}
+
+.register-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #FFC107; /* Theme color */
+  text-align: center;
+}
+
+.register-form {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.input:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+.password-requirements {
+  font-size: 0.875rem;
+  color: #FFC107;
+  margin-top: 8px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FFC107;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #FFB300;
+}
+
+.submit-button:disabled {
+  background-color: #9E9E9E;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #F44336;
+  font-size: 1rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.login-link {
+  color: #FFC107;
+  font-size: 1rem;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #FFEB3B;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  color: #FF9800;
+}
