@@ -1,0 +1,95 @@
+/* General Awards Section Styles */
+.awards-section {
+  background-color: #3c0052;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+
+.awards-section .container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.awards-section h2 {
+  font-size: 3rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.award-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.award-card:hover {
+  transform: scale(1.05);
+}
+
+.award-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #3c0052, #5c0a72);
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
+.award-card:hover .award-card-overlay {
+  opacity: 0.4;
+}
+
+.award-card-content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.award-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.award-register-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #ffbf47;
+  color: #3c0052;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.award-register-button:hover {
+  background-color: #ff9e2f;
+}
+
+.award-card-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(45deg, #3c0052, #5c0a72);
+}
+
+.award-card-overlay {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}

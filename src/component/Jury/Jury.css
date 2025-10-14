@@ -1,0 +1,154 @@
+/* General Jury Section Styles */
+.jury-section {
+  position: relative;
+  background-color: #3c0052;
+  padding: 40px 16px;
+  overflow: hidden;
+  color: white;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: blur(160px);
+  opacity: 0.3;
+  animation: animate-blob 6s ease-in-out infinite;
+}
+
+.orb-left {
+  top: 20%;
+  left: 10%;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #3c0052, #6a007f);
+  animation-delay: 0s;
+}
+
+.orb-right {
+  bottom: 20%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #3c0052, #9b4dff);
+  animation-delay: 2s;
+}
+
+@keyframes animate-blob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px);
+  }
+}
+
+/* Jury Container */
+.jury-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.jury-heading {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.jury-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.jury-item {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.jury-item:hover {
+  transform: scale(1.05);
+}
+
+.jury-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.jury-item:hover .jury-hover-overlay {
+  opacity: 1;
+}
+
+.jury-inner-content {
+  position: relative;
+  padding: 20px;
+  text-align: center;
+}
+
+.jury-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.jury-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.jury-item:hover .jury-image {
+  transform: scale(1.1);
+}
+
+.jury-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.jury-description {
+  font-size: 1rem;
+  color: #dcdcdc;
+  max-height: 100px;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.jury-bottom-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: #fff;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.jury-item:hover .jury-bottom-accent {
+  opacity: 1;
+}
+
+/* Mobile and Small Screens */
+@media (max-width: 768px) {
+  .jury-heading {
+    font-size: 2.5rem;
+  }
+}

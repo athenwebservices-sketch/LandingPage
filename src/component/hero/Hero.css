@@ -6,10 +6,12 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(to bottom right, #3c0052, #5c027d);
+  background: linear-gradient(to bottom right, #3c0052, #5c027d); /* Custom gradient */
   overflow: hidden;
+  cursor: none; /* Hide default cursor */
 }
 
+/* Background layers */
 .hero-background,
 .hero-background-conic {
   position: absolute;
@@ -21,6 +23,7 @@
   transition: all 1s ease-in-out;
 }
 
+/* Content wrapper */
 .hero-content-wrapper {
   position: relative;
   text-align: center;
@@ -42,11 +45,13 @@
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 10px;
+  font-family: 'Mukta Vaani', sans-serif; /* Custom font */
 }
 
 .hero-dates {
   font-size: 1.5rem;
   margin-bottom: 30px;
+  font-family: 'Mukta Vaani', sans-serif; /* Custom font */
 }
 
 .hero-cta-button {
@@ -58,10 +63,74 @@
   font-weight: bold;
   text-decoration: none;
   transition: background 0.3s ease;
+  font-family: 'Mukta Vaani', sans-serif; /* Custom font */
 }
 
 .hero-cta-button:hover {
   background: #a76ef7;
+}
+
+/* Image Grid Section */
+.hero-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 20px;
+  width: 100%;
+  padding: 30px;
+  max-width: 1200px;
+  margin-top: 30px;
+}
+
+.image-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.image-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.image-card:hover .image-card-img {
+  opacity: 0.7;
+}
+
+.image-card-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-card:hover .image-card-text {
+  opacity: 1;
+}
+
+.image-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: 'Mukta Vaani', sans-serif; /* Custom font */
+}
+
+.image-card-description {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-family: 'Mukta Vaani', sans-serif; /* Custom font */
 }
 
 /* Floating Orbs Styles */
@@ -110,6 +179,19 @@
   }
 }
 
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #a855f7;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out;
+  z-index: 9999;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 640px) {
   .hero-tagline {
@@ -127,5 +209,13 @@
 
   .hero-logo-image {
     max-height: 150px;
+  }
+
+  .image-card-title {
+    font-size: 1.2rem;
+  }
+
+  .image-card-description {
+    font-size: 0.9rem;
   }
 }

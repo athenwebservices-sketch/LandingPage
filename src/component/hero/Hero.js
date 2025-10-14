@@ -5,6 +5,12 @@ const Hero = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const heroRef = useRef(null);
+  const [fluidColors] = useState([
+    'rgba(250, 204, 21, 0.4)', // Gold
+    'rgba(236, 72, 153, 0.4)', // Pink
+    'rgba(59, 130, 246, 0.4)', // Blue
+    'rgba(34, 197, 94, 0.4)'   // Green
+  ]);
 
   // Track mouse position for interactive effects
   useEffect(() => {
@@ -27,17 +33,25 @@ const Hero = () => {
       <div
         className="hero-background"
         style={{
-          background: `radial-gradient(circle at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052 0%, rgba(255, 191, 203, 0.4) 40%, rgba(75, 19, 141, 0.6) 80%, transparent)`,
+          background: `radial-gradient(circle at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052 0%, ${fluidColors[1]} 40%, ${fluidColors[2]} 80%, transparent)`,
           opacity: isHovering ? 0.75 : 0.5,
+          transform: `scale(${isHovering ? 1.1 : 1})`,
+          filter: 'brightness(1.2) saturate(1.5)'
         }}
       />
       <div
         className="hero-background-conic"
         style={{
-          background: `conic-gradient(from ${cursorPosition.x * 0.1}deg at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052, transparent, rgba(255, 191, 203, 0.4))`,
+          background: `conic-gradient(from ${cursorPosition.x * 0.1}deg at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052, transparent, ${fluidColors[2]})`,
           opacity: isHovering ? 0.35 : 0.25,
+          transform: `scale(${isHovering ? 1.1 : 1})`
         }}
       />
+
+      {/* Gradient orbs */}
+      <div className="floating-orb floating-orb-1"></div>
+      <div className="floating-orb floating-orb-2"></div>
+      <div className="floating-orb floating-orb-3"></div>
 
       {/* Content wrapper */}
       <div className="hero-content-wrapper">
@@ -58,10 +72,22 @@ const Hero = () => {
         </a>
       </div>
 
-      {/* Floating Orbs */}
-      <div className="floating-orb floating-orb-1"></div>
-      <div className="floating-orb floating-orb-2"></div>
-      <div className="floating-orb floating-orb-3"></div>
+      {/* Image Grid Section */}
+      <div className="hero-image-grid">
+        {[...Array(5).keys()].map((index) => (
+          <div key={index} className="image-card">
+            <img
+              src={`/images/image${index + 1}.jpg`} // Replace with your image URLs
+              alt={`Image ${index + 1}`}
+              className="image-card-img"
+            />
+            <div className="image-card-text">
+              <h3 className="image-card-title">Event {index + 1}</h3>
+              <p className="image-card-description">Details of Event {index + 1}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
