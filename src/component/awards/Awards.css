@@ -1,4 +1,6 @@
-/* General Awards Section Styles */
+/* Scoped CSS for the Awards section */
+
+/* Awards Section */
 .awards-section {
   background-color: #3c0052;
   padding-top: 80px;
@@ -7,89 +9,105 @@
 }
 
 .awards-section .container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
-.awards-section h2 {
-  font-size: 3rem;
-  color: white;
+.awards-section .section-title {
   text-align: center;
-  margin-bottom: 2.5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 40px;
 }
 
-.awards-grid {
+.awards-section .awards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 20px;
 }
 
-.award-card {
+.awards-section .award-card {
   position: relative;
-  border-radius: 15px;
-  overflow: hidden;
   background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-}
-
-.award-card:hover {
-  transform: scale(1.05);
-}
-
-.award-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, #3c0052, #5c0a72);
-  opacity: 0.2;
-  transition: opacity 0.3s ease;
-}
-
-.award-card:hover .award-card-overlay {
-  opacity: 0.4;
-}
-
-.award-card-content {
-  position: relative;
-  z-index: 2;
+  border-radius: 20px;
+  overflow: hidden;
   padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.awards-section .award-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.awards-section .award-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom right, #3c0052, #3c0052);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.awards-section .award-card:hover .award-card-overlay {
+  opacity: 0.2;
+}
+
+.awards-section .award-card-content {
+  position: relative;
+  z-index: 1;
   text-align: center;
-  color: white;
 }
 
-.award-name {
+.awards-section .award-title {
   font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
-.award-register-button {
+.awards-section .register-btn {
+  display: inline-block;
   padding: 10px 20px;
   font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background-color: #ffbf47;
-  color: #3c0052;
+  font-weight: bold;
+  color: #f0c14b;
+  border: 2px solid #f0c14b;
   border-radius: 30px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.award-register-button:hover {
-  background-color: #ff9e2f;
+.awards-section .register-btn:hover {
+  background-color: #f0c14b;
+  color: #3c0052;
 }
 
-.award-card-bottom {
+.awards-section .award-card-bottom {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(45deg, #3c0052, #5c0a72);
+  height: 5px;
 }
 
-.award-card-overlay {
-  opacity: 0.2;
-  transition: opacity 0.3s ease;
+.awards-section .award-card-bottom.from-[#3c0052] {
+  background: linear-gradient(to right, #3c0052, #3c0052);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .awards-section .section-title {
+    font-size: 2rem;
+  }
+
+  .awards-section .awards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
