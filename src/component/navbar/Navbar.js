@@ -96,6 +96,12 @@ const Navbar = () => {
             >
               <FaTicketAlt className="social-icon-image" />
             </a>
+                          <a
+                href="/login"
+                target="_blank"
+              >
+                <FaTicketAlt className="social-icon-image" />
+              </a>
           </div>
         </div>
       </nav>
