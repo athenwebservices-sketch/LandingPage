@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 
 import { FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaWhatsapp, FaTicketAlt } from 'react-icons/fa';
-import '../styles/Navbar.css';  // or .scss, .module.css, etc.
+import './styles.css';  // or .scss, .module.css, etc.
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
