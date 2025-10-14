@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import './Hero.css';
 
-const Hero = () => {
+export default function Hero() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const heroRef = useRef(null);
+
   const [fluidColors] = useState([
     'rgba(250, 204, 21, 0.4)', // Gold
     'rgba(236, 72, 153, 0.4)', // Pink
@@ -12,15 +12,20 @@ const Hero = () => {
     'rgba(34, 197, 94, 0.4)'   // Green
   ]);
 
-  // Track mouse position for interactive effects
+  // Track mouse position for effects
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
-
+    const handleMouseMove = (e) => setCursorPosition({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  const heroImages = [
+    { name: "Awards", image: "776ab53715aa8dfc1de1a96dc55b740b6e536e84.png" },
+    { name: "Celebrity Announcements", image: "97312e3cb9c5c70b9c85dd66b852d34946ebdea9.jpg" },
+    { name: "Expo", image: "a785e33d9d3edf95bf6e35b05c06c4f0741d1492.jpg" },
+    { name: "KeyNotes", image: "be034e805aeafe0dbf416f594961adf62ad43466.jpg" },
+    { name: "Cosplay", image: "c8e8c933bdf438d5183b8bba2a38bb05b3da2978.jpeg" }
+  ];
 
   return (
     <section
@@ -29,9 +34,9 @@ const Hero = () => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      {/* Background layers */}
+      {/* Dynamic background layers */}
       <div
-        className="hero-background"
+        className="hero-bg"
         style={{
           background: `radial-gradient(circle at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052 0%, ${fluidColors[1]} 40%, ${fluidColors[2]} 80%, transparent)`,
           opacity: isHovering ? 0.75 : 0.5,
@@ -40,7 +45,7 @@ const Hero = () => {
         }}
       />
       <div
-        className="hero-background-conic"
+        className="hero-bg-conic"
         style={{
           background: `conic-gradient(from ${cursorPosition.x * 0.1}deg at ${cursorPosition.x}px ${cursorPosition.y}px, #3c0052, transparent, ${fluidColors[2]})`,
           opacity: isHovering ? 0.35 : 0.25,
@@ -48,48 +53,180 @@ const Hero = () => {
         }}
       />
 
-      {/* Gradient orbs */}
-      <div className="floating-orb floating-orb-1"></div>
-      <div className="floating-orb floating-orb-2"></div>
-      <div className="floating-orb floating-orb-3"></div>
+      {/* Animated gradient blobs */}
+      <div className="orb orb1"></div>
+      <div className="orb orb2"></div>
+      <div className="orb orb3"></div>
 
-      {/* Content wrapper */}
-      <div className="hero-content-wrapper">
-        <div className="hero-logo">
-          <img
-            src="/Logo1.png"
-            alt="Logo"
-            className="hero-logo-image"
-          />
-        </div>
+      {/* Content */}
+      <div className="hero-content">
+        <img src="/Logo1.png" alt="Logo" className="hero-logo" />
         <p className="hero-tagline">India's Biggest Celebration of Creativity</p>
         <p className="hero-dates">Oct 31st – 2nd Nov 2025 | Hyderabad | HICC Novotel</p>
-        <a
-          href="#tickets"
-          className="hero-cta-button"
-        >
-          Get Your Tickets Now
-        </a>
       </div>
 
-      {/* Image Grid Section */}
-      <div className="hero-image-grid">
-        {[...Array(5).keys()].map((index) => (
+      {/* Image grid */}
+      <div className="image-grid">
+        {heroImages.map((item, index) => (
           <div key={index} className="image-card">
-            <img
-              src={`/images/image${index + 1}.jpg`} // Replace with your image URLs
-              alt={`Image ${index + 1}`}
-              className="image-card-img"
-            />
-            <div className="image-card-text">
-              <h3 className="image-card-title">Event {index + 1}</h3>
-              <p className="image-card-description">Details of Event {index + 1}</p>
-            </div>
+            <img src={item.image} alt={item.name} className="image-card-img" />
+            <h3 className="image-card-title">{item.name}</h3>
           </div>
         ))}
       </div>
+
+      <style>{`
+        .hero-section {
+          position: relative;
+          width: 100vw;
+          min-height: 100vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          background: linear-gradient(to bottom right, #3c0052, #1a0033);
+          color: white;
+          text-align: center;
+          padding-bottom: 4rem;
+        }
+
+        .hero-bg, .hero-bg-conic {
+          position: absolute;
+          inset: 0;
+          transition: all 1s ease-in-out;
+          pointer-events: none;
+        }
+
+        .orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(100px);
+          mix-blend-mode: multiply;
+          opacity: 0.4;
+          animation: blob 7s infinite;
+        }
+
+        .orb1 {
+          top: 20%;
+          left: 15%;
+          width: 200px;
+          height: 200px;
+          background: linear-gradient(to right, #facc15, #ec4899, #3b82f6);
+          animation-delay: 0.5s;
+        }
+
+        .orb2 {
+          top: 25%;
+          right: 15%;
+          width: 200px;
+          height: 200px;
+          background: linear-gradient(to right, #ec4899, #3b82f6, #22c55e);
+          animation-delay: 1.5s;
+        }
+
+        .orb3 {
+          bottom: 10%;
+          left: 45%;
+          width: 200px;
+          height: 200px;
+          background: linear-gradient(to right, #3b82f6, #22c55e, #facc15);
+          animation-delay: 2.5s;
+        }
+
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 10;
+          margin-top: 100px;
+        }
+
+        .hero-logo {
+          height: 150px;
+          filter: drop-shadow(0 0 20px white);
+          transition: transform 0.3s;
+        }
+        .hero-logo:hover { transform: scale(1.1); }
+
+        .hero-tagline {
+          font-size: 1.5rem;
+          margin-top: 1rem;
+        }
+
+        .hero-dates {
+          font-size: 1rem;
+          color: #facc15;
+          margin-top: 0.5rem;
+          font-weight: bold;
+        }
+
+        .hero-btn {
+          display: inline-block;
+          margin-top: 1rem;
+          padding: 0.75rem 1.5rem;
+          border-radius: 9999px;
+          background: #facc15;
+          color: black;
+          font-weight: bold;
+          text-decoration: none;
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hero-btn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px #facc15;
+        }
+
+        .image-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 1rem;
+          max-width: 2000px;
+          width: 95%;
+          margin: 3rem auto 0;
+          z-index: 10;
+          background: #facc15;
+          border-radius: 1rem;
+          padding:10px;
+        }
+
+        .image-card {
+          background: #facc15;
+          
+
+          border-radius: 1rem;
+          overflow: hidden;
+          transition: transform 0.3s, box-shadow 0.3s;
+          cursor: pointer;
+          padding-top:20px;
+
+        }
+
+        .image-card:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px #facc15;
+        }
+
+        .image-card-img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 1rem;
+          
+
+        }
+
+        .image-card-title {
+          color: black;
+          font-weight: bold;
+          padding: 0.5rem;
+        }
+      `}</style>
     </section>
   );
-};
-
-export default Hero;
+}
