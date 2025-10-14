@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 
-import { FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaWhatsapp, FaTicketAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaTicketAlt } from 'react-icons/fa';
 import './styles.css';  // or .scss, .module.css, etc.
 
 const Navbar = () => {
@@ -100,7 +100,12 @@ const Navbar = () => {
                 href="/login"
                 target="_blank"
               >
-                <FaTicketAlt className="social-icon-image" />
+                Login
+              </a>
+              <a
+                href="/register"
+              >
+                Register
               </a>
           </div>
         </div>
