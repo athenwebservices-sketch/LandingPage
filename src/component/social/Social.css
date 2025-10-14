@@ -1,0 +1,86 @@
+/* Social Section Styles */
+.social-section {
+  width: 100%;
+  background-color: #3c0052; /* Dark background for the section */
+  padding: 4rem 0;
+  text-align: center;
+  color: white;
+}
+
+.social-container {
+  max-width: 6xl;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.social-heading {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  color: white;
+}
+
+.social-description {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.social-follow-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fbbf24; /* Yellow for follow text */
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.social-icon {
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.social-icon-image {
+  color: white;
+  font-size: 2rem;
+  transition: color 0.3s ease;
+}
+
+.social-icon.instagram:hover .social-icon-image {
+  color: #e1306c; /* Instagram color */
+}
+
+.social-icon.linkedin:hover .social-icon-image {
+  color: #0077b5; /* LinkedIn color */
+}
+
+.social-icon.whatsapp:hover .social-icon-image {
+  color: #25d366; /* WhatsApp color */
+}
+
+/* Small devices (mobile) */
+@media (max-width: 640px) {
+  .social-heading {
+    font-size: 2rem;
+  }
+
+  .social-follow-text {
+    font-size: 1.5rem;
+  }
+
+  .social-icons-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

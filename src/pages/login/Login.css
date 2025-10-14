@@ -1,0 +1,188 @@
+/* Styles for Login Page */
+.login-page {
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Form Container */
+.login-page .login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-page .login-form {
+  text-align: center;
+}
+
+.login-page h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.login-page .input-group {
+  margin-bottom: 20px;
+}
+
+.login-page .input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.login-page .input-field input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+  padding-left: 35px; /* for the icon */
+  font-size: 1rem;
+}
+
+.login-page .input-field .icon {
+  position: absolute;
+  left: 10px;
+  color: #b5b5b5;
+}
+
+.login-page .toggle-password {
+  background: transparent;
+  border: none;
+  color: #b5b5b5;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Form Options */
+.login-page .form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-page .remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.login-page .remember-me input {
+  margin-right: 8px;
+}
+
+.login-page .forgot-password {
+  color: #9b4dff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.login-page .forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.login-page .error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+.login-page .login-button-m {
+  width: 100%;
+  background-color: #9b4dff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-page .login-button-m:disabled {
+  background-color: #6c2bff;
+}
+
+.login-page .login-button-m:hover:not(:disabled) {
+  background-color: #7a4eff;
+}
+
+.login-page .divider {
+  margin: 20px 0;
+  color: #b5b5b5;
+}
+
+.login-page .google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #4285f4;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-page .google-button:disabled {
+  background-color: #3a6ac4;
+}
+
+.login-page .google-button:hover:not(:disabled) {
+  background-color: #357ae8;
+}
+
+.login-page .google-button .spinner {
+  border: 3px solid #fff;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Register Link */
+.login-page .register-link {
+  color: #b5b5b5;
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+.login-page .register-link span {
+  color: #9b4dff;
+  cursor: pointer;
+}
+
+.login-page .register-link span:hover {
+  text-decoration: underline;
+}
