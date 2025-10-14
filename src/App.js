@@ -4,6 +4,7 @@ import Home from '../src/pages/Home';
 import Navbar from './component/navbar/Navbar';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import AdminDashboard from './pages/admin-dashboard/Admin-dashboard';
 import { AuthProvider } from './context/AuthContext';
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -20,6 +21,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
             </Routes>
           </div>
         </Router>
