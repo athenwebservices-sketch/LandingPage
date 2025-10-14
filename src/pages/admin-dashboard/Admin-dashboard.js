@@ -7,7 +7,9 @@ const DashboardContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 20px;
+  padding-top: calc(80px + 2rem); /* 80px for navbar height, 2rem for other padding */
 `;
+
 
 const DashboardHeader = styled.div`
   display: flex;
