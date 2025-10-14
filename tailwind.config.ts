@@ -10,9 +10,6 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-		fontFamily: {
-        b612: ['B612', 'sans-serif'],
-      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
