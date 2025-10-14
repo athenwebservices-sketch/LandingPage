@@ -1,18 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import noBgImage from './no_bg_image.png';
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { FaInstagram, FaFacebookF } from 'react-icons/fa';
-import { FaLinkedinIn } from 'react-icons/fa';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Make sure this matches your icon library
+import { FaChevronLeft, FaChevronRight, FaInstagram, FaFacebookF, FaLinkedinIn, FaBars, FaTimes, FaWhatsapp, FaTicketAlt } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { FaWhatsapp ,FaTicketAlt} from 'react-icons/fa';
-import { AlignCenter } from 'lucide-react';
 
 export default function Home() {
-
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [activeYear, setActiveYear] = useState('2025');
@@ -28,71 +21,73 @@ export default function Home() {
   ]);
   const [showButton, setShowButton] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showRazorpay, setShowRazorpay] = useState(false);
   const isClient = typeof window !== 'undefined';
-  // Show or hide the button based on scroll position
-   const handleResize = () => {
-    if (isClient) {
-      setIsMobile(window.innerWidth <= 640); // Adjust based on your breakpoint
-    }
-  };
-
-  // Handle scroll position
-  const handleScroll = () => {
-    if (isClient && window.scrollY > 300) {
-      setShowButton(true);
-    } else {
-      setShowButton(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isClient) {
-      // Set initial mobile state
-      setIsMobile(window.innerWidth <= 640);
-
-      // Listen to window resize and scroll events
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('scroll', handleScroll);
-
-      // Cleanup event listeners on unmount
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [isClient]); // Empty dependency array ensures this runs once after mount
-
-  // Scroll to top function
-  const scrollToTop = () => {
-    if (isClient) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
-  const [currentColorIndex, setCurrentColorIndex] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // Gallery state
   const [galleryYear, setGalleryYear] = useState('2025');
   const [gallerySlideIndex, setGallerySlideIndex] = useState(0);
   const [galleryIsHovering, setGalleryIsHovering] = useState(false);
-  const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0); // for scrolling thumbs
-
+  const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
+  
   const THUMBNAILS_VISIBLE = 4;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
   const leaders = [
-  {
-    name: "Mr. Vikas Tiwari",
-    description: "President, MP- AVGC-XR Association",
-    color: "#FFC107",
-    image: "/Vikas.png"  // Replace with your image URL
-  },
-  {
-    name: "Mr. Sanjay Khimsera",
-    description: "President, Asifa",
-    color: "#F44336",
-    image: "/Sanjay.png"  // Replace with your image URL
-  },
-];
+    {
+      name: "Mr. Vikas Tiwari",
+      description: "President, MP- AVGC-XR Association",
+      color: "#FFC107",
+      image: "/Vikas.png"
+    },
+    {
+      name: "Mr. Sanjay Khimsera",
+      description: "President, Asifa",
+      color: "#F44336",
+      image: "/Sanjay.png"
+    },
+  ];
+
+
+
+// Function to change the title dynamically
+function changeTitle(newTitle: string): void {
+  if (typeof window !== 'undefined') {
+    document.title = newTitle;
+  }
+}
+
+// Function to dynamically change the favicon
+function changeFavicon(iconPath: string): void {
+  if (typeof window !== 'undefined') {
+    const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+
+    // Add a cache-busting query string to force a reload of the favicon
+    const cacheBustedIconPath = iconPath + '?v=' + new Date().getTime();
+
+    if (link) {
+      console.log(`Changing favicon to: ${cacheBustedIconPath}`);
+      link.href = cacheBustedIconPath;
+    } else {
+      const newLink = document.createElement('link');
+      newLink.rel = 'icon'; // Ensure this is exactly "icon"
+      newLink.type = 'image/x-icon'; // Ensure this is a valid image type
+      newLink.href = cacheBustedIconPath;
+      document.head.appendChild(newLink);
+      console.log(`Added new favicon: ${cacheBustedIconPath}`);
+    }
+  }
+}
+
+// Run the functions directly on page load or component mount
+if (typeof window !== 'undefined') {
+  changeTitle('Creators Street');
+  changeFavicon('/favicon.ico');  // Specify the icon path
+}
+
 
 
 
@@ -180,15 +175,93 @@ export default function Home() {
 
   const gallerySlides1 = galleryData[galleryYear];
 
-  // Sync thumbnail scroll with main slide
-  useEffect(() => {
-    const newStartIndex = Math.min(
-      Math.max(0, gallerySlideIndex - Math.floor(THUMBNAILS_VISIBLE / 2)),
-      gallerySlides1.length - THUMBNAILS_VISIBLE
-    );
-    setThumbnailStartIndex(newStartIndex);
-  }, [gallerySlideIndex, galleryYear]);
+  // Gallery slides data
+  const gallerySlides = [
+    { title: "Epic Cosplay Battle", description: "Witness the most incredible cosplay competition in India" },
+    { title: "Celebrity Meet & Greet", description: "Meet your favorite pop culture icons up close" },
+    { title: "Gaming Tournament", description: "Compete in the ultimate gaming championships" },
+    { title: "Artist Alley", description: "Discover amazing artwork from talented creators" },
+    { title: "Merchandise Paradise", description: "Shop exclusive collectibles and limited editions" },
+    { title: "Workshop Sessions", description: "Learn from industry experts and creators" }
+  ];
 
+  // Experience zones data
+  const experienceZones = [
+    {
+      name: "Comic Street",
+      color: "#FFC107",
+      description: "Publishers, Comics, Manga, Webtoons, Graphic Novels",
+      image: "/2024/4.png"
+    },
+    {
+      name: "Anime Street",
+      color: "#F44336",
+      description: "Anime Studios, Screenings, Merchandise",
+      image: "/coming_soon.jpg"
+    },
+    {
+      name: "Play Street",
+      color: "#00BCD4",
+      description: "Gaming, Board Games, Esports, AR/VR Fan Zones",
+      image: "/coming_soon.jpg"
+    },
+    {
+      name: "Innovation Street",
+      color: "#4CAF50",
+      description: "Blockchain, AI, Creator Economy, Startups & Emerging Tech",
+      image: "/coming_soon.jpg"
+    }
+  ];
+
+  const sections = ["Awards", "Cosplay", "Exhibit With Us", "Events"];
+
+  // Show or hide the button based on scroll position
+  const handleResize = () => {
+    if (isClient) {
+      setIsMobile(window.innerWidth <= 640);
+    }
+  };
+
+  // Handle scroll position
+  const handleScroll = () => {
+    if (isClient && window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    if (isClient) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  // Handle mobile menu toggle
+  const toggleMobileMenu = (e) => {
+    e.stopPropagation();
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Handle scroll to section
+  const handleScrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      closeMobileMenu();
+    }
+  };
+
+  // Gallery handlers
   const handleGalleryPrev = () => {
     setGallerySlideIndex((prev) =>
       prev === 0 ? gallerySlides1.length - 1 : prev - 1
@@ -217,15 +290,15 @@ export default function Home() {
 
   const handleThumbnailScrollRight = () => {
     setThumbnailStartIndex((prev) =>
-      Math.min(prev + 1, gallerySlides.length - THUMBNAILS_VISIBLE)
+      Math.min(prev + 1, gallerySlides1.length - THUMBNAILS_VISIBLE)
     );
   };
-
 
   const handleYearChange = (year) => {
     setSelectedYear(year);
     setCurrentSlide(0);
   };
+
   const scroll = (direction) => {
     const { current } = scrollRef;
     if (current) {
@@ -233,79 +306,46 @@ export default function Home() {
       current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
+
+  // Carousel handlers
+  const handleSlideChange = (index: number) => {
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % gallerySlides.length);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + gallerySlides.length) % gallerySlides.length);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
   // Track mouse position for interactive effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Gallery slides data
-  const gallerySlides = [
-    { title: "Epic Cosplay Battle", description: "Witness the most incredible cosplay competition in India" },
-    { title: "Celebrity Meet & Greet", description: "Meet your favorite pop culture icons up close" },
-    { title: "Gaming Tournament", description: "Compete in the ultimate gaming championships" },
-    { title: "Artist Alley", description: "Discover amazing artwork from talented creators" },
-    { title: "Merchandise Paradise", description: "Shop exclusive collectibles and limited editions" },
-    { title: "Workshop Sessions", description: "Learn from industry experts and creators" }
-  ];
-
-  // Experience zones data
-  const experienceZones = [
-  {
-    name: "Comic Street",
-    color: "#FFC107",
-    description: "Publishers, Comics, Manga, Webtoons, Graphic Novels",
-    image: "/2024/4.png"  // Replace with your image URL
-  },
-  {
-    name: "Anime Street",
-    color: "#F44336",
-    description: "Anime Studios, Screenings, Merchandise",
-    image: "/coming_soon.jpg"  // Replace with your image URL
-  },
-  {
-    name: "Play Street",
-    color: "#00BCD4",
-    description: "Gaming, Board Games, Esports, AR/VR Fan Zones",
-    image: "/coming_soon.jpg"  // Replace with your image URL
-  },
-  {
-    name: "Innovation Street",
-    color: "#4CAF50",
-    description: "Blockchain, AI, Creator Economy, Startups & Emerging Tech",
-    image: "/coming_soon.jpg"  // Replace with your image URL
-  }
-];
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Handle mouse movement for custom cursor and fluid background
+  // Sync thumbnail scroll with main slide
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
+    const newStartIndex = Math.min(
+      Math.max(0, gallerySlideIndex - Math.floor(THUMBNAILS_VISIBLE / 2)),
+      gallerySlides1.length - THUMBNAILS_VISIBLE
+    );
+    setThumbnailStartIndex(newStartIndex);
+  }, [gallerySlideIndex, galleryYear]);
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-  const sections = ["Awards", "Cosplay", "Exhibit With Us", "Events"];
-  const handleCloseMenu = (e) => {
-    if (mobileMenuOpen) {
-      setMobileMenuOpen(false);
-    }
-  };
-  const handleScrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
   // Auto-play carousel
   useEffect(() => {
     if (isAutoPlaying) {
@@ -321,23 +361,73 @@ export default function Home() {
     };
   }, [isAutoPlaying, gallerySlides.length]);
 
-  const handleSlideChange = (index: number) => {
-    setCurrentSlide(index);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000); // Resume auto-play after 10 seconds
-  };
+  // Initialize window event listeners
+  useEffect(() => {
+    if (isClient) {
+      // Set initial mobile state
+      setIsMobile(window.innerWidth <= 640);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % gallerySlides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+      // Listen to window resize and scroll events
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleScroll);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + gallerySlides.length) % gallerySlides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+      // Cleanup event listeners on unmount
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [isClient]);
+  const razorpayFormRef = useRef<HTMLFormElement>(null);
+  // Handle Razorpay script loading
+  useEffect(() => {
+  if (showRazorpay && razorpayFormRef.current) {
+    // Clear any existing content
+    razorpayFormRef.current.innerHTML = '';
+    
+    // Create a container div for the button
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'razorpay-button-container';
+    
+    // Create the script element
+    const script = document.createElement('script');
+    script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+    script.setAttribute('data-payment_button_id', 'pl_RT6DPFm2Zyh9RZ');
+    script.async = true;
+    
+    // Append the script to the container
+    buttonContainer.appendChild(script);
+    
+    // Append the container to the form
+    razorpayFormRef.current.appendChild(buttonContainer);
+    
+    // Add a fallback in case the script doesn't load
+    const timeout = setTimeout(() => {
+      if (!razorpayFormRef.current?.querySelector('.razorpay-payment-button')) {
+        // If the button doesn't appear after 3 seconds, show a fallback
+        buttonContainer.innerHTML = `
+          <div class="text-center">
+            <p class="text-red-500 mb-4">Payment button loading failed. Please try again.</p>
+            <button 
+              onclick="window.location.href='https://rzp.io/l/creatorsstreet'" 
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Pay with Razorpay
+            </button>
+          </div>
+        `;
+      }
+    }, 3000);
+    
+    return () => {
+      clearTimeout(timeout);
+      // Clean up when modal closes
+      if (razorpayFormRef.current) {
+        razorpayFormRef.current.innerHTML = '';
+      }
+    };
+  }
+}, [showRazorpay]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -356,182 +446,164 @@ export default function Home() {
         </svg>
       </div>
 
-      <div className="relative" onClick={handleCloseMenu}>
-  {/* Navbar */}
-  <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
-    <div className="container mx-auto px-4 py-4">
-      <div className="flex items-center justify-between">
-        {/* Logo First */}
-        <a href="/" className="cursor-pointer group">
-          <img
-            src="/Logo1.png"
-            alt="Creators Street Logo"
-            className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
-            style={{
-              filter: 'drop-shadow(0 0 8px white)',
-            }}
-          />
-        </a>
-
-        {/* Mobile Hamburger Menu */}
-        <div className="md:hidden flex items-center">
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // ⛔ prevent menu from closing immediately
-              setMobileMenuOpen(!mobileMenuOpen);
-            }}
-            className="text-white"
-          >
-            <FaBars className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Center: Desktop Nav (after logo) */}
-        <div className="hidden md:flex items-center space-x-6">
-          {sections.map((item) => (
-            <a
-              key={item}
-              onClick={(e) => {
-                e.preventDefault();
-                handleScrollToSection(item);
-              }}
-              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
-            >
-              {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <a href="/" className="cursor-pointer group">
+              <img
+                src="/Logo1.png"
+                alt="Creators Street Logo"
+                className="h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+                style={{
+                  filter: 'drop-shadow(0 0 8px white)',
+                }}
+              />
             </a>
-          ))}
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              {sections.map((item) => (
+                <a
+                  key={item}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScrollToSection(item);
+                  }}
+                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium cursor-pointer"
+                >
+                  {item.replace(/([A-Z])/g, ' $1').trim()}
+                </a>
+              ))}
+            </div>
+
+            {/* Desktop Social & Actions */}
+            <div className="hidden md:flex items-center space-x-4">
+              <a
+                href="https://www.instagram.com/creatorsstreet.official"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
+              >
+                <FaInstagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/creators-street/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+              >
+                <FaLinkedinIn className="w-5 h-5" />
+              </a>
+              <a
+                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+              >
+                Join Us
+              </a>
+              <a
+                href=""
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+              >
+                Buy Tickets
+              </a>
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={toggleMobileMenu}
+                className="text-white"
+              >
+                <FaBars className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
         </div>
+      </nav>
 
-        {/* Right: Social + Join Us */}
-        <div className="hidden md:flex items-center space-x-4">
-          <a
-            href="https://www.instagram.com/creatorsstreet.official"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-purple-600 hover:text-white transition-all duration-300"
-          >
-            <FaInstagram className="w-5 h-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/creators-street/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-          >
-            <FaLinkedinIn className="w-5 h-5" />
-          </a>
-          <a
-            href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-          >
-            Join Us
-          </a>
-          {/* Ticket Icon */}
-          <a
-            href="/tickets"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-yellow-600 hover:text-white transition-all duration-300"
-          >
-            <FaTicketAlt className="w-5 h-5" />
-          </a>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50">
+          <div className="flex flex-col space-y-4">
+            {/* Logo inside the mobile menu */}
+            <div className="mb-6">
+              <a href="/" className="cursor-pointer group">
+                <img
+                  src="/Logo1.png"
+                  alt="Creators Street Logo"
+                  className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
+                  style={{
+                    filter: 'drop-shadow(0 0 8px white)',
+                  }}
+                />
+              </a>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={closeMobileMenu}
+              className="text-white absolute top-4 right-4"
+            >
+              <FaTimes className="w-6 h-6" />
+            </button>
+
+            {/* Menu Items */}
+            {sections.map((item) => (
+              <a
+                key={item}
+                href=""
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollToSection(item);
+                }}
+              >
+                {item}
+              </a>
+            ))}
+
+            {/* Join Us Button */}
+            <a
+              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+            >
+              Join Us
+            </a>
+            <a
+              href=""
+              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
+            >
+              Buy Tickets
+            </a>
+
+            {/* Social Icons */}
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://www.facebook.com/creatorsstreet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-600 hover:text-white transition-all duration-300"
+              >
+                <FaFacebookF className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/creators-street/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
+              >
+                <FaLinkedinIn className="w-5 h-5" />
+              </a>
+              
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </nav>
+      )}
 
-  {/* Mobile Menu */}
-  {mobileMenuOpen && (
-    <div
-      onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
-      className="md:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/90 p-4 z-50"
-    >
-      <div className="flex flex-col space-y-4">
-        {/* Logo inside the mobile menu */}
-        <div className="mb-6">
-          <a href="/" className="cursor-pointer group">
-            <img
-              src="/Logo1.png"
-              alt="Creators Street Logo"
-              className="h-14 w-auto transition-transform duration-300 group-hover:scale-110 mx-auto"
-              style={{
-                filter: 'drop-shadow(0 0 8px white)',
-              }}
-            />
-          </a>
-        </div>
-
-        {/* Close Button (X) */}
-        <button
-          onClick={() => setMobileMenuOpen(false)}
-          className="text-white absolute top-4 right-4"
-        >
-          <FaTimes className="w-6 h-6" />
-        </button>
-
-        {/* Menu Items */}
-        {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
-          <a
-            key={item}
-            href=""
-            className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-            onClick={(e) => {
-              e.preventDefault();
-              handleScrollToSection(item);
-              setMobileMenuOpen(false); // Close the menu after clicking
-            }}
-          >
-            {item}
-          </a>
-        ))}
-
-        {/* Join Us Button */}
-        <a
-          href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-colors duration-300"
-          onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
-        >
-          Join Us
-        </a>
-
-        {/* Ticket, Facebook, and LinkedIn in Same Row */}
-        <div className="flex items-center space-x-4">
-          {/* Facebook Icon */}
-          <a
-            href="https://www.facebook.com/creatorsstreet"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-600 hover:text-white transition-all duration-300"
-          >
-            <FaFacebookF className="w-5 h-5" />
-          </a>
-
-          {/* LinkedIn Icon */}
-          <a
-            href="https://www.linkedin.com/company/creators-street/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-blue-700 hover:text-white transition-all duration-300"
-          >
-            <FaLinkedinIn className="w-5 h-5" />
-          </a>
-
-          {/* Ticket Icon */}
-          <a
-            href="/tickets"
-            className="p-2 bg-gray-800 rounded-full text-gray-300 hover:bg-yellow-600 hover:text-white transition-all duration-300"
-          >
-            <FaTicketAlt className="w-5 h-5" />
-          </a>
-        </div>
-      </div>
-    </div>
-  )}
-</div>
-
-
-
-
-
-        {showButton && (
+      {/* Scroll to Top Button */}
+      {showButton && (
         <button
           onClick={scrollToTop}
           className="fixed right-4 bottom-16 bg-yellow-400 text-black p-3 rounded-full shadow-lg transition-all duration-300 hover:bg-yellow-500 z-50"
@@ -543,116 +615,7 @@ export default function Home() {
         </button>
       )}
 
-      {/* Hero Section 
-     <section 
-          ref={heroRef}
-          className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-      >
-        {/* Enhanced Interactive fluid background effect 
-        <div 
-          className="absolute inset-0 transition-all duration-1000 ease-in-out"
-          style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[currentColorIndex]} 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
-            opacity: isHovering ? 0.75 : 0.5, // Increase opacity on hover for a stronger effect
-            transform: `scale(${isHovering ? 1.1 : 1})`,
-            filter: 'brightness(1.2) saturate(1.5)', // Enhance the brightness and saturation
-          }}
-        />
-        
-        {/* Additional interactive layers 
-        <div 
-          className="absolute inset-0 transition-all duration-1000 ease-in-out"
-          style={{
-            background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]}, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
-            opacity: isHovering ? 0.35 : 0.25, // Slightly more opacity for better contrast
-            transform: `scale(${isHovering ? 1.1 : 1})`,
-          }}
-        />
-        
-        {/* Reduced intensity gradient orbs 
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-500" />
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500" />
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500" />
-        
-        {/* Logo and content 
-        <div className="relative z-10 text-center fluid-cursor">
-          {/* Logo Section 
-          <div className="w-96 h-40 mx-auto mb-8 relative flex items-center justify-center">
-            {/* Glowing background 
-            <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
-            
-            {/* Logo image with enhancements 
-            <div className="relative w-full h-full flex items-center justify-center">
-              <img 
-                src="/no_bg_image.png" 
-                alt="Logo" 
-                className="h-full brightness-125 transform scale-110 transition-transform duration-300 hover:scale-115"
-                style={{
-                  filter: 'drop-shadow(0 0 25px white)' // More intense glow
-                }}
-              />
-            </div>
-          </div>
-          <p className="text-xl md:text-2xl text-yellow-200"> India's Greatest Pop-Culture Experience </p>
-        </div>
-      </section>
-
-
-
-      {/* Hero Section 
-      <section 
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        onMouseMove={(e) => {
-          if (heroRef.current) {
-            const rect = heroRef.current.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            
-            heroRef.current.style.setProperty('--mouse-x', `${x}%`);
-            heroRef.current.style.setProperty('--mouse-y', `${y}%`);
-          }
-        }}
-      >
-        {/* Fluid Background Animation 
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800">
-          <div className="absolute inset-0 opacity-50">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-            <div className="absolute top-3/4 left-3/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
-          </div>
-          
-          {/* Mouse-following gradient effect 
-          <div 
-            className="absolute inset-0 opacity-30 transition-all duration-300 ease-out"
-            style={{
-              background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(168, 85, 247, 0.4) 0%, transparent 50%)`
-            }}
-          ></div>
-        </div>
-
-        {/* Hero Content
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            Creators Street
-          </h1>
-          <p className="text-2xl md:text-4xl text-gray-300 mb-8 font-light">
-            India's Greatest Pop-Culture Experience
-          </p>
-          <div className="relative w-48 h-48 mx-auto mb-8 flex items-center justify-center">
-            <img src="/no_bg_image.png" alt="Logo" />
-        </div>
-
-
-        </div>
-              */}
-      {/* Floating orbs 
-        <div className="absolute top-20 left-20 w-32 h-32 bg-purple-500 rounded-full opacity-30 animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-24 h-24 bg-indigo-500 rounded-full opacity-30 animate-float delay-1000"></div>
-        <div className="absolute top-1/2 left-10 w-20 h-20 bg-pink-500 rounded-full opacity-30 animate-float delay-2000"></div>
-      </section>*/}
+      {/* Hero Section */}
       <section
         ref={heroRef}
         className="relative w-screen min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-visible pb-24"
@@ -664,7 +627,7 @@ export default function Home() {
         <div
           className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #3c0052 0%, ${fluidColors[(currentColorIndex + 1) % fluidColors.length]} 40%, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]} 80%, transparent)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #3c0052 0%, ${fluidColors[1]} 40%, ${fluidColors[2]} 80%, transparent)`,
             opacity: isHovering ? 0.75 : 0.5,
             transform: `scale(${isHovering ? 1.1 : 1})`,
             filter: 'brightness(1.2) saturate(1.5)',
@@ -673,7 +636,7 @@ export default function Home() {
         <div
           className="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
           style={{
-            background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, #3c0052, transparent, ${fluidColors[(currentColorIndex + 2) % fluidColors.length]})`,
+            background: `conic-gradient(from ${mousePosition.x * 0.1}deg at ${mousePosition.x}px ${mousePosition.y}px, #3c0052, transparent, ${fluidColors[2]})`,
             opacity: isHovering ? 0.35 : 0.25,
             transform: `scale(${isHovering ? 1.1 : 1})`,
           }}
@@ -684,11 +647,10 @@ export default function Home() {
         <div className="absolute top-32 right-20 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-1500 pointer-events-none" />
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2500 pointer-events-none" />
 
-        {/* Content wrapper with margin top to move content down */}
+        {/* Content wrapper */}
         <div className="relative z-10 w-full max-w-7xl px-6 py-12 flex flex-col items-center mt-12">
-
           {/* Logo Section */}
-          <div className="w-72 sm:w-96 flex flex-col items-center justify-center mb-6 mt-8 relative z-20" style={{ pointerEvents: 'auto' }}>
+          <div className="w-72 sm:w-96 flex flex-col items-center justify-center mb-6 mt-8 relative z-20">
             <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-yellow-500 rounded-xl blur-2xl opacity-80 animate-pulse" />
             <div className="relative w-full flex flex-col items-center justify-center py-4">
               <img
@@ -700,7 +662,6 @@ export default function Home() {
               <p className="font-b612 text-lg sm:text-xl md:text-2xl text-white-200 mb-6 mt-6 text-center whitespace-nowrap tracking-[3.5%] leading-[120%]">
                 India's Biggest Celebration of Creativity
               </p>
-
               <p className="font-b612 text-sm sm:text-xl text-lg font-semibold text-yellow-300 group-hover:text-yellow-400 transition-colors whitespace-nowrap">
                 Oct 31st – 2nd Nov 2025 | Hyderabad | HICC Novotel
               </p>
@@ -735,31 +696,22 @@ export default function Home() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
-
-
-
-
-
-
-
-
-      <section id="Awards" className="relative bg-[#3c0052] py-20 overflow-hidden">
+      {/* Awards Section */}
+      <section id="Awards" className="relative bg-[#3c0052] py-16 overflow-hidden mb-0">
         {/* Background Orbs */}
         <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
 
         {/* Section Content */}
-        <div className="relative z-20 container mx-auto px-6 py-10 sm:py-14 md:py-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+        <div className="relative z-20 container mx-auto px-6 py-10 sm:py-12 md:py-14">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-12">
             Creator Street Awards
           </h2>
 
-          {/* Adjust Grid to have 4 cards in a row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 name: "Comics Awards 2025",
@@ -777,7 +729,7 @@ export default function Home() {
                 color: "from-[#3c0052] to-[#3c0052]",
               },
               {
-                name: "Special Carogery Awards 2025",
+                name: "Special Category Awards 2025",
                 link: "https://docs.google.com/forms/d/e/1FAIpQLSdWxEblCh_nEGUJ5HSefC70Q0aigC_yGUo7WHDcQDPHbUeLFg/viewform?usp=header",
                 color: "from-[#3c0052] to-[#3c0052]",
               }
@@ -817,81 +769,65 @@ export default function Home() {
         </div>
       </section>
 
-
-
-<section id="Leaders" className="relative bg-[#3c0052] py-10 overflow-hidden flex items-center justify-center min-h-screen">
-  {/* Background Orbs */}
-  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
-  
-  {/* Section Content */}
-  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden flex flex-col items-center justify-center text-center">
-    <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">
-      Jury
-    </h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6 justify-center items-center">
-      {leaders.map((zone, index) => (
-        <div
-          key={index}
-          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
-          style={{
-            backgroundColor: `${zone.color}20`,
-            minHeight: '350px',
-            height: 'auto',
-            padding: '1rem',
-          }}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          {/* Hover Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
-          {/* Inner Content */}
-          <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
-            {/* Icon Container - Flex to center the image */}
-            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20 flex justify-center items-center">
-              <div className="w-full h-full flex items-center justify-center">
-                <img
-                  src={zone.image}
-                  alt={zone.name}
-                  className="w-full h-full object-cover"
-                />
+      {/* Leaders Section */}
+      <section id="Leaders" className="relative bg-[#3c0052] py-8 overflow-hidden flex items-center justify-center mt-0 mb-0">
+        {/* Background Orbs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+        
+        {/* Section Content */}
+        <div className="relative z-10 container mx-auto px-6 py-10 sm:py-12 md:py-14 pt-0 mt-0 flex flex-col items-center justify-center text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">
+            Jury
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6 justify-center items-center">
+            {leaders.map((zone, index) => (
+              <div
+                key={index}
+                className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
+                style={{
+                  backgroundColor: `${zone.color}20`,
+                  minHeight: '350px',
+                  height: 'auto',
+                  padding: '1rem',
+                }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                {/* Hover Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                {/* Inner Content */}
+                <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
+                  {/* Icon Container - Flex to center the image */}
+                  <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20 flex justify-center items-center">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img
+                        src={zone.image}
+                        alt={zone.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
+                    {zone.description}
+                  </p>
+                </div>
+                
+                {/* Bottom Accent */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
+                  style={{ backgroundColor: zone.color }}
+                ></div>
               </div>
-            </div>
-            
-            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
-              {zone.description}
-            </p>
+            ))}
           </div>
-          
-          {/* Bottom Accent */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
-            style={{ backgroundColor: zone.color }}
-          ></div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      {/* Cosplay Section */}
       <section id="Cosplay" className="relative w-screen min-h-screen flex items-center justify-center bg-[#3c0052] overflow-hidden">
         {/* Background Layers */}
         <div
@@ -917,7 +853,6 @@ export default function Home() {
 
         {/* Content Block */}
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-center w-full px-6 max-w-6xl space-y-12 md:space-y-0">
-
           {/* Left Content */}
           <div className="text-left max-w-sm">
             <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4">
@@ -959,323 +894,252 @@ export default function Home() {
         </div>
       </section>
 
-
-
-
-
-
-
-
-      {/* Interactive Experience Zones Section */}
+      {/* Experience Zones Section */}
       <section id="Exhibit With Us" className="relative bg-[#3c0052] py-20 overflow-hidden">
-  {/* Background Orbs */}
-  <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
-  <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
-  
-  {/* Section Content */}
-  <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-      Experience Zones
-    </h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {experienceZones.map((zone, index) => (
-        <div
-          key={index}
-          className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
-          style={{
-            backgroundColor: `${zone.color}20`,
-            minHeight: '350px',
-            height: 'auto',
-            padding: '1rem',
-          }}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          {/* Hover Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
-          {/* Inner Content */}
-          <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
-            {/* Icon Container */}
-            <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
-              <div className="w-full h-full flex items-center justify-center">
-                <img
-                  src={zone.image}
-                  alt={zone.name}
-                  className="w-full h-full object-cover"
-                />
+        {/* Background Orbs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-one animation-delay-500 pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#3c0052] via-[#3c0052] to-[#3c0052] rounded-full mix-blend-multiply filter blur-[160px] opacity-30 animate-blob-two animation-delay-1500 pointer-events-none" />
+        
+        {/* Section Content */}
+        <div className="relative z-10 container mx-auto px-6 py-10 sm:py-14 md:py-16 overflow-hidden">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+            Experience Zones
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {experienceZones.map((zone, index) => (
+              <div
+                key={index}
+                className="relative group cursor-pointer overflow-hidden rounded-xl bg-white/10 transition-all duration-300"
+                style={{
+                  backgroundColor: `${zone.color}20`,
+                  minHeight: '350px',
+                  height: 'auto',
+                  padding: '1rem',
+                }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                {/* Hover Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                {/* Inner Content */}
+                <div className="relative z-10 p-6 flex flex-col justify-between rounded-xl border border-white/20">
+                  {/* Icon Container */}
+                  <div className="aspect-square rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-white/10 to-white/20">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img
+                        src={zone.image}
+                        alt={zone.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
+                    {zone.description}
+                  </p>
+                </div>
+                
+                {/* Bottom Accent */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
+                  style={{ backgroundColor: zone.color }}
+                ></div>
               </div>
-            </div>
-            
-            <h3 className="text-xl font-bold mb-2 text-white">{zone.name}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed" style={{ maxHeight: '100px', overflow: 'hidden' }}>
-              {zone.description}
-            </p>
+            ))}
           </div>
-          
-          {/* Bottom Accent */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300"
-            style={{ backgroundColor: zone.color }}
-          ></div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
+      </section>
 
       {/* Gallery Section */}
-
       <section id="Events" className="relative bg-gradient-to-br from-[#3c0052] to-[#3c0052] py-16 sm:py-12">
-  <div className="relative z-10 container mx-auto px-6 sm:px-4 lg:px-12 max-w-full sm:max-w-3xl">
-    <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Past Events</h2>
-    
-    {/* Year Selector */}
-    <div className="flex justify-center space-x-4 mb-12">
-      {['2024', '2025'].map((year) => (
-        <button
-          key={year}
-          onClick={() => handleGalleryYearChange(year)}
-          className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${galleryYear === year
-            ? 'bg-yellow-400 text-black shadow-lg scale-105'
-            : 'bg-white/10 text-white hover:bg-white/20'
-            }`}
-        >
-          {year}
-        </button>
-      ))}
-    </div>
+        <div className="relative z-10 container mx-auto px-6 sm:px-4 lg:px-12 max-w-full sm:max-w-3xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Past Events</h2>
+          
+          {/* Year Selector */}
+          <div className="flex justify-center space-x-4 mb-12">
+            {['2024', '2025'].map((year) => (
+              <button
+                key={year}
+                onClick={() => handleGalleryYearChange(year)}
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${galleryYear === year
+                  ? 'bg-yellow-400 text-black shadow-lg scale-105'
+                  : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
 
-    <div className="mx-auto max-w-full sm:max-w-3xl">
-      <div className="relative mb-8">
-        
-        {/* Image Container */}
-        <div className={`w-full relative overflow-hidden rounded-xl transition-all duration-300 ${galleryIsHovering ? 'scale-105' : ''} 
-          ${isMobile ? 'h-auto' : 'h-[400px] sm:h-[500px] md:h-[600px]'}`}
-        >
-          <img
-            src={gallerySlides1[gallerySlideIndex].image}
-            alt={gallerySlides1[gallerySlideIndex].title}
-            className="w-full h-full object-cover sm:object-contain transition-all duration-300"
-            onMouseEnter={() => setGalleryIsHovering(true)}
-            onMouseLeave={() => setGalleryIsHovering(false)}
-          />
-        </div>
-
-        {/* Navigation buttons */}
-        <button
-          onClick={handleGalleryPrev}
-          className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <button
-          onClick={handleGalleryNext}
-          className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
-          onMouseEnter={() => setGalleryIsHovering(true)}
-          onMouseLeave={() => setGalleryIsHovering(false)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Thumbnail Carousel */}
-      <div className="flex items-center mb-8 space-x-2">
-        <button
-          onClick={handleThumbnailScrollLeft}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-0 flex-1 overflow-hidden">
-          {gallerySlides1
-            .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
-            .map((slide, index) => {
-              const realIndex = index + thumbnailStartIndex;
-              return (
-                <div
-                  key={realIndex}
-                  onClick={() => handleGallerySlideChange(realIndex)}
-                  className={`aspect-video overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
-                    ? 'scale-105'
-                    : 'opacity-60 hover:opacity-100'
-                    } rounded-lg`}
+          <div className="mx-auto max-w-full sm:max-w-3xl">
+            <div className="relative mb-8">
+              
+              {/* Image Container */}
+              <div className={`w-full relative overflow-hidden rounded-xl transition-all duration-300 ${galleryIsHovering ? 'scale-105' : ''} 
+                ${isMobile ? 'h-auto' : 'h-[400px] sm:h-[500px] md:h-[600px]'}`}
+              >
+                <img
+                  src={gallerySlides1[gallerySlideIndex].image}
+                  alt={gallerySlides1[gallerySlideIndex].title}
+                  className="w-full h-full object-cover sm:object-contain transition-all duration-300"
                   onMouseEnter={() => setGalleryIsHovering(true)}
                   onMouseLeave={() => setGalleryIsHovering(false)}
-                >
-                  <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className="w-full h-full object-contain rounded-lg"
-                  />
-                </div>
-              );
-            })}
-        </div>
+                />
+              </div>
 
-        <button
-          onClick={handleThumbnailScrollRight}
-          className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+              {/* Navigation buttons */}
+              <button
+                onClick={handleGalleryPrev}
+                className="absolute left-4 sm:left-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-      {/* Progress Dots */}
-      <div className="flex justify-center space-x-2">
-        {gallerySlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleGallerySlideChange(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
-              ? 'bg-yellow-400 scale-125'
-              : 'bg-gray-600 hover:bg-gray-400'
-              }`}
-            onMouseEnter={() => setGalleryIsHovering(true)}
-            onMouseLeave={() => setGalleryIsHovering(false)}
-          />
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+              <button
+                onClick={handleGalleryNext}
+                className="absolute right-4 sm:right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-2 rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg z-10"
+                onMouseEnter={() => setGalleryIsHovering(true)}
+                onMouseLeave={() => setGalleryIsHovering(false)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
+            {/* Thumbnail Carousel */}
+            <div className="flex items-center mb-8 space-x-2">
+              <button
+                onClick={handleThumbnailScrollLeft}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-0 flex-1 overflow-hidden">
+                {gallerySlides1
+                  .slice(thumbnailStartIndex, thumbnailStartIndex + THUMBNAILS_VISIBLE)
+                  .map((slide, index) => {
+                    const realIndex = index + thumbnailStartIndex;
+                    return (
+                      <div
+                        key={realIndex}
+                        onClick={() => handleGallerySlideChange(realIndex)}
+                        className={`aspect-video overflow-hidden cursor-pointer transition-all duration-300 ${gallerySlideIndex === realIndex
+                          ? 'scale-105'
+                          : 'opacity-60 hover:opacity-100'
+                          } rounded-lg`}
+                        onMouseEnter={() => setGalleryIsHovering(true)}
+                        onMouseLeave={() => setGalleryIsHovering(false)}
+                      >
+                        <img
+                          src={slide.image}
+                          alt={slide.title}
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
 
+              <button
+                onClick={handleThumbnailScrollRight}
+                className="bg-white/10 text-white hover:bg-white/20 p-2 rounded-full"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
-
-        <section id ="tickets" className="relative bg-[#3c0052] pt-12">
-  <div className="container mx-auto px-4">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      
-      {/* Left Content */}
-      <div className="space-y-6">
-        <div className="inline-block">
-          <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
-            Limited Time Offer
+            {/* Progress Dots */}
+            <div className="flex justify-center space-x-2">
+              {gallerySlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleGallerySlideChange(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${gallerySlideIndex === index
+                    ? 'bg-yellow-400 scale-125'
+                    : 'bg-gray-600 hover:bg-gray-400'
+                    }`}
+                  onMouseEnter={() => setGalleryIsHovering(true)}
+                  onMouseLeave={() => setGalleryIsHovering(false)}
+                />
+              ))}
+            </div>
           </div>
         </div>
+      </section>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-          Join the Ultimate Pop-Culture Experience at Creators Street 2025
-        </h2>
-
-        <div className="space-y-4 text-gray-300 text-lg">
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1"></span>
-            <span>Get exclusive access to all <strong>4 experience zones Animation, VFX, Film, and OTT</strong></span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1"></span>
-            <span>Meet top <strong>creators, artists, and industry leaders</strong> from across India</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1"></span>
-            <span>Participate in <strong>gaming tournaments, cosplay shows,</strong> and workshops</span>
-          </p>
-          <p className="flex items-start space-x-3">
-            <span className="text-yellow-400 text-xl mt-1"></span>
-            <span>Experience <strong>masterclasses, live performances,</strong> and panel sessions</span>
-          </p>
-        </div>
-
-        <p className="text-yellow-400 font-semibold text-lg">
-          Early Bird Offer — Limited Seats Only!
-        </p>
-
-        <div className="flex">
-          <button
-            className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center justify-center space-x-2">
-              {/* Replace "For Tickets" with a ticket logo */}
-              <span className="text-2xl">🎟️</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-        </div>
-      </div>
-
-      {/* Right Image */}
-      <div className="relative group">
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-purple-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
-        <div className="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700 rounded-2xl overflow-hidden border-2 border-white/20">
-          <div className="aspect-square w-full flex items-center justify-center p-8">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
-                <div className="relative w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
-                  <div className="text-6xl">🎪</div>
+      {/* Tickets Section */}
+      <section id="tickets" className="relative bg-[#3c0052] pt-16 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 gap-12 items-center justify-center text-center">
+            
+            {/* Left Content */}
+            <div className="space-y-6">
+              <div className="inline-block">
+                <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+                  Limited Time Offer
                 </div>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-white">Creators Street 2025</h3>
-                <p className="text-gray-300">Your adventure awaits!</p>
-                <div className="flex justify-center space-x-2 text-2xl">
-                  <span>🎨</span>
-                  <span>🎮</span>
-                  <span>🎭</span>
-                  <span>🏆</span>
-                  {/* Ticket with Glow Animation */}
-                  <span className="relative inline-block ticket-glow group-hover:scale-125 group-hover:rotate-6 transition-transform duration-500">
-                    <span className="absolute inset-0 blur-md bg-yellow-400 opacity-0 group-hover:opacity-60 rounded-full transition-opacity duration-500"></span>
-                    <span className="relative z-10">🎟</span>
+
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                Join the Ultimate Pop-Culture Experience at Creators Street 2025
+              </h2>
+
+              <div className="space-y-4 text-gray-300 text-lg">
+                <p className="flex items-start space-x-3 justify-center">
+                  <span className="text-yellow-400 text-xl mt-1"></span>
+                  <span>Get exclusive access to all <strong>4 experience zones: Animation, VFX, Film, and OTT</strong></span>
+                </p>
+                <p className="flex items-start space-x-3 justify-center">
+                  <span className="text-yellow-400 text-xl mt-1"></span>
+                  <span>Meet top <strong>creators, artists, and industry leaders</strong> from across India</span>
+                </p>
+                <p className="flex items-start space-x-3 justify-center">
+                  <span className="text-yellow-400 text-xl mt-1"></span>
+                  <span>Participate in <strong>gaming tournaments, cosplay shows,</strong> and workshops</span>
+                </p>
+                <p className="flex items-start space-x-3 justify-center">
+                  <span className="text-yellow-400 text-xl mt-1"></span>
+                  <span>Experience <strong>masterclasses, live performances,</strong> and panel sessions</span>
+                </p>
+              </div>
+
+              <p className="text-yellow-400 font-semibold text-lg">
+                Early Bird Offer — Limited Seats Only!
+              </p>
+
+              <div className="flex justify-center">
+                <button
+                
+                  className="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 hover:from-yellow-300 hover:to-yellow-400 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span className="text-2xl">🎟️</span>
+                    <span>Buy Tickets</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
                   </span>
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Image Section */}
-        <div className="absolute inset-0 w-full h-full">
-          <img src="/2024/4.png" alt="Creators Street 2025" className="object-cover w-full h-full rounded-2xl" />
-        </div>
-
-        {/* Floating badges */}
-        <div className="absolute top-4 left-4 bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold animate-float z-20">
-          Early Bird
-        </div>
-        <div className="absolute bottom-4 right-4 bg-purple-400 text-white px-4 py-2 rounded-full text-sm font-bold animate-float z-20">
-          Limited Seats
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
+      {/* Social Section */}
       <section className="w-full bg-[#3c0052] py-16 px-6 text-center text-white relative">
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Title */}
@@ -1286,64 +1150,48 @@ export default function Home() {
           {/* Subheading */}
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 text-xl md:text-2xl font-semibold">
             <span className="text-yellow-200">FOLLOW US ON</span>
-
           </div>
 
-          {/* Social Icons and Email */}
-          <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-            {/* Social Icons */}
-            <div className="flex gap-6">
-
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/creatorsstreet.official"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
+          {/* Social Icons */}
+          <div className="flex justify-center gap-6">
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/creatorsstreet.official"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black p-4 rounded-full hover:bg-[#E1306C] transition-all duration-300"
+            >
+              <svg
+                className="w-6 h-6 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
-                </svg>
-              </a>
+                <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+              </svg>
+            </a>
 
-              {/* LinkedIn */}
-              <a
-                href="https://www.linkedin.com/company/creators-street/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#0077b5] transition-all duration-300"
-              >
-                <FaLinkedinIn className="w-6 h-6 text-white" />
-              </a>
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/creators-street/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black p-4 rounded-full hover:bg-[#0077b5] transition-all duration-300"
+            >
+              <FaLinkedinIn className="w-6 h-6 text-white" />
+            </a>
 
-              {/* WhatsApp */}
-              <a
-                href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-black p-4 rounded-full hover:bg-[#25D366] transition-all duration-300"
-              >
-                <FaWhatsapp className="w-6 h-6 text-white" />
-              </a>
-
-            </div>
-
-
-            {/* Email Address */}
-
+            {/* WhatsApp */}
+            <a
+              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black p-4 rounded-full hover:bg-[#25D366] transition-all duration-300"
+            >
+              <FaWhatsapp className="w-6 h-6 text-white" />
+            </a>
           </div>
         </div>
       </section>
-
-
-
-
-
-
 
       {/* Footer */}
       <footer className="relative bg-gray-900 py-12">
@@ -1364,22 +1212,21 @@ export default function Home() {
               <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 {[
-  { text: 'About Us', id: 'hero' },
-  { text: 'Events', id: 'Events' },
-  { text: 'Tickets', id: 'tickets' }
-].map(({ text, id }) => (
-  <li key={id}>
-    <a
-      href={`#${id}`}
-      className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      {text}
-    </a>
-  </li>
-))}
-
+                  { text: 'About Us', id: 'hero' },
+                  { text: 'Events', id: 'Events' },
+                  { text: 'Tickets', id: 'tickets' }
+                ].map(({ text, id }) => (
+                  <li key={id}>
+                    <a
+                      href={`#${id}`}
+                      className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                      onMouseEnter={() => setIsHovering(true)}
+                      onMouseLeave={() => setIsHovering(false)}
+                    >
+                      {text}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -1390,7 +1237,7 @@ export default function Home() {
                 {[
                   { name: 'Instagram', icon: faInstagram, link: 'https://www.instagram.com/creatorsstreet.official' },
                   { name: 'LinkedIn', icon: faLinkedin, link: 'https://www.linkedin.com/company/creators-street/' },
-                  { name: 'WhatsApp', icon: faWhatsapp, link: 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v' }, // Add WhatsApp link
+                  { name: 'WhatsApp', icon: faWhatsapp, link: 'https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v' },
                 ].map(({ name, icon, link }) => (
                   <a
                     key={name}
@@ -1418,9 +1265,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Logo */}
-
-
           {/* Copyright */}
           <div className="border-t border-gray-800 mt-8 pt-8 text-center">
             <p className="text-gray-500 text-sm">
@@ -1429,6 +1273,43 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Razorpay Payment Modal */}
+      {showRazorpay && (
+  <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
+      <button
+        onClick={() => setShowRazorpay(false)}
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <h3 className="text-2xl font-bold text-gray-800 mb-4">Complete Your Purchase</h3>
+      
+      <div className="razorpay-payment-container">
+        <form ref={razorpayFormRef}>
+          {/* The Razorpay button will be dynamically inserted here */}
+        </form>
+      </div>
+      
+      {/* Fallback button */}
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600 mb-2">Or pay directly with Razorpay</p>
+        <a 
+          href="https://rzp.io/l/creatorsstreet" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+        >
+          Pay Now
+        </a>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* Custom Styles */}
       <style jsx global>{`
@@ -1442,12 +1323,46 @@ export default function Home() {
           50% { opacity: 0.6; }
         }
         
+        @keyframes blob {
+          0%, 100% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
         
         .animate-pulse {
           animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        
+        .animation-delay-500 {
+          animation-delay: 0.5s;
+        }
+        
+        .animation-delay-1000 {
+          animation-delay: 1s;
+        }
+        
+        .animation-delay-1500 {
+          animation-delay: 1.5s;
+        }
+        
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        
+        .animation-delay-2500 {
+          animation-delay: 2.5s;
+        }
+        
+        .animation-delay-3000 {
+          animation-delay: 3s;
         }
         
         .delay-1000 {
