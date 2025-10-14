@@ -1,0 +1,131 @@
+/* Hero Section Styles */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom right, #3c0052, #5c027d);
+  overflow: hidden;
+}
+
+.hero-background,
+.hero-background-conic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: all 1s ease-in-out;
+}
+
+.hero-content-wrapper {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+  color: white;
+}
+
+.hero-logo-image {
+  max-height: 200px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.hero-logo-image:hover {
+  transform: scale(1.1);
+}
+
+.hero-tagline {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hero-dates {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.hero-cta-button {
+  padding: 15px 30px;
+  font-size: 1.25rem;
+  background: #9b4dff;
+  color: white;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.hero-cta-button:hover {
+  background: #a76ef7;
+}
+
+/* Floating Orbs Styles */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0.4;
+  animation: float 6s ease-in-out infinite;
+  filter: blur(20px);
+}
+
+.floating-orb-1 {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-orb-2 {
+  width: 200px;
+  height: 200px;
+  top: 30%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.floating-orb-3 {
+  width: 120px;
+  height: 120px;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 4s;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .hero-tagline {
+    font-size: 1.5rem;
+  }
+
+  .hero-dates {
+    font-size: 1.25rem;
+  }
+
+  .hero-cta-button {
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+
+  .hero-logo-image {
+    max-height: 150px;
+  }
+}
