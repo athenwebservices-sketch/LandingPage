@@ -1,31 +1,27 @@
-// /src/containers/LogoutContainer.js
+// /src/containers/LogoutSuccess.js
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Custom auth context
 
-function LogoutContainer() {
-  const dispatch = useDispatch();
+function LogoutSuccess() {
   const navigate = useNavigate();
-  const { logout, logoutFailure } = useAuth(); // Access auth functions and state
 
   useEffect(() => {
-    const performLogout = async () => {
-      try {
-        console.log('logout successfull')
-        await logout(); // Call logout function from context
-        navigate('/login'); // Redirect to login page after successful logout
-      } catch (err) {
-        dispatch(logoutFailure('Logout failed. Please try again.'));
-        console.error('Logout failed', err);
-      }
-    };
+    // Redirect to login page after 3 seconds
+    const timer = setTimeout(() => {
+      navigate('/login');
+    }, 3000); // 3 seconds delay
 
-    performLogout(); // Automatically call logout when component is rendered
-  }, [dispatch, navigate, logout, logoutFailure]);
+    // Clean up the timer on component unmount
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
-  return null; // No UI is rendered, only logout action is triggered
+  return (
+    <div style={{ textAlign: 'center', padding: '50px' }}>
+      <h1>Logout Successful</h1>
+      <p>You have been logged out successfully. Redirecting to the login page...</p>
+    </div>
+  );
 }
 
-export default LogoutContainer;
+export default LogoutSuccess;
