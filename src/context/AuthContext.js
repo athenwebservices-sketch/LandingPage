@@ -133,21 +133,19 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
+
+      // Step 1: Register user and get sessionToken, otp response
       const response = await axios.post('/api/auth/register', userData);
 
-      const { user, token } = response.data;
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: { user, token }
-      });
-
-      return response.data;
+      if (response.data.message === 'User created. OTP sent to email. Use /verify-otp with otp and sessionToken.') {
+        const { sessionToken, otp } = response.data;
+        return { sessionToken, otp }; // Return sessionToken and OTP
+      } else if (response.data.message === 'User already exists but not verified. OTP sent again.') {
+        const { sessionToken, otp } = response.data;
+        return { sessionToken, otp }; // Return sessionToken and OTP
+      } else {
+        throw new Error('Unexpected response message');
+      }
     } catch (error) {
       dispatch({
         type: 'LOGIN_FAILURE',
@@ -156,6 +154,52 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+
+  // ✅ Verify OTP after registration
+  const verifyOtpAndCompleteRegistration = async (sessionToken, email, otp) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+
+      // Step 2: Verify OTP with the sessionToken and email
+      const otpResponse = await axios.post('/api/auth/verify-otp', {
+        sessionToken,
+        email,
+        otp
+      });
+
+      if (otpResponse.data.token) {
+        // OTP is verified successfully, now complete registration
+        const token = otpResponse.data.token;
+
+        const userData = otpResponse.data.user; // Assuming user info is in the response
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(userData));
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: { user: userData, token }
+        });
+
+        return otpResponse.data; // Return the final response with token
+      } else {
+        dispatch({
+          type: 'LOGIN_FAILURE',
+          payload: 'OTP verification failed'
+        });
+        throw new Error('OTP verification failed');
+      }
+    } catch (error) {
+      dispatch({
+        type: 'LOGIN_FAILURE',
+        payload: error.response?.data?.message || 'OTP verification failed'
+      });
+      throw error;
+    }
+  };
+
 
   // ✅ Google Login (NEW)
   const googleLogin = async (googleToken) => {
@@ -217,6 +261,7 @@ export const AuthProvider = ({ children }) => {
         clearError,
         loginFailure,
         googleLogin, // ✅ Added Google login here
+        verifyOtpAndCompleteRegistration
       }}
     >
       {children}

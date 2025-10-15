@@ -17,6 +17,7 @@ import CustomerDashboard from './pages/customer/CustomerDashboard';
 import SuperAdminDashboard from './pages/superAdmin/SuperAdminDashboard';
 import AdminOrders from './pages/admin/adminOrders/AdminOrders';
 import CustomerOrders from './pages/customer/customerOrders/CustomerOrders';
+import CustomerProducts from './pages/customer/customerProducts/CustomerProducts';
 import AdminUsers from './pages/admin/adminUsers/AdminUsers';
 import Logout from './pages/logout/Logout';
 import Payments from './pages/payment';
@@ -64,6 +65,7 @@ const App = () => {
       <Route element={<CustomerLayout />}>
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
         <Route path="/customer/orders" element={<CustomerOrders />} />
+        <Route path="/customer/products" element={<CustomerProducts />} />
       </Route>
 
       {/* Super Routes - Wrapped in SuperLayout */}
