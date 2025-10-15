@@ -107,6 +107,11 @@ const Navbar = () => {
               >
                 Register
               </a>
+              <a
+                href="/payment"
+              >
+                Payment
+              </a>
           </div>
         </div>
       </nav>

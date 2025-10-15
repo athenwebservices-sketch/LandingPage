@@ -1,0 +1,165 @@
+{
+  "info": {
+    "name": "Order Routes API",
+    "_postman_id": "b8e2a1b0-2d83-4cb3-8a84-1dfb7d4c7b1a",
+    "description": "Postman collection for order management endpoints (with API key + JWT auth)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    { \"productId\": \"<PRODUCT_ID>\", \"quantity\": 2 }\n  ],\n  \"shippingAddress\": { \"street\": \"123 Road\", \"city\": \"Delhi\" },\n  \"billingAddress\": { \"street\": \"123 Road\", \"city\": \"Delhi\" },\n  \"paymentMethod\": \"razorpay\",\n  \"currency\": \"INR\"\n}"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/orders", "host": ["{{BASE_URL}}"], "path": ["api", "orders"] }
+      }
+    },
+    {
+      "name": "Get All Orders (Paginated)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/orders?page=1&limit=10",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "orders"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Order by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}"] }
+      }
+    },
+    {
+      "name": "Cancel Order",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/cancel", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "cancel"] }
+      }
+    },
+    {
+      "name": "Update Order Status (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": { "mode": "raw", "raw": "{ \"status\": \"shipped\" }" },
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/status", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "status"] }
+      }
+    },
+    {
+      "name": "Create Shipment",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"trackingNumber\": \"TRK12345\",\n  \"carrier\": \"BlueDart\",\n  \"status\": \"shipped\"\n}"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/shipments", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "shipments"] }
+      }
+    },
+    {
+      "name": "Update Shipment",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": { "mode": "raw", "raw": "{ \"status\": \"delivered\" }" },
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/shipments/{{SHIPMENT_ID}}", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "shipments", "{{SHIPMENT_ID}}"] }
+      }
+    },
+    {
+      "name": "Create Return Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"reason\": \"Damaged product\", \"items\": [ { \"productId\": \"<PRODUCT_ID>\" } ] }"
+        },
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/returns", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", \"returns\"] }
+      }
+    },
+    {
+      "name": "List Returns for Order",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/returns", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "returns"] }
+      }
+    },
+    {
+      "name": "Approve Return (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/returns/{{RETURN_ID}}/approve", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "returns", "{{RETURN_ID}}", "approve"] }
+      }
+    },
+    {
+      "name": "Reject Return (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/returns/{{RETURN_ID}}/reject", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "returns", "{{RETURN_ID}}", "reject"] }
+      }
+    },
+    {
+      "name": "Mark Return as Received (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "x-api-key", "value": "{{API_KEY}}", "type": "text" },
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}", "type": "text" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/api/orders/{{ORDER_ID}}/returns/{{RETURN_ID}}/mark-received", "host": ["{{BASE_URL}}"], "path": ["api", "orders", "{{ORDER_ID}}", "returns", "{{RETURN_ID}}", "mark-r]()_]()_

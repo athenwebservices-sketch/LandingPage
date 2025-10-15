@@ -1,0 +1,35 @@
+{
+  "info": {
+    "name": "Order Routes API",
+    "_postman_id": "b8e2a1b0-2d83-4cb3-8a84-1dfb7d4c7b1a",
+    "description": "Postman collection for order management endpoints (with API key + JWT auth)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:4000"
+    },
+    {
+      "key": "API_KEY",
+      "value": "YOUR_API_KEY"
+    },
+    {
+      "key": "TOKEN",
+      "value": "JWT_TOKEN"
+    },
+    {
+      "key": "ORDER_ID",
+      "value": "ORDER_ID_HERE"
+    },
+    {
+      "key": "SHIPMENT_ID",
+      "value": "SHIPMENT_ID_HERE"
+    },
+    {
+      "key": "RETURN_ID",
+      "value": "RETURN_ID_HERE"
+    }
+  ]
+}
