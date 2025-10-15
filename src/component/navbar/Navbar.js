@@ -1,18 +1,26 @@
-import { useState } from 'react';
-import { FaFacebookF } from 'react-icons/fa';
-import { FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaTicketAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './styles.css';  // or .scss, .module.css, etc.
+import { useState, useEffect } from "react";
+import { FaFacebookF, FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaTicketAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import "./styles.css"; // updated file name
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const sections = ["Awards", "Cosplay", "Exhibit With Us", "Events"];
 
+  // Shrink navbar on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".cs-navbar");
+      if (window.scrollY > 50) navbar.classList.add("cs-navbar--scrolled");
+      else navbar.classList.remove("cs-navbar--scrolled");
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleCloseMenu = () => {
-    if (mobileMenuOpen) {
-      setMobileMenuOpen(false);
-    }
+    if (mobileMenuOpen) setMobileMenuOpen(false);
   };
 
   const handleScrollToSection = (id) => {
@@ -23,35 +31,32 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar-wrapper" onClick={handleCloseMenu}>
+    <div className="cs-navbar-wrapper" onClick={handleCloseMenu}>
       {/* Navbar */}
-      <nav className="navbar">
-        <div className="navbar-container">
-          <div className="navbar-logo">
-            <Link to="/" className="logo-link"> {/* Replace a with Link */}
-              <img
-                src="/Logo1.png"
-                alt="Creators Street Logo"
-                className="logo-image"
-              />
+      <nav className="cs-navbar">
+        <div className="cs-navbar-container">
+          {/* Logo */}
+          <div className="cs-navbar-logo">
+            <Link to="/" className="cs-logo-link">
+              <img src="/Logo1.png" alt="Creators Street Logo" className="cs-logo-image" />
             </Link>
           </div>
 
           {/* Mobile Hamburger Menu */}
-          <div className="navbar-mobile-menu">
+          <div className="cs-navbar-mobile-menu">
             <button
               onClick={(e) => {
-                e.stopPropagation(); // ⛔ prevent menu from closing immediately
+                e.stopPropagation();
                 setMobileMenuOpen(!mobileMenuOpen);
               }}
-              className="menu-icon"
+              className="cs-menu-icon"
             >
-              <FaBars className="icon" />
+              <FaBars className="cs-icon" />
             </button>
           </div>
 
-          {/* Desktop Nav */}
-          <div className="navbar-desktop-nav">
+          {/* Desktop Navigation */}
+          <div className="cs-navbar-desktop-nav">
             {sections.map((item) => (
               <a
                 key={item}
@@ -59,145 +64,101 @@ const Navbar = () => {
                   e.preventDefault();
                   handleScrollToSection(item);
                 }}
-                className="navbar-link"
+                className="cs-navbar-link"
               >
-                {item.replace(/([A-Z])/g, ' $1').trim()} {/* Formats ExhibitWithUs → Exhibit With Us */}
+                {item.replace(/([A-Z])/g, " $1").trim()}
               </a>
             ))}
           </div>
 
-          {/* Social + Join Us */}
-          <div className="navbar-social">
+          {/* Social + Links */}
+          <div className="cs-navbar-social">
             <a
               href="https://www.instagram.com/creatorsstreet.official"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon instagram"
+              className="cs-social-icon"
             >
-              <FaInstagram className="social-icon-image" />
+              <FaInstagram className="cs-social-icon-image" />
             </a>
             <a
               href="https://www.linkedin.com/company/creators-street/"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon linkedin"
+              className="cs-social-icon"
             >
-              <FaLinkedinIn className="social-icon-image" />
+              <FaLinkedinIn className="cs-social-icon-image" />
             </a>
-            <a
-              href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-              className="join-us-button"
-            >
+            <a href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v" className="cs-join-us-button">
               Join Us
             </a>
-            <Link
-              to="/tickets"
-              className="social-icon ticket"
-            >
-              <FaTicketAlt className="social-icon-image" />
+            <Link to="/tickets" className="cs-social-icon">
+              <FaTicketAlt className="cs-social-icon-image" />
             </Link>
-            <Link
-              to="/login"
-              className="nav-link" // Add a class for styling
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="nav-link" // Add a class for styling
-            >
-              Register
-            </Link>
-            <Link
-              to="/logout"
-              className="nav-link" // Add a class for styling
-            >
-              Logout
-            </Link>
-            <Link
-              to="/payment" // Change href to to
-              className="nav-link" // Add a class for styling
-            >
-              Payment
-            </Link>
+            <Link to="/login" className="cs-nav-link">Login</Link>
+            <Link to="/register" className="cs-nav-link">Register</Link>
+            <Link to="/logout" className="cs-nav-link cs-nav-link--logout">Logout</Link>
+            <Link to="/payment" className="cs-nav-link">Payment</Link>
           </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div
-          onClick={(e) => e.stopPropagation()} // ⛔ prevent click from closing menu
-          className="navbar-mobile-menu-container"
-        >
-          <div className="navbar-mobile-menu-content">
-            {/* Logo inside the mobile menu */}
-            <div className="navbar-mobile-logo">
-              <Link to="/" className="logo-link"> {/* Replace a with Link */}
-                <img
-                  src="/Logo1.png"
-                  alt="Creators Street Logo"
-                  className="logo-image"
-                />
+        <div onClick={(e) => e.stopPropagation()} className="cs-navbar-mobile-menu-container">
+          <div className="cs-navbar-mobile-menu-content">
+            <div className="cs-navbar-mobile-logo">
+              <Link to="/" className="cs-logo-link">
+                <img src="/Logo1.png" alt="Creators Street Logo" className="cs-logo-image" />
               </Link>
             </div>
 
-            {/* Close Button (X) */}
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="navbar-mobile-close-button"
-            >
-              <FaTimes className="icon" />
+            <button onClick={() => setMobileMenuOpen(false)} className="cs-navbar-mobile-close-button">
+              <FaTimes className="cs-icon" />
             </button>
 
-            {/* Menu Items */}
-            {["Awards", "Cosplay", "Exhibit With Us", "Events"].map((item) => (
+            {sections.map((item) => (
               <a
                 key={item}
                 href="#"
-                className="navbar-mobile-link"
+                className="cs-navbar-mobile-link"
                 onClick={(e) => {
                   e.preventDefault();
                   handleScrollToSection(item);
-                  setMobileMenuOpen(false); // Close the menu after clicking
+                  setMobileMenuOpen(false);
                 }}
               >
                 {item}
               </a>
             ))}
 
-            {/* Join Us Button */}
             <a
               href="https://chat.whatsapp.com/FsOZBOVFstj4PPSJjHZT4v"
-              className="navbar-mobile-join-button"
-              onClick={() => setMobileMenuOpen(false)} // Close the menu when clicking Join Us
+              className="cs-navbar-mobile-join-button"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Join Us
             </a>
 
-            {/* Social Icons */}
-            <div className="navbar-mobile-social-icons">
+            <div className="cs-navbar-mobile-social-icons">
               <a
                 href="https://www.facebook.com/creatorsstreet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon facebook"
+                className="cs-social-icon"
               >
-                <FaFacebookF className="social-icon-image" />
+                <FaFacebookF className="cs-social-icon-image" />
               </a>
               <a
                 href="https://www.linkedin.com/company/creators-street/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon linkedin"
+                className="cs-social-icon"
               >
-                <FaLinkedinIn className="social-icon-image" />
+                <FaLinkedinIn className="cs-social-icon-image" />
               </a>
-              <Link
-                to="/tickets"
-                className="social-icon ticket"
-              >
-                <FaTicketAlt className="social-icon-image" />
+              <Link to="/tickets" className="cs-social-icon">
+                <FaTicketAlt className="cs-social-icon-image" />
               </Link>
             </div>
           </div>

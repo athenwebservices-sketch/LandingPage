@@ -1,5 +1,7 @@
-/* --- General Setup & Variables --- */
-:root {
+/********************************************
+ * ADMIN ORDERS PAGE — SCOPED & SAFE STYLES
+ ********************************************/
+.admin-orders-page {
   --primary-color: #4a90e2;
   --primary-hover: #357abd;
   --background-color: #f4f7f6;
@@ -10,21 +12,18 @@
   --hover-bg: #f1f1f1;
   --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-body {
-  /* Add a top padding equal to the height of your navbar */
-  padding-top: 70px; 
-}
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
   background-color: var(--background-color);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text-color);
-  margin: 0;
+  width: 100%;
+  min-height: 100vh;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 /* --- Main Container --- */
-.orders-container {
+.admin-orders-page .orders-container {
   max-width: 1200px;
   margin: 0 auto;
   background-color: var(--container-bg);
@@ -33,165 +32,153 @@ body {
   box-shadow: var(--shadow);
 }
 
-.orders-container h1 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+.admin-orders-page .orders-container h1 {
+  margin: 0 0 1.5rem 0;
   font-size: 2rem;
-  color: var(--text-color);
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 0.5rem;
 }
 
-/* --- Table Styling --- */
-.orders-table {
+/* --- Table --- */
+.admin-orders-page .orders-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1.5rem;
   font-size: 0.95rem;
+  margin-bottom: 1.5rem;
 }
 
-.orders-table th,
-.orders-table td {
+.admin-orders-page .orders-table th,
+.admin-orders-page .orders-table td {
   padding: 12px 15px;
-  text-align: left;
   border-bottom: 1px solid var(--border-color);
+  text-align: left;
 }
 
-.orders-table thead th {
+.admin-orders-page .orders-table thead th {
   background-color: var(--header-bg);
   font-weight: 600;
-  color: var(--text-color);
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
 }
 
-.orders-table tbody tr {
-  transition: background-color 0.2s ease-in-out;
-}
-
-/* Zebra-striping for rows */
-.orders-table tbody tr:nth-of-type(even) {
+.admin-orders-page .orders-table tbody tr:nth-of-type(even) {
   background-color: #fcfcfc;
 }
 
-.orders-table tbody tr:hover {
+.admin-orders-page .orders-table tbody tr:hover {
   background-color: var(--hover-bg);
+  transform: scale(1.005);
+  transition: 0.2s ease-in-out;
 }
 
-.orders-table td {
-  color: #555;
-}
-
-/* --- Status Badge Styling --- */
-.orders-table td span[class^="status-"] {
+/* --- Status Badges --- */
+.admin-orders-page .orders-table td span[class^="status-"] {
+  display: inline-block;
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: capitalize;
-  display: inline-block;
 }
 
-.status-pending {
+.admin-orders-page .status-pending {
   background-color: #fff3cd;
   color: #856404;
 }
 
-.status-processing {
+.admin-orders-page .status-processing {
   background-color: #cce5ff;
   color: #004085;
 }
 
-.status-shipped {
+.admin-orders-page .status-shipped {
   background-color: #d1ecf1;
   color: #0c5460;
 }
 
-.status-delivered {
+.admin-orders-page .status-delivered {
   background-color: #d4edda;
   color: #155724;
 }
 
-.status-cancelled {
+.admin-orders-page .status-cancelled {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-/* --- Pagination Controls --- */
-.pagination-controls {
+/* --- Pagination --- */
+.admin-orders-page .pagination-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
 }
 
-.pagination-controls button {
+.admin-orders-page .pagination-controls button {
   background-color: var(--primary-color);
-  color: white;
+  color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: 0.3s ease;
 }
 
-.pagination-controls button:hover:not(:disabled) {
+.admin-orders-page .pagination-controls button:hover:not(:disabled) {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
 }
 
-.pagination-controls button:disabled {
+.admin-orders-page .pagination-controls button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-  transform: none;
 }
 
-.pagination-controls span {
+.admin-orders-page .pagination-controls span {
   font-size: 1rem;
-  color: #666;
+  color: #555;
   font-weight: 500;
 }
 
-/* --- Loading & Error States --- */
-.loading,
-.error {
+/* --- Loading / Error --- */
+.admin-orders-page .loading,
+.admin-orders-page .error {
   text-align: center;
   padding: 3rem;
   font-size: 1.2rem;
 }
 
-.loading {
+.admin-orders-page .loading {
   color: var(--primary-color);
 }
 
-.error {
+.admin-orders-page .error {
   color: #721c24;
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
   border-radius: 5px;
 }
 
-/* --- Responsive Design --- */
+/* --- Responsive --- */
 @media (max-width: 768px) {
-  body {
+  .admin-orders-page {
     padding: 1rem;
   }
 
-  .orders-container {
+  .admin-orders-page .orders-container {
     padding: 1rem;
   }
 
-  .orders-table {
+  .admin-orders-page .orders-table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
   }
 
-  .pagination-controls {
+  .admin-orders-page .pagination-controls {
     flex-direction: column;
     gap: 1rem;
   }
