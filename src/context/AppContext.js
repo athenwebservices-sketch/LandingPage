@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useReducer, useEffect, useRef } from 'react';
 import axios from '../lib/axiosInstance';
+import { useAuth } from './AuthContext'; // Assuming useAuth is from an AuthContext
 
 // Create a context for the app
 const AppContext = createContext();
@@ -71,16 +72,13 @@ const appReducer = (state, action) => {
   }
 };
 
-console.log(axios.defaults.headers.common,"axios App Context")
-
-// Initial state for the app context
+// Initial state for the app context (removed token)
 const initialState = {
   allUsers: [],
   orders: [],
   products: [],
   loading: false,
   error: null,
-  token: localStorage.getItem('token'),
   productsFetched: false,
 };
 
@@ -88,6 +86,14 @@ const initialState = {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const isInitialized = useRef(false);
+  const { token } = useAuth(); // Get token from useAuth hook
+
+  // Set axios default authorization header if token exists
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+  }, [token]);
 
   useEffect(() => {
     // Only run this effect once when the component mounts
@@ -164,7 +170,6 @@ export const AppProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/products', productData, {
         headers: {
-          Authorization: `Bearer ${state.token}`,
           'Content-Type': 'application/json',
         },
       });
@@ -187,7 +192,6 @@ export const AppProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/orders', orderData, {
         headers: {
-          Authorization: `Bearer ${state.token}`,
           'Content-Type': 'application/json',
         },
       });

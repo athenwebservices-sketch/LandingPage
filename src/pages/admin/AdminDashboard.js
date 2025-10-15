@@ -134,9 +134,9 @@ const StatusBadge = styled.span`
 
 const AdminDashboard = () => {
   console.log("hi")
-  const { user } = useAuth();
+  const { user ,token} = useAuth();
   console.log(user);  // This should now log the user when it's available
-
+  console.log(token)
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
