@@ -1,89 +1,193 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Custom auth context
+import { useAuth } from '../../context/AuthContext';
 import Navbar from '../../component/navbar/Navbar';
 import LoginForm from '../../component/loginForm/LoginForm';
 
-
 function LoginContainer() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { login, isAuthenticated, loading, error, loginFailure, user } = useAuth(); // Access auth functions and state
+  const { login, isAuthenticated, loading, error, user } = useAuth();
+
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
   });
-  const [showPassword, setShowPassword] = useState(false);
-  useEffect(() => {
-  if (isAuthenticated) {
-    // You can safely access user here after the state is updated
-    console.log(user); // This should print the user now
-    alert(`Welcome ${user?.name || 'User'}`); // Show welcome message with the user name
-    
-  }
-}, [isAuthenticated, user]); // Listen to changes in isAuthenticated or user
 
-  const togglePassword = () => setShowPassword(!showPassword);
+  const [showPassword, setShowPassword] = useState(false);
+  const googleLoaded = useRef(false);
+
+  // ✅ Load Google SDK dynamically
+  useEffect(() => {
+    if (googleLoaded.current) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => {
+      console.log('✅ Google SDK loaded');
+      googleLoaded.current = true;
+      initializeGoogleSignIn();
+    };
+
+    script.onerror = () => console.error('❌ Failed to load Google SDK');
+    document.body.appendChild(script);
+  }, []);
+
+  // ✅ Initialize Google SDK after loading
+  const initializeGoogleSignIn = () => {
+    const clientId =
+      (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLIENT_ID) ||
+      process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+    if (!clientId) {
+      console.error('❌ Google Client ID missing. Check your .env file.');
+      alert('Google Client ID missing. Please check your .env file.');
+      return;
+    }
+
+    if (!window.google || !window.google.accounts) {
+      console.error('❌ Google SDK not ready.');
+      return;
+    }
+
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+      callback: handleGoogleResponse,
+      auto_select: false,
+    });
+
+    console.log('✅ Google initialized with Client ID:', clientId);
+  };
+
+  // ✅ Handle Google login button click
+  const loginWithGoogle = () => {
+    if (!googleLoaded.current || !window.google?.accounts?.id) {
+      alert('Google SDK not loaded yet. Please refresh and try again.');
+      return;
+    }
+
+    window.google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        console.warn('⚠️ Google One Tap not displayed:', notification.getNotDisplayedReason());
+      }
+    });
+  };
+
+  // ✅ Handle Google login response and send to backend
+  const handleGoogleResponse = async (response) => {
+    try {
+      const token = response?.credential;
+      if (!token) {
+        alert('Google login failed: No token received.');
+        return;
+      }
+
+      console.log('✅ Google token received:', token);
+
+      // 🔥 Send token to your backend (localhost:5000)
+      const res = await fetch('http://localhost:5000/api/auth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error('❌ Backend Google login failed:', data);
+        alert(data.message || 'Google login failed on server.');
+        return;
+      }
+
+      console.log('✅ Google login success:', data);
+
+      // You can optionally store token & user info
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      alert(`Welcome ${data.user?.name || 'User'}!`);
+      navigate('/');
+    } catch (err) {
+      console.error('❌ Google login failed:', err);
+      alert('Google login failed. Please try again.');
+    }
+  };
+
+  // ✅ Redirect if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+      navigate('/');
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
     setLoginForm((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  // Handle form submission
+  const togglePassword = () => setShowPassword(!showPassword);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = loginForm;
-
-    // Validation
     if (!email || !password) {
-      dispatch(loginFailure('Please fill in all fields.'));
+      alert('Please fill in all fields.');
       return;
     }
-
     try {
-      await login(email, password); // Call login function from context
+      await login(email, password);
     } catch (err) {
-      // Error is already handled in context, but if needed, you can dispatch it here too.
       console.error('Login failed', err);
     }
   };
 
-  // Handle login with Google
-  const loginWithGoogle = () => {
-    if (!window.google || !window.google.accounts?.id) {
-      dispatch(loginFailure('Google SDK not loaded. Please try again.'));
-      return;
-    }
-    window.google.accounts.id.prompt();
-  };
-
-  // Navigation helpers
   const navigateToForgotPassword = () => navigate('/forgot-password');
   const navigateToRegister = () => navigate('/register');
 
   return (
     <>
-    <Navbar></Navbar>
-    <LoginForm
-      loginForm={loginForm}
-      loading={loading}
-      errorMessage={error}
-      showPassword={showPassword}
-      onChange={onChange}
-      togglePassword={togglePassword}
-      onSubmit={onSubmit}
-      loginWithGoogle={loginWithGoogle}
-      navigateToForgotPassword={navigateToForgotPassword}
-      navigateToRegister={navigateToRegister}
-    />
+      <Navbar />
+      <div className="login-container">
+        <div className="login-wrapper">
+          <h2 className="login-title">Sign in to your account</h2>
+
+          <LoginForm
+            loginForm={loginForm}
+            loading={loading}
+            errorMessage={error}
+            showPassword={showPassword}
+            onChange={onChange}
+            togglePassword={togglePassword}
+            onSubmit={onSubmit}
+            loginWithGoogle={loginWithGoogle}
+            navigateToForgotPassword={navigateToForgotPassword}
+            navigateToRegister={navigateToRegister}
+          />
+
+          <div className="google-login-container">
+            <button
+              type="button"
+              onClick={loginWithGoogle}
+              className="google-login-btn"
+            >
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google logo"
+                className="google-icon"
+              />
+              <span>Sign in with Google</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </>
-    
   );
 }
 
