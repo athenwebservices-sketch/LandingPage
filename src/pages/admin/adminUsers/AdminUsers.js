@@ -1,110 +1,131 @@
+// src/pages/Admin/AdminUsers/AdminUsers.js
 import React, { useEffect, useState } from 'react';
 import './AdminUsers.css';
 import axios from '../../../lib/axiosInstance';
 import { useAuth } from '../../../context/AuthContext';
-import './AdminUsers.css';
 
 const AdminUsers = () => {
-    const [orders, setOrders] = useState([]);
-    const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0 });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const { token } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { token } = useAuth();
 
-    // Function to fetch orders from API, now accepts a page number
-    const fetchOrders = async (page = 1) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axios.get(`/api/users?page=${page}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+  // Fetch users with pagination
+  const fetchUsers = async (page = 1) => {
+    setLoading(true);
+    setError(null);
 
-            // Axios automatically parses JSON and throws for error statuses
-            const { orders: newOrders, page: currentPage, limit, total } = response.data;
+    try {
+      const response = await axios.get(`/api/users?page=${page}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
 
-            setOrders(newOrders);
-            setPagination({ page: currentPage, limit, total });
+      const data = response.data;
 
-        } catch (err) {
-            // Use a more descriptive error message if available
-            setError(err.response?.data?.message || err.message || 'Failed to fetch orders');
-        } finally {
-            setLoading(false);
-        }
-    };
+      // Handle both { users: [...] } and plain array responses safely
+      const newUsers = Array.isArray(data) ? data : data.users || [];
 
-    // Fetch the first page of orders when the component mounts or token changes
-    useEffect(() => {
-        if (token) {
-            fetchOrders(1);
-        }
-    }, [token]); // Dependency on token ensures we refetch if it becomes available
+      setUsers(newUsers);
+      setPagination({
+        page: data.page || 1,
+        limit: data.limit || 20,
+        total: data.total || newUsers.length,
+      });
 
-    // Handlers for pagination buttons
-    const handleNextPage = () => {
-        const totalPages = Math.ceil(pagination.total / pagination.limit);
-        if (pagination.page < totalPages) {
-            fetchOrders(pagination.page + 1);
-        }
-    };
+    } catch (err) {
+      setError(err.response?.data?.message || err.message || 'Failed to fetch users');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handlePreviousPage = () => {
-        if (pagination.page > 1) {
-            fetchOrders(pagination.page - 1);
-        }
-    };
+  // Load users on mount or when token becomes available
+  useEffect(() => {
+    if (token) {
+      fetchUsers(1);
+    }
+  }, [token]);
 
-    if (loading) return <div className="loading">Loading...</div>;
-    if (error) return <div className="error">{error}</div>;
+  // Pagination Handlers
+  const handleNextPage = () => {
+    const totalPages = Math.ceil(pagination.total / pagination.limit);
+    if (pagination.page < totalPages) {
+      fetchUsers(pagination.page + 1);
+    }
+  };
 
-    return (
-        <div className="orders-container">
-            <h1>Manage Orders</h1>
-            <table className="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer ID</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => (
-                        <tr key={order._id}>
-                            <td>#{order._id}</td>
-                            {/* In a real app, you'd fetch user details to display the name.
-                                For now, we display the user ID. */}
-                            <td>{order.user}</td>
-                            <td>${order.total.toLocaleString()}</td>
-                            <td><span className={`status-${order.status}`}>{order.status}</span></td>
-                            <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+  const handlePreviousPage = () => {
+    if (pagination.page > 1) {
+      fetchUsers(pagination.page - 1);
+    }
+  };
 
-            {/* Pagination Controls */}
-            <div className="pagination-controls">
-                <button onClick={handlePreviousPage} disabled={pagination.page === 1}>
-                    Previous
-                </button>
-                <span>
-                    Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit) || 1}
-                </span>
-                <button
-                    onClick={handleNextPage}
-                    disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
-                >
-                    Next
-                </button>
-            </div>
-        </div>
-    );
+  // UI States
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+
+  return (
+    <div className="users-container">
+      <h1>Manage Users</h1>
+
+      <table className="users-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {Array.isArray(users) && users.length > 0 ? (
+            users.map((user) => (
+              <tr key={user._id}>
+                <td>#{user._id}</td>
+                <td>{user.name || 'N/A'}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <span className={`status-${user.isActive ? 'active' : 'inactive'}`}>
+                    {user.isActive ? 'Active' : 'Inactive'}
+                  </span>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" style={{ textAlign: 'center', padding: '1rem' }}>
+                No users found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      {/* Pagination Controls */}
+      <div className="pagination-controls">
+        <button onClick={handlePreviousPage} disabled={pagination.page === 1}>
+          Previous
+        </button>
+        <span>
+          Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit) || 1}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default AdminUsers;

@@ -19,7 +19,8 @@ import AdminOrders from './pages/admin/adminOrders/AdminOrders';
 import CustomerOrders from './pages/customer/customerOrders/CustomerOrders';
 import AdminUsers from './pages/admin/adminUsers/AdminUsers';
 import Logout from './pages/logout/Logout';
-import Payments from './pages/payment'
+import Payments from './pages/payment';
+import AdminProducts from './pages/admin/adminProducts/AdminProducts';
 
 const App = () => {
   const { user, isAuthenticated } = useAuth();
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/products" element={<AdminProducts />} />
       </Route>
 
       {/* Customer Routes - Wrapped in CustomerLayout */}

@@ -1,16 +1,18 @@
+// src/pages/Admin/AdminDashboard/AdminDashboard.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styled from 'styled-components';
-import {useApp} from '../../context/AppContext';
-//console.log("In Admin Dashboard")
+import axios from '../../lib/axiosInstance';
+import { useApp } from '../../context/AppContext';
+
+// Styled Components
 const DashboardContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 20px;
-  padding-top: calc(80px + 2rem); /* 80px for navbar height, 2rem for other padding */
+  padding-top: calc(80px + 2rem);
 `;
-
 
 const DashboardHeader = styled.div`
   display: flex;
@@ -133,49 +135,74 @@ const StatusBadge = styled.span`
   }
 `;
 
+// MAIN COMPONENT
 const AdminDashboard = () => {
- // console.log("hi")
-  const { user ,token} = useAuth();
-  //console.log(user);  // This should now log the user when it's available
- // console.log(token);
-  const tmep=useApp();
-  //console.log(tmep)
+  const { user, token } = useAuth();
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
     totalUsers: 0,
-    totalProducts: 0
+    totalProducts: 0,
   });
-
   const [recentOrders, setRecentOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      //console.log('User data:', user);  // Logs user data when it is available
-    } else {
-    //  console.log('User is not authenticated');  // Logs if user is null or not authenticated
-    }
-  }, [user]);  // Only re-run this when the `user` changes
+    const fetchDashboardData = async () => {
+      if (!token) return;
+      setLoading(true);
 
-  useEffect(() => {
-    // Mock data - replace with actual API calls
-    setStats({
-      totalOrders: 1234,
-      totalRevenue: 45678,
-      totalUsers: 890,
-      totalProducts: 567
-    });
+      try {
+        // Fetch all data in parallel for performance
+        const [productsRes, usersRes, ordersRes] = await Promise.all([
+          axios.get('/api/products', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/users', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/orders', { headers: { Authorization: `Bearer ${token}` } }),
+        ]);
 
-    setRecentOrders([
-      { id: 1, customer: 'John Doe', total: 299, status: 'pending', date: '2024-01-15' },
-      { id: 2, customer: 'Jane Smith', total: 599, status: 'completed', date: '2024-01-14' },
-      { id: 3, customer: 'Bob Johnson', total: 199, status: 'pending', date: '2024-01-14' },
-      { id: 4, customer: 'Alice Brown', total: 799, status: 'cancelled', date: '2024-01-13' },
-    ]);
-  }, []); // Only run this once on component mount
+        // Extract arrays safely
+        const products = productsRes.data?.products || productsRes.data || [];
+        const users = usersRes.data?.users || usersRes.data || [];
+        const orders = ordersRes.data?.orders || ordersRes.data || [];
 
-  if (!user) {
-    return <div>Loading...</div>;  // Show a loading message while user data is being fetched
+        // ✅ Calculate total revenue from orders
+        const totalRevenue = Array.isArray(orders)
+          ? orders.reduce((sum, order) => {
+              const total =
+                Number(order.totalAmount) ||
+                Number(order.total) ||
+                0;
+              return sum + total;
+            }, 0)
+          : 0;
+
+        // ✅ Get 5 most recent orders
+        const recent = Array.isArray(orders)
+          ? orders
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .slice(0, 5)
+          : [];
+
+        setStats({
+          totalOrders: orders.length,
+          totalRevenue,
+          totalUsers: users.length,
+          totalProducts: products.length,
+        });
+
+        setRecentOrders(recent);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, [token]);
+
+  if (!user || loading) {
+    return <div>Loading dashboard...</div>;
   }
 
   return (
@@ -189,6 +216,7 @@ const AdminDashboard = () => {
         </ActionButtons>
       </DashboardHeader>
 
+      {/* ✅ Dynamic Stats */}
       <StatsGrid>
         <StatCard>
           <StatIcon>📦</StatIcon>
@@ -215,6 +243,7 @@ const AdminDashboard = () => {
         </StatCard>
       </StatsGrid>
 
+      {/* ✅ Recent Orders */}
       <RecentOrders>
         <SectionTitle>Recent Orders</SectionTitle>
         <OrderTable>
@@ -228,19 +257,27 @@ const AdminDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {recentOrders.map(order => (
-              <tr key={order.id}>
-                <td>#{order.id}</td>
-                <td>{order.customer}</td>
-                <td>${order.total}</td>
-                <td>
-                  <StatusBadge className={order.status}>
-                    {order.status}
-                  </StatusBadge>
+            {recentOrders.length > 0 ? (
+              recentOrders.map((order) => (
+                <tr key={order._id || order.id}>
+                  <td>#{order._id || order.id}</td>
+                  <td>{order.user?.name || order.customer || 'N/A'}</td>
+                  <td>${(order.totalAmount || order.total || 0).toLocaleString()}</td>
+                  <td>
+                    <StatusBadge className={order.status || 'pending'}>
+                      {order.status || 'pending'}
+                    </StatusBadge>
+                  </td>
+                  <td>{new Date(order.createdAt || order.date).toLocaleDateString()}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" style={{ textAlign: 'center', padding: '1rem' }}>
+                  No recent orders found.
                 </td>
-                <td>{order.date}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </OrderTable>
       </RecentOrders>
