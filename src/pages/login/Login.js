@@ -1,28 +1,33 @@
-// /src/containers/LoginContainer.js
-
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Custom auth context
 
-import LoginForm from '../../component/loginForm/LoginForm'
+import LoginForm from '../../component/loginForm/LoginForm';
 
 function LoginContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { login, isAuthenticated, loading, error, clearError,loginFailure } = useAuth(); // Access auth functions and state
+  const { login, isAuthenticated, loading, error, loginFailure, user } = useAuth(); // Access auth functions and state
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
     rememberMe: false
   });
   const [showPassword, setShowPassword] = useState(false);
-
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/register'); // Redirect if already authenticated
+  if (isAuthenticated) {
+    // You can safely access user here after the state is updated
+    console.log(user); // This should print the user now
+    alert(`Welcome ${user?.name || 'User'}`); // Show welcome message with the user name
+    if(user.role==="admin"){
+      navigate('/admin-dashboard')
     }
-  }, [isAuthenticated, navigate]);
+    else if(user.role==="customer"){
+      navigate('/user-dashboard')
+    }
+  }
+}, [isAuthenticated, user, navigate]); // Listen to changes in isAuthenticated or user
 
   const togglePassword = () => setShowPassword(!showPassword);
 
@@ -34,10 +39,12 @@ function LoginContainer() {
     }));
   };
 
+  // Handle form submission
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, rememberMe } = loginForm;
+    const { email, password } = loginForm;
 
+    // Validation
     if (!email || !password) {
       dispatch(loginFailure('Please fill in all fields.'));
       return;
@@ -45,14 +52,13 @@ function LoginContainer() {
 
     try {
       await login(email, password); // Call login function from context
-      // Redirect or show success message here (e.g., navigate to dashboard)
     } catch (err) {
-      // Error is handled in the context, no need to catch it again here
-      console.error('Login failed', error);
+      // Error is already handled in context, but if needed, you can dispatch it here too.
+      console.error('Login failed', err);
     }
-
   };
 
+  // Handle login with Google
   const loginWithGoogle = () => {
     if (!window.google || !window.google.accounts?.id) {
       dispatch(loginFailure('Google SDK not loaded. Please try again.'));
@@ -61,6 +67,7 @@ function LoginContainer() {
     window.google.accounts.id.prompt();
   };
 
+  // Navigation helpers
   const navigateToForgotPassword = () => navigate('/forgot-password');
   const navigateToRegister = () => navigate('/register');
 

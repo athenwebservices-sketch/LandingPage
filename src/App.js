@@ -14,6 +14,7 @@ import AdminUsers from './component/adminUsers/AdminUsers';
 import AdminProducts from './component/adminProducts/AdminProducts';
 import { AppProvider } from './context/AppContext'; // Import your AppProvider
 import Logout from './component/logout/Logout';
+import UserDashboard from './pages/user-dashboard/User-dashboard'
 const App = () => {
   return (
     <div>
@@ -28,6 +29,7 @@ const App = () => {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                  <Route path="/user-dashboard" element={<UserDashboard />} />
                   <Route path="/admin/orders" element={<AdminOrders />} />
                   <Route path="/admin/users" element={<AdminUsers />} />
                   <Route path="/admin/products" element={<AdminProducts />} />

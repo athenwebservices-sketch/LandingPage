@@ -134,14 +134,24 @@ const StatusBadge = styled.span`
 
 const AdminDashboard = () => {
   const { user } = useAuth();
-  console.log(user)
+  console.log(user);  // This should now log the user when it's available
+
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
     totalUsers: 0,
     totalProducts: 0
   });
+
   const [recentOrders, setRecentOrders] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('User data:', user);  // Logs user data when it is available
+    } else {
+      console.log('User is not authenticated');  // Logs if user is null or not authenticated
+    }
+  }, [user]);  // Only re-run this when the `user` changes
 
   useEffect(() => {
     // Mock data - replace with actual API calls
@@ -158,7 +168,11 @@ const AdminDashboard = () => {
       { id: 3, customer: 'Bob Johnson', total: 199, status: 'pending', date: '2024-01-14' },
       { id: 4, customer: 'Alice Brown', total: 799, status: 'cancelled', date: '2024-01-13' },
     ]);
-  }, []);
+  }, []); // Only run this once on component mount
+
+  if (!user) {
+    return <div>Loading...</div>;  // Show a loading message while user data is being fetched
+  }
 
   return (
     <DashboardContainer>
