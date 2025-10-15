@@ -71,6 +71,8 @@ const appReducer = (state, action) => {
   }
 };
 
+console.log(axios.defaults.headers.common,"axios App Context")
+
 // Initial state for the app context
 const initialState = {
   allUsers: [],

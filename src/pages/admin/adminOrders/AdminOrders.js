@@ -8,7 +8,7 @@ const AdminOrders = () => {
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
-
+  console.log(orders)
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 

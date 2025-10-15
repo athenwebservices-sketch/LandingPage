@@ -55,7 +55,7 @@ const authReducer = (state, action) => {
       return state;
   }
 };
-
+console.log(axios.defaults.headers.common,"axios Auth Context")
 const initialState = {
   isAuthenticated: false,
   user: null,
