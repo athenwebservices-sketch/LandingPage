@@ -86,8 +86,8 @@ const initialState = {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const isInitialized = useRef(false);
-  const { token } = useAuth(); // Get token from useAuth hook
-
+  const { user,token } = useAuth(); // Get token from useAuth hook
+  console.log(token ,"App Provider user");
   // Set axios default authorization header if token exists
   useEffect(() => {
     if (token) {
@@ -100,7 +100,7 @@ export const AppProvider = ({ children }) => {
     if (!isInitialized.current) {
       isInitialized.current = true;
       // Automatically fetch data on page load
-      fetchAllUsers();
+      
       fetchOrders();
       fetchProducts();
     }

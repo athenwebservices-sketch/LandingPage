@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styled from 'styled-components';
+import {useApp} from '../../context/AppContext';
 console.log("In Admin Dashboard")
 const DashboardContainer = styled.div`
   max-width: 1200px;
@@ -136,7 +137,9 @@ const AdminDashboard = () => {
   console.log("hi")
   const { user ,token} = useAuth();
   console.log(user);  // This should now log the user when it's available
-  console.log(token)
+  console.log(token);
+  const tmep=useApp();
+  console.log(tmep)
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
