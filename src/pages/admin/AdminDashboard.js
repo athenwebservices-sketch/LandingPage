@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styled from 'styled-components';
-
+console.log("In Admin Dashboard")
 const DashboardContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -133,6 +133,7 @@ const StatusBadge = styled.span`
 `;
 
 const AdminDashboard = () => {
+  console.log("hi")
   const { user } = useAuth();
   console.log(user);  // This should now log the user when it's available
 

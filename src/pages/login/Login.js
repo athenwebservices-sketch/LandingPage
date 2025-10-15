@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Custom auth context
-
+import Navbar from '../../component/navbar/Navbar';
 import LoginForm from '../../component/loginForm/LoginForm';
+
 
 function LoginContainer() {
   const dispatch = useDispatch();
@@ -20,14 +21,9 @@ function LoginContainer() {
     // You can safely access user here after the state is updated
     console.log(user); // This should print the user now
     alert(`Welcome ${user?.name || 'User'}`); // Show welcome message with the user name
-    if(user.role==="admin"){
-      navigate('/admin-dashboard')
-    }
-    else if(user.role==="customer"){
-      navigate('/user-dashboard')
-    }
+    
   }
-}, [isAuthenticated, user, navigate]); // Listen to changes in isAuthenticated or user
+}, [isAuthenticated, user]); // Listen to changes in isAuthenticated or user
 
   const togglePassword = () => setShowPassword(!showPassword);
 
@@ -72,6 +68,8 @@ function LoginContainer() {
   const navigateToRegister = () => navigate('/register');
 
   return (
+    <>
+    <Navbar></Navbar>
     <LoginForm
       loginForm={loginForm}
       loading={loading}
@@ -84,6 +82,8 @@ function LoginContainer() {
       navigateToForgotPassword={navigateToForgotPassword}
       navigateToRegister={navigateToRegister}
     />
+    </>
+    
   );
 }
 

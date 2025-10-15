@@ -156,7 +156,7 @@ const ActionButton = styled(Link)`
   }
 `;
 
-const UserDashboard = () => {
+const CustomerDashboard = () => {
   const { user } = useAuth();
   console.log(user)
   useEffect(() => {
@@ -295,4 +295,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default CustomerDashboard;

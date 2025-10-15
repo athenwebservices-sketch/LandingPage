@@ -68,26 +68,24 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    // Initialize axios headers with token from localStorage if it exists
-    if (state.token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
-    } else {
-      // Clear any previous authorization token if not authenticated
-      delete axios.defaults.headers.common['Authorization'];
-    }
+  if (state.token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
 
-    // Try to auto-authenticate on page load based on stored token
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: {
-          user: JSON.parse(storedUser),
-          token: state.token
-        }
-      });
-    }
-  }, [state.token]);
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);  // Parse the user from localStorage
+    dispatch({
+      type: 'LOGIN_SUCCESS',
+      payload: {
+        user: parsedUser,  // Dispatch parsed user
+        token: state.token
+      }
+    });
+  }
+}, [state.token]);
 
   const login = async (email, password) => {
     try {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../../context/AppContext';
 import './AdminOrders.css';
 
 const AdminOrders = () => {
@@ -26,7 +26,7 @@ const AdminOrders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
+          {/* {orders.map((order) => (
             <tr key={order.id}>
               <td>#{order.id}</td>
               <td>{order.customer}</td>
@@ -34,7 +34,7 @@ const AdminOrders = () => {
               <td>{order.status}</td>
               <td>{order.date}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>

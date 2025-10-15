@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+// AppContext.js
+
+import React, { createContext, useContext, useReducer, useEffect, useRef } from 'react';
 import axios from '../lib/axiosInstance';
 
 // Create a context for the app
@@ -59,7 +61,7 @@ const appReducer = (state, action) => {
         ...state,
         error: null,
       };
-    case 'SET_PRODUCTS_FETCHED':  // Added this case
+    case 'SET_PRODUCTS_FETCHED':
       return {
         ...state,
         productsFetched: action.payload,
@@ -77,21 +79,29 @@ const initialState = {
   loading: false,
   error: null,
   token: localStorage.getItem('token'),
-  productsFetched: false,  // Track if products have been fetched
+  productsFetched: false,
 };
 
 // AppProvider component to wrap around the app and manage context state
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    // Automatically fetch data on page load
-    fetchAllUsers();
-    fetchOrders();
-    fetchProducts();
+    // Only run this effect once when the component mounts
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      // Automatically fetch data on page load
+      fetchAllUsers();
+      fetchOrders();
+      fetchProducts();
+    }
   }, []);
 
   const fetchAllUsers = async () => {
+    // Prevent multiple simultaneous requests
+    if (state.loading) return;
+    
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.get('/api/users');
@@ -108,6 +118,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const fetchOrders = async () => {
+    // Prevent multiple simultaneous requests
+    if (state.loading) return;
+    
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.get('/api/orders');
@@ -124,6 +137,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const fetchProducts = async () => {
+    // Prevent multiple simultaneous requests
+    if (state.loading) return;
+    
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.get('/api/products');
@@ -216,3 +232,5 @@ export const useApp = () => {
   }
   return context;
 };
+
+export default AppContext;

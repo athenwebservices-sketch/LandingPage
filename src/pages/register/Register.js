@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Register.css';
-
+import Navbar from '../../component/navbar/Navbar';
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -79,6 +79,8 @@ const Register = () => {
   };
 
   return (
+    <>
+    <Navbar></Navbar>
     <div className="register-container">
       <h1 className="register-title">Create Account</h1>
       
@@ -149,6 +151,8 @@ const Register = () => {
         Already have an account? <Link to="/admin">Login here</Link>
       </div>
     </div>
+    </>
+    
   );
 };
 

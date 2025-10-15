@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
-
 import { FaBars, FaTimes, FaInstagram, FaLinkedinIn, FaTicketAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './styles.css';  // or .scss, .module.css, etc.
 
 const Navbar = () => {
@@ -28,13 +28,13 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-logo">
-            <a href="/" className="logo-link">
+            <Link to="/" className="logo-link"> {/* Replace a with Link */}
               <img
                 src="/Logo1.png"
                 alt="Creators Street Logo"
                 className="logo-image"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Hamburger Menu */}
@@ -90,32 +90,36 @@ const Navbar = () => {
             >
               Join Us
             </a>
-            <a
-              href="/tickets"
+            <Link
+              to="/tickets"
               className="social-icon ticket"
             >
               <FaTicketAlt className="social-icon-image" />
-            </a>
-                          <a
-                href="/login"
-              >
-                Login
-              </a>
-               <a
-                href="/register"
-              >
-                Register
-              </a>
-              <a
-                href="/logout"
-              >
-                Logout
-              </a>
-              <a
-                href="/Payment"
-              >
-                Payment
-              </a>
+            </Link>
+            <Link
+              to="/login"
+              className="nav-link" // Add a class for styling
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="nav-link" // Add a class for styling
+            >
+              Register
+            </Link>
+            <Link
+              to="/logout"
+              className="nav-link" // Add a class for styling
+            >
+              Logout
+            </Link>
+            <Link
+              to="/payment" // Change href to to
+              className="nav-link" // Add a class for styling
+            >
+              Payment
+            </Link>
           </div>
         </div>
       </nav>
@@ -129,13 +133,13 @@ const Navbar = () => {
           <div className="navbar-mobile-menu-content">
             {/* Logo inside the mobile menu */}
             <div className="navbar-mobile-logo">
-              <a href="/" className="logo-link">
+              <Link to="/" className="logo-link"> {/* Replace a with Link */}
                 <img
                   src="/Logo1.png"
                   alt="Creators Street Logo"
                   className="logo-image"
                 />
-              </a>
+              </Link>
             </div>
 
             {/* Close Button (X) */}
@@ -189,12 +193,12 @@ const Navbar = () => {
               >
                 <FaLinkedinIn className="social-icon-image" />
               </a>
-              <a
-                href="/tickets"
+              <Link
+                to="/tickets"
                 className="social-icon ticket"
               >
                 <FaTicketAlt className="social-icon-image" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

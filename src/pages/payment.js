@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 export default function Payment() {
+  console.log("In payment page ")
   const [orderData, setOrderData] = useState(null);
   const [verifyData, setVerifyData] = useState(null);
   const [error, setError] = useState('');
