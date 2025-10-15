@@ -1,12 +1,17 @@
+// src/pages/Admin/CustomerDashboard/CustomerDashboard.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styled from 'styled-components';
+import axios from '../../lib/axiosInstance';
+import { useApp } from '../../context/AppContext';
 
+// Styled Components
 const DashboardContainer = styled.div`
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 2rem 20px;
+  padding-top: calc(80px + 2rem);
 `;
 
 const DashboardHeader = styled.div`
@@ -23,11 +28,6 @@ const DashboardHeader = styled.div`
 
 const DashboardTitle = styled.h1`
   color: #2c3e50;
-`;
-
-const WelcomeMessage = styled.p`
-  color: #7f8c8d;
-  margin-bottom: 2rem;
 `;
 
 const StatsGrid = styled.div`
@@ -61,13 +61,22 @@ const StatLabel = styled.div`
   color: #7f8c8d;
 `;
 
-const DashboardContent = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const ActionButton = styled(Link)`
+  padding: 0.5rem 1rem;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease;
   
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  &:hover {
+    background: #5a67d8;
   }
 `;
 
@@ -110,108 +119,103 @@ const StatusBadge = styled.span`
   font-size: 0.875rem;
   font-weight: 500;
   
-  &.delivered {
-    background: #d4edda;
-    color: #155724;
-  }
-  
-  &.processing {
+  &.pending {
     background: #fff3cd;
     color: #856404;
   }
   
-  &.shipped {
-    background: #cce5ff;
-    color: #004085;
-  }
-`;
-
-const QuickActions = styled.div`
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-`;
-
-const ActionButton = styled(Link)`
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background: #f8f9fa;
-  color: #2c3e50;
-  text-decoration: none;
-  border-radius: 5px;
-  text-align: center;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: #667eea;
-    color: white;
-    transform: translateY(-2px);
+  &.completed {
+    background: #d4edda;
+    color: #155724;
   }
   
-  &:last-child {
-    margin-bottom: 0;
+  &.cancelled {
+    background: #f8d7da;
+    color: #721c24;
   }
 `;
 
+// MAIN COMPONENT
 const CustomerDashboard = () => {
-  const { user } = useAuth();
-  console.log(user)
-  useEffect(() => {
-      if (user) {
-        console.log('User data:', user);  // Logs user data when it is available
-      } else {
-        console.log('User is not authenticated');  // Logs if user is null or not authenticated
-      }
-    }, [user]);  // Only re-run this when the `user` changes
+  const { user, token } = useAuth();
   const [stats, setStats] = useState({
     totalOrders: 0,
-    totalSpent: 0,
-    pendingOrders: 0,
-    savedItems: 0
+    totalRevenue: 0,
+    totalUsers: 0,
+    totalProducts: 0,
   });
   const [recentOrders, setRecentOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock user data
-    setStats({
-      totalOrders: 24,
-      totalSpent: 3456,
-      pendingOrders: 2,
-      savedItems: 8
-    });
+    const fetchDashboardData = async () => {
+      if (!token) return;
+      setLoading(true);
 
-    setRecentOrders([
-      { id: 12345, date: '2024-01-15', total: 299, status: 'delivered', items: 3 },
-      { id: 12346, date: '2024-01-12', total: 599, status: 'shipped', items: 2 },
-      { id: 12347, date: '2024-01-10', total: 199, status: 'processing', items: 1 },
-      { id: 12348, date: '2024-01-08', total: 799, status: 'delivered', items: 4 },
-      { id: 12349, date: '2024-01-05', total: 149, status: 'delivered', items: 2 },
-    ]);
-  }, []);
+      try {
+        // Fetch all data in parallel for performance
+        const [productsRes, usersRes, ordersRes] = await Promise.all([
+          axios.get('/api/products', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/users', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/orders', { headers: { Authorization: `Bearer ${token}` } }),
+        ]);
 
-  const getStatusClass = (status) => {
-    switch (status) {
-      case 'delivered': return 'delivered';
-      case 'processing': return 'processing';
-      case 'shipped': return 'shipped';
-      default: return '';
-    }
-  };
+        // Extract arrays safely
+        const products = productsRes.data?.products || productsRes.data || [];
+        const users = usersRes.data?.users || usersRes.data || [];
+        const orders = ordersRes.data?.orders || ordersRes.data || [];
+
+        // ✅ Calculate total revenue from orders
+        const totalRevenue = Array.isArray(orders)
+          ? orders.reduce((sum, order) => {
+              const total =
+                Number(order.totalAmount) ||
+                Number(order.total) ||
+                0;
+              return sum + total;
+            }, 0)
+          : 0;
+
+        // ✅ Get 5 most recent orders
+        const recent = Array.isArray(orders)
+          ? orders
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .slice(0, 5)
+          : [];
+
+        setStats({
+          totalOrders: orders.length,
+          totalRevenue,
+          totalUsers: users.length,
+          totalProducts: products.length,
+        });
+
+        setRecentOrders(recent);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, [token]);
+
+  if (!user || loading) {
+    return <div>Loading dashboard...</div>;
+  }
 
   return (
     <DashboardContainer>
       <DashboardHeader>
-        <div>
-          <DashboardTitle>User Dashboard</DashboardTitle>
-          <WelcomeMessage>
-            Welcome back, {user?.name || 'User'}! Here's an overview of your account.
-          </WelcomeMessage>
-        </div>
+        <DashboardTitle>Customer Dashboard</DashboardTitle>
+        <ActionButtons>
+          <ActionButton to="/customer/products">Products</ActionButton>
+          <ActionButton to="/customer/orders">My Orders</ActionButton>
+        </ActionButtons>
       </DashboardHeader>
 
+      {/* ✅ Dynamic Stats */}
       <StatsGrid>
         <StatCard>
           <StatIcon>📦</StatIcon>
@@ -221,76 +225,61 @@ const CustomerDashboard = () => {
 
         <StatCard>
           <StatIcon>💰</StatIcon>
-          <StatValue>${stats.totalSpent}</StatValue>
-          <StatLabel>Total Spent</StatLabel>
+          <StatValue>${stats.totalRevenue.toLocaleString()}</StatValue>
+          <StatLabel>Total Revenue</StatLabel>
         </StatCard>
 
         <StatCard>
-          <StatIcon>⏳</StatIcon>
-          <StatValue>{stats.pendingOrders}</StatValue>
-          <StatLabel>Pending Orders</StatLabel>
+          <StatIcon>👥</StatIcon>
+          <StatValue>{stats.totalUsers}</StatValue>
+          <StatLabel>Total Users</StatLabel>
         </StatCard>
 
         <StatCard>
-          <StatIcon>❤️</StatIcon>
-          <StatValue>{stats.savedItems}</StatValue>
-          <StatLabel>Saved Items</StatLabel>
+          <StatIcon>🛍️</StatIcon>
+          <StatValue>{stats.totalProducts}</StatValue>
+          <StatLabel>Total Products</StatLabel>
         </StatCard>
       </StatsGrid>
 
-      <DashboardContent>
-        <RecentOrders>
-          <SectionTitle>Recent Orders</SectionTitle>
-          <OrderTable>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentOrders.map(order => (
-                <tr key={order.id}>
-                  <td>#{order.id}</td>
-                  <td>{order.date}</td>
-                  <td>{order.items}</td>
-                  <td>${order.total}</td>
+      {/* ✅ Recent Orders */}
+      <RecentOrders>
+        <SectionTitle>Recent Orders</SectionTitle>
+        <OrderTable>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recentOrders.length > 0 ? (
+              recentOrders.map((order) => (
+                <tr key={order._id || order.id}>
+                  <td>#{order._id || order.id}</td>
+                  <td>{order.user?.name || order.customer || 'N/A'}</td>
+                  <td>${(order.totalAmount || order.total || 0).toLocaleString()}</td>
                   <td>
-                    <StatusBadge className={getStatusClass(order.status)}>
-                      {order.status}
+                    <StatusBadge className={order.status || 'pending'}>
+                      {order.status || 'pending'}
                     </StatusBadge>
                   </td>
+                  <td>{new Date(order.createdAt || order.date).toLocaleDateString()}</td>
                 </tr>
-              ))}
-            </tbody>
-          </OrderTable>
-        </RecentOrders>
-
-        <QuickActions>
-          <SectionTitle>Quick Actions</SectionTitle>
-          <ActionButton to="/user-profile">
-            👤 Edit Profile
-          </ActionButton>
-          <ActionButton to="/cart">
-            🛒 View Cart
-          </ActionButton>
-          <ActionButton to="/orders">
-            📦 View All Orders
-          </ActionButton>
-          <ActionButton to="/wishlist">
-            ❤️ Wishlist
-          </ActionButton>
-          <ActionButton to="/settings">
-            ⚙️ Account Settings
-          </ActionButton>
-          <ActionButton to="/store">
-            🛍️ Continue Shopping
-          </ActionButton>
-        </QuickActions>
-      </DashboardContent>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" style={{ textAlign: 'center', padding: '1rem' }}>
+                  No recent orders found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </OrderTable>
+      </RecentOrders>
     </DashboardContainer>
   );
 };

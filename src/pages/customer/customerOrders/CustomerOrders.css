@@ -1,0 +1,185 @@
+/********************************************
+ * ADMIN ORDERS PAGE — SCOPED & SAFE STYLES
+ ********************************************/
+.admin-orders-page {
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --background-color: #f4f7f6;
+  --container-bg: #ffffff;
+  --text-color: #333;
+  --header-bg: #eef2f5;
+  --border-color: #ddd;
+  --hover-bg: #f1f1f1;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+  background-color: var(--background-color);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-color);
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* --- Main Container --- */
+.admin-orders-page .orders-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--container-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.admin-orders-page .orders-container h1 {
+  margin: 0 0 1.5rem 0;
+  font-size: 2rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+/* --- Table --- */
+.admin-orders-page .orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-orders-page .orders-table th,
+.admin-orders-page .orders-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.admin-orders-page .orders-table thead th {
+  background-color: var(--header-bg);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-orders-page .orders-table tbody tr:nth-of-type(even) {
+  background-color: #fcfcfc;
+}
+
+.admin-orders-page .orders-table tbody tr:hover {
+  background-color: var(--hover-bg);
+  transform: scale(1.005);
+  transition: 0.2s ease-in-out;
+}
+
+/* --- Status Badges --- */
+.admin-orders-page .orders-table td span[class^="status-"] {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.admin-orders-page .status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.admin-orders-page .status-processing {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.admin-orders-page .status-shipped {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.admin-orders-page .status-delivered {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-orders-page .status-cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* --- Pagination --- */
+.admin-orders-page .pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.admin-orders-page .pagination-controls button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-orders-page .pagination-controls button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.admin-orders-page .pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.admin-orders-page .pagination-controls span {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* --- Loading / Error --- */
+.admin-orders-page .loading,
+.admin-orders-page .error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+}
+
+.admin-orders-page .loading {
+  color: var(--primary-color);
+}
+
+.admin-orders-page .error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .admin-orders-page {
+    padding: 1rem;
+  }
+
+  .admin-orders-page .orders-container {
+    padding: 1rem;
+  }
+
+  .admin-orders-page .orders-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .admin-orders-page .pagination-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
