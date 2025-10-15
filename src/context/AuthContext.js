@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
       
       localStorage.setItem('token', response.data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
+      console.log(response)
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {

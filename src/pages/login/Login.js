@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Custom auth context
 
-import LoginForm from '../../component/LoginForm'
+import LoginForm from '../../component/loginForm/LoginForm'
 
 function LoginContainer() {
   const dispatch = useDispatch();

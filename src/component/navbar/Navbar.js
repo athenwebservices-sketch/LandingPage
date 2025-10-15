@@ -98,17 +98,21 @@ const Navbar = () => {
             </a>
                           <a
                 href="/login"
-                target="_blank"
               >
                 Login
               </a>
-              <a
+               <a
                 href="/register"
               >
                 Register
               </a>
               <a
-                href="/payment"
+                href="/logout"
+              >
+                Logout
+              </a>
+              <a
+                href="/Payment"
               >
                 Payment
               </a>

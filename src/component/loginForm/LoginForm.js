@@ -4,7 +4,7 @@ import React from 'react';
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import '../styles/login.css'
+import './LoginForm.css'
 
 
 const LoginForm = ({

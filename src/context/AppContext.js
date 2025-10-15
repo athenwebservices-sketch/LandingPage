@@ -59,6 +59,11 @@ const appReducer = (state, action) => {
         ...state,
         error: null,
       };
+    case 'SET_PRODUCTS_FETCHED':  // Added this case
+      return {
+        ...state,
+        productsFetched: action.payload,
+      };
     default:
       return state;
   }
@@ -71,6 +76,8 @@ const initialState = {
   products: [],
   loading: false,
   error: null,
+  token: localStorage.getItem('token'),
+  productsFetched: false,  // Track if products have been fetched
 };
 
 // AppProvider component to wrap around the app and manage context state
@@ -124,11 +131,59 @@ export const AppProvider = ({ children }) => {
         type: 'FETCH_PRODUCTS_SUCCESS',
         payload: response.data,
       });
+      // Mark products as fetched
+      dispatch({ type: 'SET_PRODUCTS_FETCHED', payload: true });
     } catch (error) {
       dispatch({
         type: 'FETCH_PRODUCTS_FAILURE',
         payload: error.response?.data?.message || 'Failed to fetch products',
       });
+    }
+  };
+
+  const createProduct = async (productData) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+      const response = await axios.post('/api/products', productData, {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      dispatch({
+        type: 'FETCH_PRODUCTS_SUCCESS',
+        payload: response.data,
+      });
+      return response.data;
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_PRODUCTS_FAILURE',
+        payload: error.response?.data?.message || 'Failed to create product',
+      });
+      throw error;
+    }
+  };
+
+  const createOrder = async (orderData) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+      const response = await axios.post('/api/orders', orderData, {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      dispatch({
+        type: 'FETCH_ORDERS_SUCCESS',
+        payload: response.data,
+      });
+      return response.data;
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_ORDERS_FAILURE',
+        payload: error.response?.data?.message || 'Failed to create order',
+      });
+      throw error;
     }
   };
 
@@ -143,6 +198,8 @@ export const AppProvider = ({ children }) => {
         fetchAllUsers,
         fetchOrders,
         fetchProducts,
+        createProduct,
+        createOrder,
         clearError,
       }}
     >

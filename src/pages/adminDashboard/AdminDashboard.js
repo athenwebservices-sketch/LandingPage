@@ -134,6 +134,7 @@ const StatusBadge = styled.span`
 
 const AdminDashboard = () => {
   const { user } = useAuth();
+  console.log(user)
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
