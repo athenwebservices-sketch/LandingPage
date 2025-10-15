@@ -55,11 +55,11 @@ const authReducer = (state, action) => {
       return state;
   }
 };
-console.log(axios.defaults.headers.common,"axios Auth Context")
+
 const initialState = {
   isAuthenticated: false,
   user: null,
-  token: localStorage.getItem('token'),  // Check for token in localStorage
+  token: localStorage.getItem('token'),
   loading: false,
   error: null
 };
@@ -67,12 +67,13 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  // ✅ Automatically restore user session
   useEffect(() => {
-  if (state.token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
-  } else {
-    delete axios.defaults.headers.common['Authorization'];
-  }
+    if (state.token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
 
   const storedUser = localStorage.getItem('user');
   console.log(storedUser)
@@ -100,15 +101,14 @@ export const AuthProvider = ({ children }) => {
 
 }, [state.token]);
 
+  // ✅ Normal email/password login
   const login = async (email, password) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/auth/login', { email, password });
 
-      const user = response.data.user;
-      const token = response.data.token;
+      const { user, token } = response.data;
 
-      // Store the token and user data in localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
@@ -116,10 +116,7 @@ export const AuthProvider = ({ children }) => {
 
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: {
-          user,
-          token
-        }
+        payload: { user, token }
       });
 
       return response.data;
@@ -132,15 +129,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ✅ Register new user
   const register = async (userData) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/auth/register', userData);
 
-      const user = response.data.user;
-      const token = response.data.token;
+      const { user, token } = response.data;
 
-      // Store the token and user data in localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
@@ -148,10 +144,7 @@ export const AuthProvider = ({ children }) => {
 
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: {
-          user,
-          token
-        }
+        payload: { user, token }
       });
 
       return response.data;
@@ -164,11 +157,43 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ✅ Google Login (NEW)
+  const googleLogin = async (googleToken) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+
+      // 🔥 Send Google token to backend (port 5000)
+      const response = await axios.post('http://localhost:5000/api/auth/google', {
+        token: googleToken,
+      });
+
+      const { user, token } = response.data;
+
+      // Store in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // Set default header
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: { user, token }
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error('❌ Google login error:', error.response?.data || error.message);
+      dispatch({
+        type: 'LOGIN_FAILURE',
+        payload: error.response?.data?.message || 'Google login failed'
+      });
+      throw error;
+    }
+  };
+
   const loginFailure = () => {
-    dispatch({
-      type: 'LOGIN_BLANK',
-      payload: 'LOGIN_BLANK'
-    });
+    dispatch({ type: 'LOGIN_BLANK', payload: 'LOGIN_BLANK' });
   };
 
   const logout = () => {
@@ -190,7 +215,8 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         clearError,
-        loginFailure
+        loginFailure,
+        googleLogin, // ✅ Added Google login here
       }}
     >
       {children}
