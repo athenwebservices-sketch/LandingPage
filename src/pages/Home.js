@@ -9,7 +9,6 @@ import PastEvents from '../component/pastEvents/PastEvents.js';
 import Ticket from '../component/tickets/Tickets.js';
 import Social from '../component/social/Social.js';
 import Footer from '../component/footer/Footer.js';
-import './Home.css'; // 👈 new namespaced CSS file
 
 const Home = () => {
   return (

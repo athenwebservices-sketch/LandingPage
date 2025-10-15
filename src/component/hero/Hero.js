@@ -78,8 +78,7 @@ export default function Hero() {
       <style>{`
         .hero-section {
           position: relative;
-          width: 100vw;
-          min-height: 100vh;
+          min-height: 80vh;
           overflow: hidden;
           display: flex;
           flex-direction: column;
@@ -89,6 +88,8 @@ export default function Hero() {
           color: white;
           text-align: center;
           padding-bottom: 4rem;
+          padding-left: 140px;
+          padding-right: 140px;
         }
 
         .hero-bg, .hero-bg-conic {
@@ -192,7 +193,7 @@ export default function Hero() {
           z-index: 10;
           background: #facc15;
           border-radius: 1rem;
-          padding:10px;
+          padding: 10px;
         }
 
         .image-card {
@@ -203,8 +204,8 @@ export default function Hero() {
           overflow: hidden;
           transition: transform 0.3s, box-shadow 0.3s;
           cursor: pointer;
-          padding-top:20px;
-
+          padding-top: 9px;
+          padding-bottom: 0px;
         }
 
         .image-card:hover {
@@ -224,7 +225,7 @@ export default function Hero() {
         .image-card-title {
           color: black;
           font-weight: bold;
-          padding: 0.5rem;
+          padding: 0rem;
         }
       `}</style>
     </section>
