@@ -75,16 +75,29 @@ export const AuthProvider = ({ children }) => {
   }
 
   const storedUser = localStorage.getItem('user');
+  console.log(storedUser)
   if (storedUser) {
+  try {
     const parsedUser = JSON.parse(storedUser);  // Parse the user from localStorage
+      
     dispatch({
       type: 'LOGIN_SUCCESS',
       payload: {
-        user: parsedUser,  // Dispatch parsed user
+        user: parsedUser,  // Use parsed user here
         token: state.token
       }
     });
+  } catch (error) {
+    // Handle JSON parsing error, e.g., if storedUser is corrupted
+    console.error('Error parsing stored user:', error);
+    // Optionally, dispatch an error action or handle differently
   }
+} else {
+  // Handle case where storedUser is undefined or null
+  console.log('No user found in localStorage');
+  // Optionally, dispatch a different action (e.g., LOGIN_FAILURE or a default state)
+}
+
 }, [state.token]);
 
   const login = async (email, password) => {

@@ -1,8 +1,9 @@
 // AppContext.js
 
-import React, { createContext, useContext, useReducer, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import axios from '../lib/axiosInstance';
-import { useAuth } from './AuthContext'; // Assuming useAuth is from an AuthContext
+import { useAuth } from './AuthContext';
+import { jwtDecode } from 'jwt-decode';
 
 // Create a context for the app
 const AppContext = createContext();
@@ -44,6 +45,7 @@ const appReducer = (state, action) => {
         products: action.payload,
         loading: false,
         error: null,
+        productsFetched: true,
       };
     case 'FETCH_PRODUCTS_FAILURE':
       return {
@@ -51,6 +53,7 @@ const appReducer = (state, action) => {
         products: [],
         loading: false,
         error: action.payload,
+        productsFetched: true,
       };
     case 'SET_LOADING':
       return {
@@ -72,7 +75,7 @@ const appReducer = (state, action) => {
   }
 };
 
-// Initial state for the app context (removed token)
+// Initial state for the app context
 const initialState = {
   allUsers: [],
   orders: [],
@@ -85,9 +88,8 @@ const initialState = {
 // AppProvider component to wrap around the app and manage context state
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const isInitialized = useRef(false);
-  const { user,token } = useAuth(); // Get token from useAuth hook
-  console.log(token ,"App Provider user");
+  const { token } = useAuth(); // Get token from useAuth hook
+  
   // Set axios default authorization header if token exists
   useEffect(() => {
     if (token) {
@@ -95,19 +97,8 @@ export const AppProvider = ({ children }) => {
     }
   }, [token]);
 
-  useEffect(() => {
-    // Only run this effect once when the component mounts
-    if (!isInitialized.current) {
-      isInitialized.current = true;
-      // Automatically fetch data on page load
-      
-      fetchOrders();
-      fetchProducts();
-    }
-  }, []);
-
+  // Fetch functions that can be called independently
   const fetchAllUsers = async () => {
-    // Prevent multiple simultaneous requests
     if (state.loading) return;
     
     try {
@@ -117,16 +108,17 @@ export const AppProvider = ({ children }) => {
         type: 'FETCH_ALL_USERS_SUCCESS',
         payload: response.data,
       });
+      return response.data;
     } catch (error) {
       dispatch({
         type: 'FETCH_ALL_USERS_FAILURE',
         payload: error.response?.data?.message || 'Failed to fetch users',
       });
+      throw error;
     }
   };
 
   const fetchOrders = async () => {
-    // Prevent multiple simultaneous requests
     if (state.loading) return;
     
     try {
@@ -136,16 +128,17 @@ export const AppProvider = ({ children }) => {
         type: 'FETCH_ORDERS_SUCCESS',
         payload: response.data,
       });
+      return response.data;
     } catch (error) {
       dispatch({
         type: 'FETCH_ORDERS_FAILURE',
         payload: error.response?.data?.message || 'Failed to fetch orders',
       });
+      throw error;
     }
   };
 
   const fetchProducts = async () => {
-    // Prevent multiple simultaneous requests
     if (state.loading) return;
     
     try {
@@ -155,13 +148,13 @@ export const AppProvider = ({ children }) => {
         type: 'FETCH_PRODUCTS_SUCCESS',
         payload: response.data,
       });
-      // Mark products as fetched
-      dispatch({ type: 'SET_PRODUCTS_FETCHED', payload: true });
+      return response.data;
     } catch (error) {
       dispatch({
         type: 'FETCH_PRODUCTS_FAILURE',
         payload: error.response?.data?.message || 'Failed to fetch products',
       });
+      throw error;
     }
   };
 
@@ -239,4 +232,70 @@ export const useApp = () => {
   return context;
 };
 
-export default AppContext;
+// // Export the fetch functions for independent use
+// export const fetchAllUsers = async (token) => {
+//   try {
+//     if (token) {
+//       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     }
+//     const response = await axios.get('/api/users');
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data?.message || 'Failed to fetch users';
+//   }
+// };
+
+// export const fetchOrders = async (token) => {
+//   try {
+//     if (token) {
+//       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     }
+//     const response = await axios.get('/api/orders');
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data?.message || 'Failed to fetch orders';
+//   }
+// };
+
+// export const fetchProducts = async () => {
+//   try {
+//     const response = await axios.get('/api/products');
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data?.message || 'Failed to fetch products';
+//   }
+// };
+
+// export const createProduct = async (productData, token) => {
+//   try {
+//     if (token) {
+//       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     }
+//     const response = await axios.post('/api/products', productData, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data?.message || 'Failed to create product';
+//   }
+// };
+
+// export const createOrder = async (orderData, token) => {
+//   try {
+//     if (token) {
+//       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     }
+//     const response = await axios.post('/api/orders', orderData, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data?.message || 'Failed to create order';
+//   }
+// };
+
+// export default AppContext;

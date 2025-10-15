@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Routes, Route, useNavigate,useLocation } from 'react-router-dom'; // Import useNavigate
 
 import { useAuth } from './context/AuthContext'; // Import the useAuth hook
 
@@ -22,12 +22,18 @@ import Logout from './pages/logout/Logout';
 import Payments from './pages/payment'
 
 const App = () => {
-  const { user, isAuthenticated } = useAuth(); // Get user and authentication state
-  const navigate = useNavigate(); // Initialize navigate hook
+  const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation(); // 2. GET THE CURRENT LOCATION
 
   useEffect(() => {
-    if (isAuthenticated) {
-      console.log(user,"in App")
+    // 3. DEFINE WHICH PATHS ARE PUBLIC
+    const publicPaths = ['/', '/login', '/register', '/payments'];
+    const isPublicPath = publicPaths.includes(location.pathname);
+
+    // 4. ONLY REDIRECT IF THE USER IS AUTHENTICATED AND IS ON A PUBLIC PATH
+    if (isAuthenticated && isPublicPath) {
+      console.log(user, "in App - Redirecting from public path");
       // After login, navigate based on user role
       if (user.role === 'admin') {
         navigate('/admin-dashboard');
@@ -35,7 +41,7 @@ const App = () => {
         navigate('/customer-dashboard');
       }
     }
-  }, [isAuthenticated, user, navigate]); // Trigger when isAuthenticated or user changes
+  }, [isAuthenticated, user, navigate, location]); // 5. ADD location TO DEPENDENCIES
 
   return (
     <Routes>
@@ -44,13 +50,13 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/payments" element={<Payments/>}/>
+
       {/* Admin Routes - Wrapped in AdminLayout */}
       <Route element={<AdminLayout />}>
-  <Route path="/admin-dashboard" element={<AdminDashboard />} />
-  <Route path="/admin/orders" element={<AdminOrders />} />
-  <Route path="/admin/users" element={<AdminUsers />} />
-</Route>
-
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+      </Route>
 
       {/* Customer Routes - Wrapped in CustomerLayout */}
       <Route element={<CustomerLayout />}>
