@@ -59,7 +59,7 @@ const authReducer = (state, action) => {
 const initialState = {
   isAuthenticated: false,
   user: null,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem('token'),  // Check for token in localStorage
   loading: false,
   error: null
 };
@@ -68,8 +68,24 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
+    // Initialize axios headers with token from localStorage if it exists
     if (state.token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
+    } else {
+      // Clear any previous authorization token if not authenticated
+      delete axios.defaults.headers.common['Authorization'];
+    }
+
+    // Try to auto-authenticate on page load based on stored token
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          user: JSON.parse(storedUser),
+          token: state.token
+        }
+      });
     }
   }, [state.token]);
 
@@ -77,18 +93,24 @@ export const AuthProvider = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/auth/login', { email, password });
-      
-      localStorage.setItem('token', response.data.token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      console.log(response)
+
+      const user = response.data.user;
+      const token = response.data.token;
+
+      // Store the token and user data in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: response.data.user,
-          token: response.data.token
+          user,
+          token
         }
       });
-      
+
       return response.data;
     } catch (error) {
       dispatch({
@@ -103,18 +125,24 @@ export const AuthProvider = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await axios.post('/api/auth/register', userData);
-      
-      localStorage.setItem('token', response.data.token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
+
+      const user = response.data.user;
+      const token = response.data.token;
+
+      // Store the token and user data in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: response.data.user,
-          token: response.data.token
+          user,
+          token
         }
       });
-      
+
       return response.data;
     } catch (error) {
       dispatch({
@@ -124,14 +152,17 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-  const loginFailure = () =>{
+
+  const loginFailure = () => {
     dispatch({
-        type: 'LOGIN_BLANK',
-        payload: 'LOGIN_BLANK'
-      });
-  }
+      type: 'LOGIN_BLANK',
+      payload: 'LOGIN_BLANK'
+    });
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     delete axios.defaults.headers.common['Authorization'];
     dispatch({ type: 'LOGOUT' });
   };

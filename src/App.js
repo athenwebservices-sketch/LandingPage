@@ -13,7 +13,7 @@ import AdminOrders from './component/adminOrders/AdminOrders';
 import AdminUsers from './component/adminUsers/AdminUsers';
 import AdminProducts from './component/adminProducts/AdminProducts';
 import { AppProvider } from './context/AppContext'; // Import your AppProvider
-import Logout from './component/logout/Logout';
+import Logout from './pages/logout/Logout';
 import UserDashboard from './pages/user-dashboard/User-dashboard'
 const App = () => {
   return (
