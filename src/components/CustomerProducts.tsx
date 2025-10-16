@@ -1,10 +1,11 @@
 // components/CustomerProducts.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { apiService } from '@/lib/api';
 import ProductCard from './ProductCard';
+import { debounce } from 'lodash'; // or implement your own debounce function
 
 interface Product {
   _id: string;
@@ -32,6 +33,20 @@ const CustomerProducts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { token } = useAuth();
 
+  // Memoize categories to avoid recreation on every render
+  const categories = useMemo(() => 
+    ['all', 'Apparel', 'Accessories', 'Tickets', 'Electronics', 'Collectibles'], 
+    []
+  );
+
+  // Debounced search function to avoid excessive API calls
+  const debouncedSearch = useCallback(
+    debounce((searchValue: string) => {
+      setSearchTerm(searchValue);
+    }, 300),
+    []
+  );
+
   const fetchProducts = async (page = 1) => {
     setLoading(true);
     setError(null);
@@ -48,7 +63,7 @@ const CustomerProducts = () => {
         url += `&search=${searchTerm}`;
       }
       
-      const response = await apiService.get(url);
+      const response = await apiService.get(url, token ? { Authorization: `Bearer ${token}` } : {});
       
       // Handle different response formats
       const productsData = response.products || response.data || response;
@@ -133,8 +148,8 @@ const CustomerProducts = () => {
   };
 
   useEffect(() => {
-    if (token) fetchProducts(1);
-  }, [token, selectedCategory, searchTerm]);
+    fetchProducts(1);
+  }, [selectedCategory, searchTerm, token]);
 
   const handleNextPage = () => {
     const totalPages = Math.ceil(pagination.total / pagination.limit);
@@ -145,17 +160,50 @@ const CustomerProducts = () => {
     if (pagination.page > 1) fetchProducts(pagination.page - 1);
   };
 
+  const handlePageChange = (page: number) => {
+    fetchProducts(page);
+  };
+
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setPagination(prev => ({ ...prev, page: 1 })); // Reset to first page when changing category
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    debouncedSearch(e.target.value);
     setPagination(prev => ({ ...prev, page: 1 })); // Reset to first page when searching
   };
 
-  const categories = ['all', 'Apparel', 'Accessories', 'Tickets', 'Electronics', 'Collectibles'];
+  // Generate page numbers for pagination
+  const pageNumbers = useMemo(() => {
+    const totalPages = Math.ceil(pagination.total / pagination.limit);
+    const currentPage = pagination.page;
+    const maxVisiblePages = 5;
+    
+    if (totalPages <= maxVisiblePages) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    
+    const pages = [];
+    const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    if (startPage > 1) {
+      pages.push(1);
+      if (startPage > 2) pages.push('...');
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) pages.push('...');
+      pages.push(totalPages);
+    }
+    
+    return pages;
+  }, [pagination.page, pagination.total, pagination.limit]);
 
   if (loading) {
     return (
@@ -187,13 +235,13 @@ const CustomerProducts = () => {
               <input
                 type="text"
                 placeholder="Search products..."
-                value={searchTerm}
                 onChange={handleSearchChange}
                 className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                aria-label="Search products"
               />
             </div>
             
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap" role="group" aria-label="Product categories">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -203,6 +251,7 @@ const CustomerProducts = () => {
                       ? 'bg-yellow-400 text-black'
                       : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
+                  aria-pressed={selectedCategory === category}
                 >
                   {category.charAt(0).toUpperCase() + category.slice(1)}
                 </button>
@@ -212,7 +261,7 @@ const CustomerProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8" role="list">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
@@ -226,25 +275,43 @@ const CustomerProducts = () => {
           </div>
         )}
 
-        {/* Pagination */}
+        {/* Enhanced Pagination */}
         {products.length > 0 && (
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center gap-2 flex-wrap" role="navigation" aria-label="Pagination">
             <button
               onClick={handlePreviousPage}
               disabled={pagination.page === 1}
               className="px-4 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Previous page"
             >
               Previous
             </button>
             
-            <span className="text-white">
-              Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit) || 1}
-            </span>
+            {pageNumbers.map((page, index) => (
+              page === '...' ? (
+                <span key={`ellipsis-${index}`} className="px-2 text-white">...</span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page as number)}
+                  className={`px-3 py-2 rounded-lg transition-colors ${
+                    pagination.page === page
+                      ? 'bg-yellow-400 text-black'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                  aria-label={`Page ${page}`}
+                  aria-current={pagination.page === page ? 'page' : undefined}
+                >
+                  {page}
+                </button>
+              )
+            ))}
             
             <button
               onClick={handleNextPage}
               disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
               className="px-4 py-2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Next page"
             >
               Next
             </button>

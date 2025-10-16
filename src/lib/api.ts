@@ -48,8 +48,13 @@ class ApiService {
     });
     
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
+      try{
+        const error = await response.json().catch(() => ({}));
       throw new Error(error.message || 'Request failed');
+      }
+      catch(e){
+
+      }
     }
     
     return response.json();
