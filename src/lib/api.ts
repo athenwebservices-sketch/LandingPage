@@ -1,8 +1,6 @@
 // lib/api.ts (Updated)
 'use client';
 
-import { useAuth } from '@/context/AuthContext';
-
 class ApiService {
   private getAuthHeaders() {
     if (typeof window === 'undefined') return {};

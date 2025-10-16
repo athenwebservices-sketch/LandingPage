@@ -1,9 +1,9 @@
-// components/ProductCard.tsx (Updated)
 'use client';
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import RazorpayPayment from './RazorpayPayment';
+import { useRouter } from 'next/navigation'; // Import the useRouter hook
 
 interface Product {
   _id: string;
@@ -22,31 +22,34 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { user, isAuthenticated } = useAuth();
-  const [isProcessing, setIsProcessing] = useState(false);
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false); // Track payment success status
+  const router = useRouter(); // Initialize useRouter for navigation
 
-  const { handlePayment } = RazorpayPayment({
-    product,
-    onSuccess: (response) => {
-      console.log('Payment successful:', response);
-      setIsProcessing(false);
-      setShowPaymentSuccess(true);
-      
-      // In a real app, you would:
-      // 1. Save the order to your backend
-      // 2. Update product stock
-      // 3. Send confirmation email
-      
-      setTimeout(() => {
-        setShowPaymentSuccess(false);
-      }, 5000);
-    },
-    onFailure: (error) => {
-      console.error('Payment failed:', error);
-      setIsProcessing(false);
-      alert('Payment failed. Please try again.');
+  const getProductImage = () => {
+    if (product.image) {
+      return product.image;
     }
-  });
+    return '/placeholder-product.png'; // Fallback image
+  };
+
+  const handlePaymentSuccess = (response: any) => {
+    console.log('Payment successful:', response);
+    setIsPaymentSuccessful(true); // Mark the payment as successful
+    setShowPaymentSuccess(true);
+    
+    // Redirect to the orders page after 3 seconds
+    setTimeout(() => {
+      router.push('/customer-dashboard'); // Navigate to the orders page
+    }, 3000);
+  };
+
+  const handlePaymentFailure = (error: any) => {
+    console.error('Payment failed:', error);
+    alert('Payment failed. Please try again.');
+  };
 
   const handleBuyNow = () => {
     if (!isAuthenticated) {
@@ -54,8 +57,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       return;
     }
 
-    setIsProcessing(true);
-    handlePayment();
+    if (isPaymentSuccessful) {
+      alert('Payment has already been completed. You are being redirected to your orders.');
+      return;
+    }
+
+    setShowPayment(true); // Trigger Razorpay component
+  };
+
+  const handleDismiss = () => {
+    console.log('Payment modal was dismissed');
+    setShowPayment(false); // Hide the payment modal if dismissed
   };
 
   const getStockStatus = () => {
@@ -65,16 +77,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const stockStatus = getStockStatus();
+  const productImage = getProductImage();
 
   return (
     <div className="bg-white/10 backdrop-blur-md rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
       {/* Product Image */}
       <div className="aspect-square w-full overflow-hidden bg-white/5">
-        <img
-          src={product.image || '/placeholder-product.png'}
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
+        {imageError ? (
+          <div className="w-full h-full flex items-center justify-center bg-gray-800/20">
+            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586 1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        ) : (
+          <img
+            src={productImage}
+            alt={product.name}
+            className="w-full h-full object-contain"
+            onError={() => setImageError(true)}
+          />
+        )}
       </div>
 
       {/* Product Details */}
@@ -102,14 +124,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Buy Now Button */}
         <button
           onClick={handleBuyNow}
-          // disabled={product.stock === -1 || isProcessing}
+          disabled={product.stock === 0 || showPayment || isPaymentSuccessful}
           className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-            product.stock === 0
+            product.stock === 0 || isPaymentSuccessful
               ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
               : 'bg-yellow-400 text-black hover:bg-yellow-300'
-          } ${isProcessing ? 'opacity-70 cursor-wait' : ''}`}
+          } ${showPayment ? 'opacity-70 cursor-wait' : ''}`}
         >
-          {isProcessing ? (
+          {showPayment ? (
             <span className="flex items-center justify-center">
               <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -125,10 +147,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Payment Success Message */}
         {showPaymentSuccess && (
           <div className="mt-3 p-2 bg-green-500/20 border border-green-500/30 text-green-300 rounded-lg text-sm">
-            Payment successful! Your order has been placed.
+            Payment successful! You are being redirected to your orders.
           </div>
         )}
       </div>
+
+      {/* Razorpay Payment Component - Rendered conditionally */}
+      {showPayment && (
+        <RazorpayPayment
+          product={product}
+          onSuccess={handlePaymentSuccess}
+          onFailure={handlePaymentFailure}
+          onDismiss={handleDismiss} // Pass the dismiss handler
+        />
+      )}
     </div>
   );
 };

@@ -1,31 +1,6 @@
-// components/RazorpayPayment.tsx (Updated)
 'use client';
 
 import { useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { apiService } from '@/lib/api';
-
-interface RazorpayOptions {
-  key: string;
-  amount: number;
-  currency: string;
-  name: string;
-  description: string;
-  image: string;
-  order_id: string;
-  handler: (response: any) => void;
-  prefill: {
-    name: string;
-    email: string;
-    contact: string;
-  };
-  notes: {
-    address: string;
-  };
-  theme: {
-    color: string;
-  };
-}
 
 declare global {
   interface Window {
@@ -33,19 +8,21 @@ declare global {
   }
 }
 
-const RazorpayPayment = ({ 
-  product, 
-  onSuccess, 
-  onFailure 
-}: { 
-  product: any; 
-  onSuccess: (response: any) => void; 
+interface RazorpayPaymentProps {
+  product: any;
+  onSuccess: (response: any) => void;
   onFailure: (error: any) => void;
-}) => {
-  const { user } = useAuth();
+  onDismiss: () => void; // New prop to handle dismiss
+}
 
+const RazorpayPayment = ({ product, onSuccess, onFailure, onDismiss }: RazorpayPaymentProps) => {
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       script.onload = () => resolve(true);
@@ -54,81 +31,90 @@ const RazorpayPayment = ({
     });
   };
 
-  const handlePayment = async () => {
-    try {
-      const isLoaded = await loadRazorpayScript();
-      if (!isLoaded) {
-        alert('Failed to load payment gateway. Please try again.');
-        return;
-      }
-
-      // Create an order on your backend first
-      let orderData;
+  useEffect(() => {
+    const initiatePayment = async () => {
       try {
-        orderData = await apiService.post('/api/orders/create', {
-          productId: product._id,
-          quantity: 1,
-          totalAmount: product.price
-        });
+        const isLoaded = await loadRazorpayScript();
+        if (!isLoaded) {
+          alert('Failed to load Razorpay script. Please try again.');
+          onFailure('Failed to load payment gateway');
+          return;
+        }
+
+        const options = {
+          key: 'rzp_test_RTn7656VqItM3e', // Hardcoded test key
+          amount: product.price * 100, // Convert to paise
+          currency: 'INR',
+          description: product.name,
+          image: '',
+          prefill: {
+            email: 'a@gmail.com',
+            contact: 123456789,
+          },
+          config: {
+            display: {
+              blocks: {
+                utib: { // Name for Axis block
+                  name: 'Pay Using Axis Bank',
+                  instruments: [
+                    {
+                      method: 'card',
+                      issuers: ['UTIB'],
+                    },
+                    {
+                      method: 'netbanking',
+                      banks: ['UTIB'],
+                    },
+                  ],
+                },
+                other: { // Name for other block
+                  name: 'Other Payment Methods',
+                  instruments: [
+                    {
+                      method: 'card',
+                      issuers: ['ICIC'],
+                    },
+                    {
+                      method: 'netbanking',
+                    },
+                  ],
+                },
+              },
+              hide: [
+                {
+                  method: 'upi',
+                },
+              ],
+              sequence: ['block.utib', 'block.other'],
+              preferences: {
+                show_default_blocks: false,
+              },
+            },
+          },
+          handler: function (response: any) {
+            console.log('Payment successful:', response);
+            onSuccess(response);
+          },
+          modal: {
+            ondismiss: function () {
+              console.log('Checkout form dismissed by the user');
+              onDismiss(); // Notify parent about dismiss
+            },
+          },
+        };
+
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
       } catch (error) {
-        console.error('Error creating order:', error);
-        // Continue with mock order if backend fails
-        orderData = { order_id: `order_${Date.now()}` };
+        console.error('Payment initiation error:', error);
+        onFailure('Error initiating Razorpay payment');
       }
+    };
 
-      // Extract user's name or use email as fallback
-      const userName = user?.name || user?.email || 'Customer';
+    initiatePayment();
+  }, [product, onSuccess, onFailure, onDismiss]);
 
-      const options: RazorpayOptions = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY || 'rzp_test_1234567890', // Your Razorpay key
-        amount: product.price * 100, // Amount in paise
-        currency: 'INR',
-        name: 'Creators Street',
-        description: `Payment for ${product.name}`,
-        image: '/Logo1.png',
-        order_id: orderData.order_id,
-        handler: function (response: any) {
-          // Handle successful payment
-          // Verify payment on your backend
-          verifyPayment(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature);
-          onSuccess(response);
-        },
-        prefill: {
-          name: userName,
-          email: user?.email || 'customer@example.com',
-          contact: '9999999999',
-        },
-        notes: {
-          address: 'Creators Street, Hyderabad'
-        },
-        theme: {
-          color: '#3c0052', // Your theme color
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error('Payment error:', error);
-      onFailure(error);
-    }
-  };
-
-  const verifyPayment = async (orderId: string, paymentId: string, signature: string) => {
-    try {
-      // Verify payment on your backend
-      await apiService.post('/api/payments/verify', {
-        razorpay_order_id: orderId,
-        razorpay_payment_id: paymentId,
-        razorpay_signature: signature
-      });
-      console.log('Payment verified successfully');
-    } catch (error) {
-      console.error('Payment verification failed:', error);
-    }
-  };
-
-  return { handlePayment };
+  return null; // This component doesn’t render anything visible, Razorpay handles the UI.
 };
 
 export default RazorpayPayment;
